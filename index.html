@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HAICO Link Hub</title>
+
+    <meta name="description"
+          content="HAICO TECH & DESIGN - Projects, services and digital solutions.">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="brand-area">
+
+        <div class="logo-box">
+            H
+        </div>
+
+        <div>
+            <h1>HAICO</h1>
+            <span>TECH & DESIGN</span>
+        </div>
+
+    </div>
+
+    <button class="menu-btn" id="menuBtn">
+        ☰
+    </button>
+
+</header>
+
+
+<!-- ================= SIDE MENU ================= -->
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <button class="close-btn" id="closeBtn">
+        ×
+    </button>
+
+    <div class="side-brand">
+        <div class="logo-box">H</div>
+
+        <h2>HAICO</h2>
+        <p>TECH & DESIGN</p>
+    </div>
+
+    <nav>
+
+        <a href="#home" class="nav-link">
+            🏠 Home
+        </a>
+
+        <a href="#about" class="nav-link">
+            ℹ️ About
+        </a>
+
+        <a href="#services" class="nav-link">
+            🛠️ Services
+        </a>
+
+        <a href="#projects" class="nav-link">
+            💻 Projects
+        </a>
+
+        <a href="#social" class="nav-link">
+            🌐 Social Media
+        </a>
+
+        <a href="#contact" class="nav-link">
+            📞 Contact
+        </a>
+
+        <button id="openLoginBtn" class="admin-menu-btn">
+            🔐 Admin Login
+        </button>
+
+    </nav>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+<!-- ================= HERO ================= -->
+
+<section id="home" class="hero">
+
+    <div class="hero-content">
+
+        <div class="badge">
+            🚀 DIGITAL SOLUTIONS
+        </div>
+
+        <h2 id="heroBrand">
+            HAICO TECH & DESIGN
+        </h2>
+
+        <h3 id="heroTagline">
+            Your Idea. Our Creativity. One Digital Solution.
+        </h3>
+
+        <p>
+            Discover our projects, services and digital solutions
+            designed to help businesses and organizations grow.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#projects" class="btn primary-btn">
+                Explore Projects
+            </a>
+
+            <a href="#contact" class="btn secondary-btn">
+                Contact HAICO
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about" class="section">
+
+    <div class="section-heading">
+
+        <span>ABOUT US</span>
+
+        <h2>About HAICO</h2>
+
+    </div>
+
+    <div class="about-card">
+
+        <div class="about-icon">
+            💡
+        </div>
+
+        <div>
+
+            <p id="aboutText">
+                HAICO TECH & DESIGN provides websites, apps,
+                graphic design, management systems, e-commerce
+                and digital solutions.
+            </p>
+
+            <div class="contact-mini">
+
+                <span>
+                    📞 <strong id="phoneText">+255 718 170 176</strong>
+                </span>
+
+                <span>
+                    ✉️ <strong id="emailText">
+                        ayoubhafidhi1@gmail.com
+                    </strong>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section id="services" class="section light-section">
+
+    <div class="section-heading">
+
+        <span>WHAT WE DO</span>
+
+        <h2>Our Services</h2>
+
+    </div>
+
+    <div id="servicesContainer" class="services-grid">
+
+        <div class="loading">
+            Loading services...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROJECTS ================= -->
+
+<section id="projects" class="section">
+
+    <div class="section-heading">
+
+        <span>OUR WORK</span>
+
+        <h2>Projects</h2>
+
+        <p>
+            Explore digital projects created by HAICO TECH & DESIGN.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="project-tools">
+
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="🔎 Search projects..."
+        >
+
+        <select id="categoryFilter">
+
+            <option value="all">
+                All Categories
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- PROJECTS -->
+
+    <div id="projectsContainer" class="projects-grid">
+
+        <div class="loading">
+            Loading projects...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SOCIAL ================= -->
+
+<section id="social" class="section social-section">
+
+    <div class="section-heading">
+
+        <span>CONNECT WITH US</span>
+
+        <h2>Follow HAICO</h2>
+
+    </div>
+
+    <div id="socialContainer" class="social-grid">
+
+        <div class="loading">
+            Loading social links...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="section contact-section">
+
+    <div class="section-heading">
+
+        <span>GET IN TOUCH</span>
+
+        <h2>Contact HAICO</h2>
+
+    </div>
+
+    <div class="contact-grid">
+
+        <a
+            id="whatsappContact"
+            href="https://wa.me/255718170176"
+            target="_blank"
+            class="contact-card whatsapp"
+        >
+
+            <div>💬</div>
+
+            <h3>WhatsApp</h3>
+
+            <p>Chat with HAICO</p>
+
+        </a>
+
+
+        <a
+            id="emailContact"
+            href="mailto:ayoubhafidhi1@gmail.com"
+            class="contact-card"
+        >
+
+            <div>✉️</div>
+
+            <h3>Email</h3>
+
+            <p>Send us an email</p>
+
+        </a>
+
+
+        <a
+            href="tel:+255718170176"
+            class="contact-card"
+        >
+
+            <div>📞</div>
+
+            <h3>Phone</h3>
+
+            <p>+255 718 170 176</p>
+
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-brand">
+
+        <div class="logo-box">
+            H
+        </div>
+
+        <div>
+
+            <h3>HAICO TECH & DESIGN</h3>
+
+            <p>
+                Your Idea. Our Creativity. One Digital Solution.
+            </p>
+
+        </div>
+
+    </div>
+
+    <p class="copyright">
+        © <span id="year"></span> HAICO TECH & DESIGN.
+        All Rights Reserved.
+    </p>
+
+    <button id="footerAdminBtn" class="footer-admin">
+        🔐 Admin
+    </button>
+
+</footer>
+
+
+<!-- ================= PROJECT DETAILS MODAL ================= -->
+
+<div class="modal" id="projectModal">
+
+    <div class="modal-box large-modal">
+
+        <button class="modal-close" id="closeProjectModal">
+            ×
+        </button>
+
+        <div id="projectDetails">
+
+            <!-- Project details inserted by JS -->
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADMIN LOGIN MODAL ================= -->
+
+<div class="modal" id="loginModal">
+
+    <div class="modal-box">
+
+        <button class="modal-close" id="closeLoginModal">
+            ×
+        </button>
+
+        <div class="modal-heading">
+
+            <div class="admin-icon">
+                🔐
+            </div>
+
+            <h2>Admin Login</h2>
+
+            <p>
+                Sign in to manage HAICO Link Hub.
+            </p>
+
+        </div>
+
+        <form id="loginForm">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Admin email"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="btn primary-btn full-btn"
+            >
+                Login
+            </button>
+
+            <p id="loginMessage" class="form-message"></p>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADMIN PANEL ================= -->
+
+<div class="modal" id="adminModal">
+
+    <div class="modal-box admin-box">
+
+        <button class="modal-close" id="closeAdminModal">
+            ×
+        </button>
+
+        <div class="admin-header">
+
+            <div>
+
+                <span>ADMIN DASHBOARD</span>
+
+                <h2>HAICO Link Hub</h2>
+
+            </div>
+
+            <button id="logoutBtn" class="logout-btn">
+                Logout
+            </button>
+
+        </div>
+
+
+        <!-- ADMIN TABS -->
+
+        <div class="admin-tabs">
+
+            <button
+                class="admin-tab active"
+                data-tab="projectsTab"
+            >
+                Projects
+            </button>
+
+            <button
+                class="admin-tab"
+                data-tab="servicesTab"
+            >
+                Services
+            </button>
+
+            <button
+                class="admin-tab"
+                data-tab="brandTab"
+            >
+                Brand
+            </button>
+
+            <button
+                class="admin-tab"
+                data-tab="socialTab"
+            >
+                Social
+            </button>
+
+        </div>
+
+
+        <!-- PROJECTS TAB -->
+
+        <div id="projectsTab" class="admin-tab-content active">
+
+            <div class="admin-section-title">
+
+                <div>
+
+                    <h3>Projects</h3>
+
+                    <p>
+                        Add and manage online projects.
+                    </p>
+
+                </div>
+
+                <button
+                    id="addProjectBtn"
+                    class="btn primary-btn"
+                >
+                    + Add Project
+                </button>
+
+            </div>
+
+            <div
+                id="adminProjectsContainer"
+                class="admin-list"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- SERVICES TAB -->
+
+        <div id="servicesTab" class="admin-tab-content">
+
+            <div class="admin-section-title">
+
+                <div>
+
+                    <h3>Services</h3>
+
+                    <p>
+                        Manage HAICO services.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <form id="serviceForm" class="admin-form">
+
+                <input
+                    type="hidden"
+                    id="serviceId"
+                >
+
+                <input
+                    type="text"
+                    id="serviceName"
+                    placeholder="Service name"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="serviceIcon"
+                    placeholder="Icon e.g. 🌐"
+                >
+
+                <textarea
+                    id="serviceDescription"
+                    placeholder="Service description"
+                    required
+                ></textarea>
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="btn primary-btn"
+                    >
+                        Save Service
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelServiceBtn"
+                        class="btn cancel-btn"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div
+                id="adminServicesContainer"
+                class="admin-list"
+            >
+            </div>
+
+        </div>
+
+
+        <!-- BRAND TAB -->
+
+        <div id="brandTab" class="admin-tab-content">
+
+            <div class="admin-section-title">
+
+                <div>
+
+                    <h3>Brand Settings</h3>
+
+                    <p>
+                        Update HAICO public information.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <form id="brandForm" class="admin-form">
+
+                <input
+                    type="text"
+                    id="brandName"
+                    placeholder="Brand name"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="brandTagline"
+                    placeholder="Tagline"
+                >
+
+                <textarea
+                    id="brandAbout"
+                    placeholder="About HAICO"
+                    required
+                ></textarea>
+
+                <input
+                    type="text"
+                    id="brandLogo"
+                    placeholder="Logo URL"
+                >
+
+                <input
+                    type="text"
+                    id="brandPhone"
+                    placeholder="Phone"
+                >
+
+                <input
+                    type="email"
+                    id="brandEmail"
+                    placeholder="Email"
+                >
+
+                <input
+                    type="text"
+                    id="brandWhatsapp"
+                    placeholder="WhatsApp number"
+                >
+
+                <button
+                    type="submit"
+                    class="btn primary-btn"
+                >
+                    Save Brand Settings
+                </button>
+
+                <p id="brandMessage" class="form-message"></p>
+
+            </form>
+
+        </div>
+
+
+        <!-- SOCIAL TAB -->
+
+        <div id="socialTab" class="admin-tab-content">
+
+            <div class="admin-section-title">
+
+                <div>
+
+                    <h3>Social Links</h3>
+
+                    <p>
+                        Manage your social media links.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <form id="socialForm" class="admin-form">
+
+                <input
+                    type="hidden"
+                    id="socialId"
+                >
+
+                <input
+                    type="text"
+                    id="socialPlatform"
+                    placeholder="Platform e.g. TikTok"
+                    required
+                >
+
+                <input
+                    type="url"
+                    id="socialUrl"
+                    placeholder="https://..."
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="socialIcon"
+                    placeholder="Icon e.g. 🎵"
+                >
+
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="btn primary-btn"
+                    >
+                        Save Social Link
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelSocialBtn"
+                        class="btn cancel-btn"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </form>
+
+            <div
+                id="adminSocialContainer"
+                class="admin-list"
+            >
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADD / EDIT PROJECT MODAL ================= -->
+
+<div class="modal" id="projectFormModal">
+
+    <div class="modal-box large-modal">
+
+        <button
+            class="modal-close"
+            id="closeProjectFormModal"
+        >
+            ×
+        </button>
+
+        <div class="modal-heading">
+
+            <div class="admin-icon">
+                💻
+            </div>
+
+            <h2 id="projectFormTitle">
+                Add Project
+            </h2>
+
+            <p>
+                Project information will be saved online.
+            </p>
+
+        </div>
+
+
+        <form id="projectForm" class="admin-form">
+
+            <input
+                type="hidden"
+                id="projectId"
+            >
+
+
+            <label>Project Name</label>
+
+            <input
+                type="text"
+                id="projectName"
+                placeholder="Project name"
+                required
+            >
+
+
+            <label>Category</label>
+
+            <input
+                type="text"
+                id="projectCategory"
+                placeholder="e.g. Management System"
+                required
+            >
+
+
+            <label>Short Description</label>
+
+            <textarea
+                id="projectDescription"
+                placeholder="Short project description"
+                required
+            ></textarea>
+
+
+            <label>Full Details</label>
+
+            <textarea
+                id="projectDetailsText"
+                placeholder="Complete project details"
+            ></textarea>
+
+
+            <label>Created By</label>
+
+            <input
+                type="text"
+                id="projectCreatedBy"
+                placeholder="Created by"
+                value="HAICO TECH & DESIGN"
+            >
+
+
+            <label>Technologies</label>
+
+            <input
+                type="text"
+                id="projectTechnologies"
+                placeholder="HTML, CSS, JavaScript, Supabase"
+            >
+
+
+            <label>Status</label>
+
+            <select id="projectStatus">
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Development">
+                    In Development
+                </option>
+
+                <option value="Completed">
+                    Completed
+                </option>
+
+                <option value="Coming Soon">
+                    Coming Soon
+                </option>
+
+            </select>
+
+
+            <label>Project Image</label>
+
+            <input
+                type="file"
+                id="projectImage"
+                accept="image/*"
+            >
+
+            <small>
+                Image will be uploaded to Supabase Storage.
+            </small>
+
+
+            <label>Live Link</label>
+
+            <input
+                type="url"
+                id="projectLiveLink"
+                placeholder="https://..."
+            >
+
+
+            <label>GitHub Link</label>
+
+            <input
+                type="url"
+                id="projectGithubLink"
+                placeholder="https://github.com/..."
+            >
+
+
+            <label>WhatsApp Link</label>
+
+            <input
+                type="url"
+                id="projectWhatsappLink"
+                placeholder="https://wa.me/..."
+            >
+
+
+            <label>Attachment</label>
+
+            <input
+                type="file"
+                id="projectAttachment"
+            >
+
+            <small>
+                PDF, ZIP or other project file.
+            </small>
+
+
+            <label class="checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="projectFeatured"
+                >
+
+                <span>
+                    Featured Project
+                </span>
+
+            </label>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="btn primary-btn"
+                    id="saveProjectBtn"
+                >
+                    Save Project
+                </button>
+
+                <button
+                    type="button"
+                    id="cancelProjectBtn"
+                    class="btn cancel-btn"
+                >
+                    Cancel
+                </button>
+
+            </div>
+
+            <p
+                id="projectFormMessage"
+                class="form-message"
+            ></p>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================= TOAST ================= -->
+
+<div id="toast" class="toast"></div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></scrip>
+<script src="app.js"></script>
+
+</body>
+</html>
+
+</body>
+</html>
