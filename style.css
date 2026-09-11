@@ -1399,4 +1399,150 @@ button:focus-visible {
         scroll-behavior: auto !important;
     }
 }
-```
+
+/* =========================================================
+   HAICO PROFESSIONAL ADMIN LOGIN BUTTON
+   ========================================================= */
+
+.admin-login-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 11px 19px;
+    min-height: 44px;
+
+    border: 1px solid rgba(212, 175, 55, 0.55);
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0b1f3a 0%,
+            #123b68 100%
+        );
+
+    color: #ffffff;
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+
+    box-shadow:
+        0 7px 20px rgba(11, 31, 58, 0.20),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease,
+        background 0.25s ease;
+
+    overflow: hidden;
+}
+
+/* Gold shine */
+
+.admin-login-btn::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.16),
+            transparent
+        );
+
+    transform: skewX(-20deg);
+
+    transition: left 0.55s ease;
+}
+
+.admin-login-btn:hover::before {
+    left: 140%;
+}
+
+/* Icon */
+
+.admin-login-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 27px;
+    height: 27px;
+
+    border-radius: 8px;
+
+    background: rgba(212, 175, 55, 0.16);
+
+    border: 1px solid rgba(212, 175, 55, 0.28);
+
+    font-size: 13px;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease;
+}
+
+/* Hover */
+
+.admin-login-btn:hover {
+    color: #0b1f3a;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d4af37 0%,
+            #f0d675 100%
+        );
+
+    border-color: #d4af37;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(11, 31, 58, 0.25),
+        0 0 0 4px rgba(212, 175, 55, 0.08);
+}
+
+.admin-login-btn:hover .admin-login-icon {
+    background: rgba(11, 31, 58, 0.10);
+    border-color: rgba(11, 31, 58, 0.15);
+    transform: scale(1.08);
+}
+
+/* Click */
+
+.admin-login-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* Keyboard accessibility */
+
+.admin-login-btn:focus-visible {
+    outline: 3px solid rgba(212, 175, 55, 0.35);
+    outline-offset: 3px;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+    .admin-login-btn {
+        width: 100%;
+        padding: 12px 18px;
+        min-height: 46px;
+    }
+}
+
