@@ -1,706 +1,133 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#0b1f3a">
 
     <title>HAICO Link Hub</title>
 
-    <!-- =========================================================
-         SECTION 1: CSS
-         Hii ndiyo design yote ya website.
-         Baadaye unaweza kuitoa na kuiweka kwenye style.css
-    ========================================================== -->
+    <meta name="description"
+          content="HAICO TECH & DESIGN - Projects, services and digital solutions.">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    <link rel="stylesheet" href="style.css">
 
-        :root {
-            --primary: #0b1f3a;
-            --secondary: #d4af37;
-            --light: #f5f7fb;
-            --white: #ffffff;
-            --dark: #111827;
-            --gray: #6b7280;
-            --border: #e5e7eb;
-            --success: #16a34a;
-            --danger: #dc2626;
-            --shadow: 0 10px 30px rgba(0,0,0,.08);
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        button,
-        input,
-        textarea,
-        select {
-            font: inherit;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        /* ================= HEADER ================= */
-
-        header {
-            background: var(--primary);
-            color: white;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        .navbar {
-            max-width: 1200px;
-            margin: auto;
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .brand-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            object-fit: cover;
-            background: white;
-        }
-
-        .brand h1 {
-            font-size: 20px;
-        }
-
-        .brand small {
-            color: #dbe4f0;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .nav-links button {
-            background: transparent;
-            border: 0;
-            color: white;
-            padding: 9px 12px;
-            border-radius: 8px;
-        }
-
-        .nav-links button:hover {
-            background: rgba(255,255,255,.1);
-        }
-
-        .admin-btn {
-            background: var(--secondary) !important;
-            color: var(--dark) !important;
-            font-weight: bold;
-        }
-
-        /* ================= HERO ================= */
-
-        .hero {
-            background:
-                linear-gradient(rgba(11,31,58,.94), rgba(11,31,58,.94)),
-                radial-gradient(circle at top right, #d4af37, transparent 35%);
-            color: white;
-            padding: 70px 20px;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 850px;
-            margin: auto;
-        }
-
-        .hero h2 {
-            font-size: clamp(34px, 6vw, 64px);
-            margin-bottom: 12px;
-        }
-
-        .gold {
-            color: var(--secondary);
-        }
-
-        .hero p {
-            color: #dbe4f0;
-            max-width: 700px;
-            margin: auto;
-            font-size: 18px;
-        }
-
-        .hero-actions {
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            border: 0;
-            border-radius: 10px;
-            padding: 12px 18px;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-        }
-
-        .btn-primary {
-            background: var(--secondary);
-            color: var(--dark);
-        }
-
-        .btn-dark {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-light {
-            background: white;
-            color: var(--primary);
-        }
-
-        .btn-danger {
-            background: var(--danger);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--success);
-            color: white;
-        }
-
-        /* ================= MAIN ================= */
-
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 50px 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .section-title h2 {
-            font-size: 32px;
-            color: var(--primary);
-        }
-
-        .section-title p {
-            color: var(--gray);
-        }
-
-        /* ================= ABOUT ================= */
-
-        .about-box {
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: var(--shadow);
-            margin-bottom: 50px;
-        }
-
-        /* ================= SERVICES ================= */
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 18px;
-            margin-bottom: 55px;
-        }
-
-        .service-card {
-            background: white;
-            padding: 25px;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .service-icon {
-            font-size: 35px;
-            margin-bottom: 10px;
-        }
-
-        .service-card h3 {
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .service-card p {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        /* ================= PROJECTS ================= */
-
-        .project-toolbar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            flex: 1;
-            min-width: 220px;
-        }
-
-        .input {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            outline: none;
-            background: white;
-        }
-
-        .input:focus {
-            border-color: var(--secondary);
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 22px;
-        }
-
-        .project-card {
-            background: white;
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: .25s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 190px;
-            object-fit: cover;
-            background: #e5e7eb;
-        }
-
-        .project-body {
-            padding: 20px;
-        }
-
-        .project-category {
-            display: inline-block;
-            background: #eef2ff;
-            color: var(--primary);
-            font-size: 12px;
-            padding: 5px 9px;
-            border-radius: 20px;
-            margin-bottom: 9px;
-        }
-
-        .project-body h3 {
-            color: var(--primary);
-            margin-bottom: 7px;
-        }
-
-        .project-body p {
-            color: var(--gray);
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-
-        .project-meta {
-            font-size: 13px;
-            color: var(--gray);
-            margin-bottom: 14px;
-        }
-
-        .project-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .project-actions .btn {
-            padding: 9px 12px;
-            font-size: 13px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 50px 20px;
-            color: var(--gray);
-            display: none;
-        }
-
-        /* ================= MODALS ================= */
-
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,.65);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 500;
-            overflow-y: auto;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background: white;
-            width: min(800px, 100%);
-            max-height: 92vh;
-            overflow-y: auto;
-            border-radius: 18px;
-            padding: 25px;
-            position: relative;
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .modal-header h2 {
-            color: var(--primary);
-        }
-
-        .close {
-            border: 0;
-            background: #f1f5f9;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 20px;
-        }
-
-        /* ================= FORMS ================= */
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-            color: var(--primary);
-        }
-
-        textarea.input {
-            min-height: 110px;
-            resize: vertical;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        /* ================= ADMIN ================= */
-
-        #adminPanel {
-            display: none;
-        }
-
-        .admin-layout {
-            display: grid;
-            grid-template-columns: 230px 1fr;
-            gap: 20px;
-        }
-
-        .admin-sidebar {
-            background: var(--primary);
-            color: white;
-            border-radius: 15px;
-            padding: 20px;
-            height: fit-content;
-        }
-
-        .admin-sidebar h3 {
-            margin-bottom: 15px;
-        }
-
-        .admin-sidebar button {
-            width: 100%;
-            text-align: left;
-            border: 0;
-            background: transparent;
-            color: white;
-            padding: 11px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
-
-        .admin-sidebar button:hover {
-            background: rgba(255,255,255,.1);
-        }
-
-        .admin-content {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: var(--light);
-            border-radius: 14px;
-            padding: 20px;
-        }
-
-        .stat-card strong {
-            display: block;
-            font-size: 30px;
-            color: var(--primary);
-        }
-
-        .admin-project-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .admin-project {
-            border: 1px solid var(--border);
-            padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .admin-project-actions {
-            display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
-        }
-
-        /* ================= SOCIAL ================= */
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .social-link {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 10px 15px;
-            border-radius: 10px;
-        }
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            background: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 35px 20px;
-            margin-top: 50px;
-        }
-
-        footer p {
-            color: #dbe4f0;
-        }
-
-        /* ================= TOAST ================= */
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--dark);
-            color: white;
-            padding: 14px 18px;
-            border-radius: 10px;
-            display: none;
-            z-index: 1000;
-        }
-
-        .toast.show {
-            display: block;
-        }
-
-        /* ================= RESPONSIVE ================= */
-
-        @media (max-width: 750px) {
-            .navbar {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .nav-links {
-                width: 100%;
-                overflow-x: auto;
-            }
-
-            .form-grid,
-            .admin-layout,
-            .stats {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding: 50px 20px;
-            }
-
-            .admin-project {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-    </style>
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
 
-<!-- =========================================================
-     SECTION 2: PUBLIC WEBSITE
-     Hii ndiyo sehemu ambayo kila visitor anaiona.
-========================================================== -->
+<!-- ================= HEADER ================= -->
 
-<header id="publicHeader">
+<header class="header">
 
-    <div class="navbar">
+    <div class="brand-area">
 
-        <div class="brand">
-
-            <img
-                id="brandLogo"
-                class="brand-logo"
-                src=""
-                alt="HAICO Logo"
-            >
-
-            <div>
-                <h1 id="brandName">HAICO TECH & DESIGN</h1>
-                <small id="brandTagline">
-                    Your Idea. Our Creativity. One Digital Solution.
-                </small>
-            </div>
-
+        <div class="logo-box">
+            H
         </div>
 
-        <nav class="nav-links">
-
-            <button onclick="scrollToSection('about')">
-                About
-            </button>
-
-            <button onclick="scrollToSection('services')">
-                Services
-            </button>
-
-            <button onclick="scrollToSection('projects')">
-                Projects
-            </button>
-
-            <button
-                class="admin-btn"
-                onclick="openLoginModal()"
-            >
-                🔐 Admin
-            </button>
-
-        </nav>
+        <div>
+            <h1>HAICO</h1>
+            <span>TECH & DESIGN</span>
+        </div>
 
     </div>
+
+    <button class="menu-btn" id="menuBtn">
+        ☰
+    </button>
 
 </header>
 
 
+<!-- ================= SIDE MENU ================= -->
+
+<div class="overlay" id="overlay"></div>
+
+<aside class="sidebar" id="sidebar">
+
+    <button class="close-btn" id="closeBtn">
+        ×
+    </button>
+
+    <div class="side-brand">
+        <div class="logo-box">H</div>
+
+        <h2>HAICO</h2>
+        <p>TECH & DESIGN</p>
+    </div>
+
+    <nav>
+
+        <a href="#home" class="nav-link">
+            🏠 Home
+        </a>
+
+        <a href="#about" class="nav-link">
+            ℹ️ About
+        </a>
+
+        <a href="#services" class="nav-link">
+            🛠️ Services
+        </a>
+
+        <a href="#projects" class="nav-link">
+            💻 Projects
+        </a>
+
+        <a href="#social" class="nav-link">
+            🌐 Social Media
+        </a>
+
+        <a href="#contact" class="nav-link">
+            📞 Contact
+        </a>
+
+        <button id="openLoginBtn" class="admin-menu-btn">
+            🔐 Admin Login
+        </button>
+
+    </nav>
+
+</aside>
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
 <!-- ================= HERO ================= -->
 
-<section class="hero">
+<section id="home" class="hero">
 
     <div class="hero-content">
 
-        <h2>
-            Welcome to
-            <span class="gold" id="heroBrandName">
-                HAICO
-            </span>
+        <div class="badge">
+            🚀 DIGITAL SOLUTIONS
+        </div>
+
+        <h2 id="heroBrand">
+            HAICO TECH & DESIGN
         </h2>
 
-        <p id="heroTagline">
+        <h3 id="heroTagline">
             Your Idea. Our Creativity. One Digital Solution.
+        </h3>
+
+        <p>
+            Discover our projects, services and digital solutions
+            designed to help businesses and organizations grow.
         </p>
 
-        <div class="hero-actions">
+        <div class="hero-buttons">
 
-            <button
-                class="btn btn-primary"
-                onclick="scrollToSection('projects')"
-            >
-                🚀 Explore Projects
-            </button>
+            <a href="#projects" class="btn primary-btn">
+                Explore Projects
+            </a>
 
-            <a
-                id="heroWhatsapp"
-                class="btn btn-light"
-                href="#"
-                target="_blank"
-            >
-                💬 WhatsApp
+            <a href="#contact" class="btn secondary-btn">
+                Contact HAICO
             </a>
 
         </div>
@@ -710,683 +137,43 @@
 </section>
 
 
-<!-- ================= MAIN PUBLIC CONTENT ================= -->
+<!-- ================= ABOUT ================= -->
 
-<main class="container">
+<section id="about" class="section">
 
+    <div class="section-heading">
 
-    <!-- ================= ABOUT ================= -->
+        <span>ABOUT US</span>
 
-    <section id="about">
+        <h2>About HAICO</h2>
 
-        <div class="section-title">
+    </div>
 
-            <h2>About Us</h2>
+    <div class="about-card">
 
-            <p>
-                Discover who we are and what we create.
-            </p>
-
+        <div class="about-icon">
+            💡
         </div>
 
-        <div class="about-box">
+        <div>
 
             <p id="aboutText">
-                HAICO Tech & Design is a digital solutions brand
-                focused on websites, applications, graphic design,
-                management systems, e-commerce and innovative
-                digital solutions.
+                HAICO TECH & DESIGN provides websites, apps,
+                graphic design, management systems, e-commerce
+                and digital solutions.
             </p>
 
-        </div>
-
-    </section>
-
-
-    <!-- ================= SERVICES ================= -->
-
-    <section id="services">
-
-        <div class="section-title">
-
-            <h2>Our Services</h2>
-
-            <p>
-                Digital solutions designed for modern businesses.
-            </p>
-
-        </div>
-
-        <div
-            id="servicesGrid"
-            class="services-grid"
-        ></div>
-
-    </section>
-
-
-    <!-- ================= PROJECTS ================= -->
-
-    <section id="projects">
-
-        <div class="section-title">
-
-            <h2>Our Projects</h2>
-
-            <p>
-                Explore projects developed and managed by HAICO.
-            </p>
-
-        </div>
-
-
-        <div class="project-toolbar">
-
-            <div class="search-box">
-
-                <input
-                    id="projectSearch"
-                    class="input"
-                    type="search"
-                    placeholder="Search projects..."
-                    oninput="renderProjects()"
-                >
-
-            </div>
-
-            <select
-                id="categoryFilter"
-                class="input"
-                style="max-width:220px"
-                onchange="renderProjects()"
-            >
-                <option value="all">
-                    All Categories
-                </option>
-            </select>
-
-        </div>
-
-
-        <div
-            id="projectGrid"
-            class="project-grid"
-        ></div>
-
-
-        <div
-            id="emptyProjects"
-            class="empty-state"
-        >
-
-            <h3>No projects found</h3>
-
-            <p>
-                Projects will appear here when the admin adds them.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- ================= SOCIAL LINKS ================= -->
-
-    <section style="margin-top:60px">
-
-        <div class="section-title">
-
-            <h2>Connect With Us</h2>
-
-            <p>
-                Follow HAICO across our platforms.
-            </p>
-
-        </div>
-
-        <div
-            id="socialLinks"
-            class="social-links"
-        ></div>
-
-    </section>
-
-</main>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-    <h2 id="footerBrand">
-        HAICO TECH & DESIGN
-    </h2>
-
-    <p id="footerText">
-        Your Idea. Our Creativity. One Digital Solution.
-    </p>
-
-    <p style="margin-top:12px">
-        © <span id="currentYear"></span>
-        HAICO. All Rights Reserved.
-    </p>
-
-</footer>
-
-
-<!-- =========================================================
-     SECTION 3: ADMIN LOGIN MODAL
-========================================================== -->
-
-<div
-    id="loginModal"
-    class="modal"
->
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2>🔐 Admin Login</h2>
-
-            <button
-                class="close"
-                onclick="closeModal('loginModal')"
-            >
-                ×
-            </button>
-
-        </div>
-
-
-        <form onsubmit="adminLogin(event)">
-
-            <div class="form-group">
-
-                <label>
-                    Username
-                </label>
-
-                <input
-                    id="adminUsername"
-                    class="input"
-                    type="text"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Password
-                </label>
-
-                <input
-                    id="adminPassword"
-                    class="input"
-                    type="password"
-                    required
-                >
-
-            </div>
-
-
-            <button
-                class="btn btn-primary"
-                style="width:100%"
-            >
-                Login
-            </button>
-
-        </form>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     SECTION 4: PROJECT DETAILS MODAL
-========================================================== -->
-
-<div
-    id="projectModal"
-    class="modal"
->
-
-    <div class="modal-box">
-
-        <div class="modal-header">
-
-            <h2 id="detailsTitle">
-                Project Details
-            </h2>
-
-            <button
-                class="close"
-                onclick="closeModal('projectModal')"
-            >
-                ×
-            </button>
-
-        </div>
-
-        <img
-            id="detailsImage"
-            src=""
-            style="
-                width:100%;
-                max-height:350px;
-                object-fit:cover;
-                border-radius:12px;
-                margin-bottom:20px;
-            "
-        >
-
-        <div id="detailsContent"></div>
-
-    </div>
-
-</div>
-
-
-<!-- =========================================================
-     SECTION 5: ADMIN PANEL
-     Hii inaonekana baada ya admin login.
-========================================================== -->
-
-<section
-    id="adminPanel"
-    class="container"
->
-
-    <div class="admin-layout">
-
-
-        <!-- ADMIN SIDEBAR -->
-
-        <aside class="admin-sidebar">
-
-            <h3>
-                HAICO ADMIN
-            </h3>
-
-            <button onclick="showAdminSection('projectsAdmin')">
-                📁 Projects
-            </button>
-
-            <button onclick="showAdminSection('brandAdmin')">
-                🏷️ Brand Settings
-            </button>
-
-            <button onclick="showAdminSection('servicesAdmin')">
-                🛠️ Services
-            </button>
-
-            <button onclick="showAdminSection('socialAdmin')">
-                🔗 Social Links
-            </button>
-
-            <button onclick="exportData()">
-                💾 Backup Data
-            </button>
-
-            <button onclick="document.getElementById('importFile').click()">
-                📥 Restore Data
-            </button>
-
-            <input
-                id="importFile"
-                type="file"
-                accept=".json"
-                style="display:none"
-                onchange="importData(event)"
-            >
-
-            <button onclick="adminLogout()">
-                🚪 Logout
-            </button>
-
-        </aside>
-
-
-        <!-- ADMIN CONTENT -->
-
-        <div class="admin-content">
-
-
-            <!-- PROJECT ADMIN -->
-
-            <div id="projectsAdmin">
-
-                <div
-                    style="
-                        display:flex;
-                        justify-content:space-between;
-                        gap:10px;
-                        flex-wrap:wrap;
-                        margin-bottom:20px;
-                    "
-                >
-
-                    <h2>
-                        Project Management
-                    </h2>
-
-                    <button
-                        class="btn btn-primary"
-                        onclick="openProjectForm()"
-                    >
-                        + Add Project
-                    </button>
-
-                </div>
-
-
-                <div class="stats">
-
-                    <div class="stat-card">
-
-                        <span>
-                            Projects
-                        </span>
-
-                        <strong id="totalProjects">
-                            0
-                        </strong>
-
-                    </div>
-
-                    <div class="stat-card">
-
-                        <span>
-                            Featured
-                        </span>
-
-                        <strong id="featuredProjects">
-                            0
-                        </strong>
-
-                    </div>
-
-                    <div class="stat-card">
-
-                        <span>
-                            Categories
-                        </span>
-
-                        <strong id="totalCategories">
-                            0
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-                <div
-                    id="adminProjectList"
-                    class="admin-project-list"
-                ></div>
-
-            </div>
-
-
-            <!-- BRAND ADMIN -->
-
-            <div
-                id="brandAdmin"
-                style="display:none"
-            >
-
-                <h2>
-                    Brand Settings
-                </h2>
-
-                <br>
-
-                <form onsubmit="saveBrandSettings(event)">
-
-                    <div class="form-group">
-
-                        <label>
-                            Brand Name
-                        </label>
-
-                        <input
-                            id="brandInput"
-                            class="input"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Tagline
-                        </label>
-
-                        <input
-                            id="taglineInput"
-                            class="input"
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            About
-                        </label>
-
-                        <textarea
-                            id="aboutInput"
-                            class="input"
-                        ></textarea>
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            WhatsApp Link
-                        </label>
-
-                        <input
-                            id="whatsappInput"
-                            class="input"
-                            placeholder="https://wa.me/255..."
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label>
-                            Logo
-                        </label>
-
-                        <input
-                            id="logoInput"
-                            class="input"
-                            type="file"
-                            accept="image/*"
-                        >
-
-                    </div>
-
-
-                    <button class="btn btn-primary">
-                        Save Brand
-                    </button>
-
-                </form>
-
-            </div>
-
-
-            <!-- SERVICES ADMIN -->
-
-            <div
-                id="servicesAdmin"
-                style="display:none"
-            >
-
-                <h2>
-                    Services
-                </h2>
-
-                <br>
-
-                <form onsubmit="addService(event)">
-
-                    <div class="form-grid">
-
-                        <input
-                            id="serviceName"
-                            class="input"
-                            placeholder="Service name"
-                            required
-                        >
-
-                        <input
-                            id="serviceIcon"
-                            class="input"
-                            placeholder="Icon e.g. 💻"
-                            required
-                        >
-
-                    </div>
-
-                    <br>
-
-                    <textarea
-                        id="serviceDescription"
-                        class="input"
-                        placeholder="Service description"
-                        required
-                    ></textarea>
-
-                    <br>
-
-                    <button class="btn btn-primary">
-                        + Add Service
-                    </button>
-
-                </form>
-
-                <br>
-
-                <div id="adminServicesList"></div>
-
-            </div>
-
-
-            <!-- SOCIAL ADMIN -->
-
-            <div
-                id="socialAdmin"
-                style="display:none"
-            >
-
-                <h2>
-                    Social Links
-                </h2>
-
-                <br>
-
-                <form onsubmit="saveSocialLinks(event)">
-
-                    <div class="form-group">
-
-                        <label>
-                            WhatsApp
-                        </label>
-
-                        <input
-                            id="socialWhatsapp"
-                            class="input"
-                        >
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            Facebook
-                        </label>
-
-                        <input
-                            id="socialFacebook"
-                            class="input"
-                        >
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            Instagram
-                        </label>
-
-                        <input
-                            id="socialInstagram"
-                            class="input"
-                        >
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            TikTok
-                        </label>
-
-                        <input
-                            id="socialTiktok"
-                            class="input"
-                        >
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            YouTube
-                        </label>
-
-                        <input
-                            id="socialYoutube"
-                            class="input"
-                        >
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label>
-                            GitHub
-                        </label>
-
-                        <input
-                            id="socialGithub"
-                            class="input"
-                        >
-
-                    </div>
-
-                    <button class="btn btn-primary">
-                        Save Links
-                    </button>
-
-                </form>
+            <div class="contact-mini">
+
+                <span>
+                    📞 <strong id="phoneText">+255 718 170 176</strong>
+                </span>
+
+                <span>
+                    ✉️ <strong id="emailText">
+                        ayoubhafidhi1@gmail.com
+                    </strong>
+                </span>
 
             </div>
 
@@ -1397,320 +184,275 @@
 </section>
 
 
-<!-- =========================================================
-     SECTION 6: ADD / EDIT PROJECT MODAL
-========================================================== -->
+<!-- ================= SERVICES ================= -->
 
-<div
-    id="projectFormModal"
-    class="modal"
->
+<section id="services" class="section light-section">
 
-    <div class="modal-box">
+    <div class="section-heading">
 
-        <div class="modal-header">
+        <span>WHAT WE DO</span>
 
-            <h2 id="projectFormTitle">
-                Add Project
-            </h2>
+        <h2>Our Services</h2>
 
-            <button
-                class="close"
-                onclick="closeModal('projectFormModal')"
-            >
-                ×
-            </button>
+    </div>
+
+    <div id="servicesContainer" class="services-grid">
+
+        <div class="loading">
+            Loading services...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= PROJECTS ================= -->
+
+<section id="projects" class="section">
+
+    <div class="section-heading">
+
+        <span>OUR WORK</span>
+
+        <h2>Projects</h2>
+
+        <p>
+            Explore digital projects created by HAICO TECH & DESIGN.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="project-tools">
+
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="🔎 Search projects..."
+        >
+
+        <select id="categoryFilter">
+
+            <option value="all">
+                All Categories
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- PROJECTS -->
+
+    <div id="projectsContainer" class="projects-grid">
+
+        <div class="loading">
+            Loading projects...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SOCIAL ================= -->
+
+<section id="social" class="section social-section">
+
+    <div class="section-heading">
+
+        <span>CONNECT WITH US</span>
+
+        <h2>Follow HAICO</h2>
+
+    </div>
+
+    <div id="socialContainer" class="social-grid">
+
+        <div class="loading">
+            Loading social links...
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="section contact-section">
+
+    <div class="section-heading">
+
+        <span>GET IN TOUCH</span>
+
+        <h2>Contact HAICO</h2>
+
+    </div>
+
+    <div class="contact-grid">
+
+        <a
+            id="whatsappContact"
+            href="https://wa.me/255718170176"
+            target="_blank"
+            class="contact-card whatsapp"
+        >
+
+            <div>💬</div>
+
+            <h3>WhatsApp</h3>
+
+            <p>Chat with HAICO</p>
+
+        </a>
+
+
+        <a
+            id="emailContact"
+            href="mailto:ayoubhafidhi1@gmail.com"
+            class="contact-card"
+        >
+
+            <div>✉️</div>
+
+            <h3>Email</h3>
+
+            <p>Send us an email</p>
+
+        </a>
+
+
+        <a
+            href="tel:+255718170176"
+            class="contact-card"
+        >
+
+            <div>📞</div>
+
+            <h3>Phone</h3>
+
+            <p>+255 718 170 176</p>
+
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="footer-brand">
+
+        <div class="logo-box">
+            H
+        </div>
+
+        <div>
+
+            <h3>HAICO TECH & DESIGN</h3>
+
+            <p>
+                Your Idea. Our Creativity. One Digital Solution.
+            </p>
 
         </div>
 
+    </div>
 
-        <form onsubmit="saveProject(event)">
+    <p class="copyright">
+        © <span id="year"></span> HAICO TECH & DESIGN.
+        All Rights Reserved.
+    </p>
+
+    <button id="footerAdminBtn" class="footer-admin">
+        🔐 Admin
+    </button>
+
+</footer>
+
+
+<!-- ================= PROJECT DETAILS MODAL ================= -->
+
+<div class="modal" id="projectModal">
+
+    <div class="modal-box large-modal">
+
+        <button class="modal-close" id="closeProjectModal">
+            ×
+        </button>
+
+        <div id="projectDetails">
+
+            <!-- Project details inserted by JS -->
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= ADMIN LOGIN MODAL ================= -->
+
+<div class="modal" id="loginModal">
+
+    <div class="modal-box">
+
+        <button class="modal-close" id="closeLoginModal">
+            ×
+        </button>
+
+        <div class="modal-heading">
+
+            <div class="admin-icon">
+                🔐
+            </div>
+
+            <h2>Admin Login</h2>
+
+            <p>
+                Sign in to manage HAICO Link Hub.
+            </p>
+
+        </div>
+
+        <form id="loginForm">
+
+            <label>Email</label>
 
             <input
-                id="editingProjectId"
-                type="hidden"
+                type="email"
+                id="loginEmail"
+                placeholder="Admin email"
+                required
             >
 
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Project Name *
-                    </label>
-
-                    <input
-                        id="projectName"
-                        class="input"
-                        required
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Category *
-                    </label>
-
-                    <input
-                        id="projectCategory"
-                        class="input"
-                        placeholder="Web, App, Design..."
-                        required
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Short Description *
-                </label>
-
-                <textarea
-                    id="projectShortDescription"
-                    class="input"
-                    required
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Full Details
-                </label>
-
-                <textarea
-                    id="projectDetails"
-                    class="input"
-                ></textarea>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Created By
-                    </label>
-
-                    <input
-                        id="projectCreatedBy"
-                        class="input"
-                        placeholder="HAICO Tech & Design"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Brand / Client
-                    </label>
-
-                    <input
-                        id="projectBrand"
-                        class="input"
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Technologies
-                    </label>
-
-                    <input
-                        id="projectTechnologies"
-                        class="input"
-                        placeholder="HTML, CSS, JavaScript"
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Status
-                    </label>
-
-                    <select
-                        id="projectStatus"
-                        class="input"
-                    >
-
-                        <option>
-                            Completed
-                        </option>
-
-                        <option>
-                            In Progress
-                        </option>
-
-                        <option>
-                            Planned
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Project Image
-                </label>
-
-                <input
-                    id="projectImage"
-                    class="input"
-                    type="file"
-                    accept="image/*"
-                >
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        Live / Demo Link
-                    </label>
-
-                    <input
-                        id="projectLiveLink"
-                        class="input"
-                        type="url"
-                        placeholder="https://..."
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        GitHub Link
-                    </label>
-
-                    <input
-                        id="projectGithubLink"
-                        class="input"
-                        type="url"
-                        placeholder="https://github.com/..."
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-grid">
-
-                <div class="form-group">
-
-                    <label>
-                        WhatsApp Link
-                    </label>
-
-                    <input
-                        id="projectWhatsapp"
-                        class="input"
-                        type="url"
-                        placeholder="https://wa.me/..."
-                    >
-
-                </div>
-
-
-                <div class="form-group">
-
-                    <label>
-                        Other Link
-                    </label>
-
-                    <input
-                        id="projectOtherLink"
-                        class="input"
-                        type="url"
-                        placeholder="https://..."
-                    >
-
-                </div>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    Attachment
-                </label>
-
-                <input
-                    id="projectAttachment"
-                    class="input"
-                    type="file"
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label>
-                    <input
-                        id="projectFeatured"
-                        type="checkbox"
-                    >
-
-                    Featured Project
-                </label>
-
-            </div>
-
-
-            <div class="form-actions">
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    💾 Save Project
-                </button>
-
-                <button
-                    type="button"
-                    class="btn btn-dark"
-                    onclick="closeModal('projectFormModal')"
-                >
-                    Cancel
-                </button>
-
-            </div>
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Password"
+                required
+            >
+
+            <button
+                type="submit"
+                class="btn primary-btn full-btn"
+            >
+                Login
+            </button>
+
+            <p id="loginMessage" class="form-message"></p>
 
         </form>
 
@@ -1719,1797 +461,555 @@
 </div>
 
 
-<div
-    id="toast"
-    class="toast"
-></div>
-
-
-<!-- =========================================================
-     SECTION 7: JAVASCRIPT
-     Hii ndiyo logic ya mfumo.
-     Baadaye unaweza kuitoa na kuiweka app.js
-========================================================== -->
-
-<script>
-
-    /* ========================================================
-       1. ADMIN LOGIN
-    ======================================================== */
-
-    /*
-       HIZI NI CREDENTIALS ZA TESTING TU.
-
-       Username:
-       admin
-
-       Password:
-       HAICO@2026
-
-       Kwa production tutabadilisha architecture ili
-       authentication isiwe exposed kwenye frontend.
-    */
-
-    const ADMIN_USERNAME = "admin";
-    const ADMIN_PASSWORD = "HAICO@2026";
-
-
-    /* ========================================================
-       2. DEFAULT DATA
-    ======================================================== */
-
-    const defaultData = {
-
-        brand: {
-            name: "HAICO TECH & DESIGN",
-            tagline: "Your Idea. Our Creativity. One Digital Solution.",
-            about:
-                "HAICO Tech & Design is a digital solutions brand focused on websites, applications, graphic design, management systems, e-commerce and innovative digital solutions.",
-            whatsapp: "https://wa.me/255718170176",
-            logo: ""
-        },
+<!-- ================= ADMIN PANEL ================= -->
 
-        services: [
+<div class="modal" id="adminModal">
 
-            {
-                id: crypto.randomUUID(),
-                name: "Website Development",
-                icon: "💻",
-                description:
-                    "Professional responsive websites for businesses and organizations."
-            },
+    <div class="modal-box admin-box">
 
-            {
-                id: crypto.randomUUID(),
-                name: "Mobile Apps",
-                icon: "📱",
-                description:
-                    "Modern mobile application concepts and digital experiences."
-            },
+        <button class="modal-close" id="closeAdminModal">
+            ×
+        </button>
 
-            {
-                id: crypto.randomUUID(),
-                name: "Graphic Design",
-                icon: "🎨",
-                description:
-                    "Professional logos, posters, banners and branding materials."
-            },
+        <div class="admin-header">
 
-            {
-                id: crypto.randomUUID(),
-                name: "Management Systems",
-                icon: "⚙️",
-                description:
-                    "Custom digital management systems for organizations."
-            },
+            <div>
 
-            {
-                id: crypto.randomUUID(),
-                name: "E-Commerce",
-                icon: "🛒",
-                description:
-                    "Digital shopping and online business solutions."
-            },
+                <span>ADMIN DASHBOARD</span>
 
-            {
-                id: crypto.randomUUID(),
-                name: "Digital Solutions",
-                icon: "🚀",
-                description:
-                    "Technology solutions designed around your business needs."
-            }
+                <h2>HAICO Link Hub</h2>
 
-        ],
+            </div>
 
-        projects: [],
+            <button id="logoutBtn" class="logout-btn">
+                Logout
+            </button>
 
-        social: {
-            whatsapp: "https://wa.me/255718170176",
-            facebook: "",
-            instagram: "",
-            tiktok: "",
-            youtube: "",
-            github: ""
-        }
+        </div>
 
-    };
 
+        <!-- ADMIN TABS -->
 
-    /* ========================================================
-       3. STORAGE
-    ======================================================== */
+        <div class="admin-tabs">
 
-    function loadData() {
+            <button
+                class="admin-tab active"
+                data-tab="projectsTab"
+            >
+                Projects
+            </button>
 
-        const saved =
-            localStorage.getItem("haicoLinkHubData");
+            <button
+                class="admin-tab"
+                data-tab="servicesTab"
+            >
+                Services
+            </button>
 
-        if (!saved) {
+            <button
+                class="admin-tab"
+                data-tab="brandTab"
+            >
+                Brand
+            </button>
 
-            localStorage.setItem(
-                "haicoLinkHubData",
-                JSON.stringify(defaultData)
-            );
+            <button
+                class="admin-tab"
+                data-tab="socialTab"
+            >
+                Social
+            </button>
 
-            return structuredClone(defaultData);
-        }
+        </div>
 
-        return JSON.parse(saved);
-    }
 
+        <!-- PROJECTS TAB -->
 
-    let data = loadData();
+        <div id="projectsTab" class="admin-tab-content active">
 
+            <div class="admin-section-title">
 
-    function saveData() {
+                <div>
 
-        localStorage.setItem(
-            "haicoLinkHubData",
-            JSON.stringify(data)
-        );
-
-    }
-
-
-    /* ========================================================
-       4. FILE → BASE64
-       Hii inafanya picha iweze kuhifadhiwa kwenye browser.
-    ======================================================== */
-
-    function fileToBase64(file) {
-
-        return new Promise((resolve, reject) => {
-
-            if (!file) {
-                resolve("");
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = () =>
-                resolve(reader.result);
-
-            reader.onerror = reject;
-
-            reader.readAsDataURL(file);
-
-        });
-
-    }
-
-
-    /* ========================================================
-       5. PUBLIC BRAND
-    ======================================================== */
-
-    function renderBrand() {
-
-        document.getElementById("brandName")
-            .textContent = data.brand.name;
-
-        document.getElementById("heroBrandName")
-            .textContent = data.brand.name;
-
-        document.getElementById("brandTagline")
-            .textContent = data.brand.tagline;
-
-        document.getElementById("heroTagline")
-            .textContent = data.brand.tagline;
-
-        document.getElementById("aboutText")
-            .textContent = data.brand.about;
-
-        document.getElementById("footerBrand")
-            .textContent = data.brand.name;
-
-        document.getElementById("footerText")
-            .textContent = data.brand.tagline;
-
-
-        const logo =
-            document.getElementById("brandLogo");
-
-        if (data.brand.logo) {
-
-            logo.src = data.brand.logo;
-
-        } else {
-
-            logo.src =
-                "data:image/svg+xml," +
-                encodeURIComponent(`
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         width="100"
-                         height="100">
-                        <rect width="100"
-                              height="100"
-                              rx="20"
-                              fill="#ffffff"/>
-                        <text x="50"
-                              y="60"
-                              text-anchor="middle"
-                              font-size="35"
-                              font-family="Arial"
-                              font-weight="bold"
-                              fill="#0b1f3a">
-                            H
-                        </text>
-                    </svg>
-                `);
-
-        }
-
-
-        document.getElementById("heroWhatsapp")
-            .href = data.brand.whatsapp || "#";
-
-    }
-
-
-    /* ========================================================
-       6. SERVICES
-    ======================================================== */
-
-    function renderServices() {
-
-        const grid =
-            document.getElementById("servicesGrid");
-
-        grid.innerHTML = "";
-
-        data.services.forEach(service => {
-
-            grid.innerHTML += `
-
-                <div class="service-card">
-
-                    <div class="service-icon">
-                        ${escapeHTML(service.icon)}
-                    </div>
-
-                    <h3>
-                        ${escapeHTML(service.name)}
-                    </h3>
+                    <h3>Projects</h3>
 
                     <p>
-                        ${escapeHTML(service.description)}
+                        Add and manage online projects.
                     </p>
 
                 </div>
 
-            `;
-
-        });
-
-        renderAdminServices();
-
-    }
-
-
-    /* ========================================================
-       7. PROJECTS
-    ======================================================== */
-
-    function renderProjects() {
-
-        const grid =
-            document.getElementById("projectGrid");
-
-        const search =
-            document.getElementById("projectSearch")
-                .value
-                .toLowerCase();
-
-        const category =
-            document.getElementById("categoryFilter")
-                .value;
-
-        const projects =
-            data.projects.filter(project => {
-
-                const matchesSearch =
-                    project.name.toLowerCase()
-                        .includes(search) ||
-
-                    project.shortDescription
-                        .toLowerCase()
-                        .includes(search) ||
-
-                    project.category
-                        .toLowerCase()
-                        .includes(search);
-
-                const matchesCategory =
-                    category === "all" ||
-                    project.category === category;
-
-                return matchesSearch &&
-                       matchesCategory;
-
-            });
-
-
-        grid.innerHTML = "";
-
-
-        projects.forEach(project => {
-
-            const image =
-                project.image ||
-                "data:image/svg+xml," +
-                encodeURIComponent(`
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                         width="800"
-                         height="500">
-                        <rect width="100%"
-                              height="100%"
-                              fill="#0b1f3a"/>
-                        <text x="50%"
-                              y="50%"
-                              text-anchor="middle"
-                              fill="#d4af37"
-                              font-size="42"
-                              font-family="Arial"
-                              font-weight="bold">
-                            HAICO
-                        </text>
-                    </svg>
-                `);
-
-
-            grid.innerHTML += `
-
-                <article class="project-card">
-
-                    <img
-                        class="project-image"
-                        src="${image}"
-                        alt="${escapeHTML(project.name)}"
-                    >
-
-                    <div class="project-body">
-
-                        <span class="project-category">
-                            ${escapeHTML(project.category)}
-                        </span>
-
-                        <h3>
-                            ${escapeHTML(project.name)}
-                        </h3>
-
-                        <p>
-                            ${escapeHTML(project.shortDescription)}
-                        </p>
-
-                        <div class="project-meta">
-
-                            <strong>
-                                Created by:
-                            </strong>
-
-                            ${escapeHTML(
-                                project.createdBy || "HAICO"
-                            )}
-
-                        </div>
-
-                        <div class="project-actions">
-
-                            <button
-                                class="btn btn-dark"
-                                onclick="viewProject('${project.id}')"
-                            >
-                                View Details
-                            </button>
-
-                            ${
-                                project.liveLink
-                                ?
-                                `
-                                <a
-                                    class="btn btn-primary"
-                                    href="${safeURL(project.liveLink)}"
-                                    target="_blank"
-                                >
-                                    Live
-                                </a>
-                                `
-                                :
-                                ""
-                            }
-
-                        </div>
-
-                    </div>
-
-                </article>
-
-            `;
-
-        });
-
-
-        document.getElementById("emptyProjects")
-            .style.display =
-                projects.length ? "none" : "block";
-
-
-        updateCategoryFilter();
-
-    }
-
-
-    /* ========================================================
-       8. CATEGORY FILTER
-    ======================================================== */
-
-    function updateCategoryFilter() {
-
-        const select =
-            document.getElementById("categoryFilter");
-
-        const current =
-            select.value;
-
-        const categories =
-            [...new Set(
-                data.projects.map(
-                    project => project.category
-                )
-            )];
-
-        select.innerHTML =
-            `<option value="all">
-                All Categories
-            </option>`;
-
-        categories.forEach(category => {
-
-            select.innerHTML += `
-                <option value="${escapeHTML(category)}">
-                    ${escapeHTML(category)}
-                </option>
-            `;
-
-        });
-
-        if (
-            categories.includes(current)
-        ) {
-
-            select.value = current;
-
-        }
-
-    }
-
-
-    /* ========================================================
-       9. PROJECT DETAILS
-    ======================================================== */
-
-    function viewProject(id) {
-
-        const project =
-            data.projects.find(
-                item => item.id === id
-            );
-
-        if (!project) return;
-
-
-        document.getElementById("detailsTitle")
-            .textContent = project.name;
-
-        document.getElementById("detailsImage")
-            .src = project.image || "";
-
-
-        let html = `
-
-            <p>
-                <strong>Category:</strong>
-                ${escapeHTML(project.category)}
-            </p>
-
-            <br>
-
-            <p>
-                <strong>Description:</strong><br>
-                ${escapeHTML(project.shortDescription)}
-            </p>
-
-            <br>
-
-            <p>
-                <strong>Details:</strong><br>
-                ${escapeHTML(
-                    project.details || "No details provided."
-                )}
-            </p>
-
-            <br>
-
-            <p>
-                <strong>Created By:</strong>
-                ${escapeHTML(
-                    project.createdBy || "HAICO"
-                )}
-            </p>
-
-            <br>
-
-            <p>
-                <strong>Brand / Client:</strong>
-                ${escapeHTML(
-                    project.brand || "HAICO"
-                )}
-            </p>
-
-            <br>
-
-            <p>
-                <strong>Technologies:</strong>
-                ${escapeHTML(
-                    project.technologies || "Not specified"
-                )}
-            </p>
-
-            <br>
-
-            <p>
-                <strong>Status:</strong>
-                ${escapeHTML(project.status)}
-            </p>
-
-            <div class="form-actions">
-
-        `;
-
-
-        if (project.liveLink) {
-
-            html += `
-                <a
-                    class="btn btn-primary"
-                    href="${safeURL(project.liveLink)}"
-                    target="_blank"
+                <button
+                    id="addProjectBtn"
+                    class="btn primary-btn"
                 >
-                    🌐 Live Project
-                </a>
-            `;
+                    + Add Project
+                </button>
 
-        }
+            </div>
 
+            <div
+                id="adminProjectsContainer"
+                class="admin-list"
+            >
+            </div>
 
-        if (project.githubLink) {
+        </div>
 
-            html += `
-                <a
-                    class="btn btn-dark"
-                    href="${safeURL(project.githubLink)}"
-                    target="_blank"
-                >
-                    GitHub
-                </a>
-            `;
 
-        }
+        <!-- SERVICES TAB -->
 
+        <div id="servicesTab" class="admin-tab-content">
 
-        if (project.whatsapp) {
+            <div class="admin-section-title">
 
-            html += `
-                <a
-                    class="btn btn-success"
-                    href="${safeURL(project.whatsapp)}"
-                    target="_blank"
-                >
-                    WhatsApp
-                </a>
-            `;
+                <div>
 
-        }
+                    <h3>Services</h3>
 
-
-        if (project.otherLink) {
-
-            html += `
-                <a
-                    class="btn btn-light"
-                    href="${safeURL(project.otherLink)}"
-                    target="_blank"
-                >
-                    Other Link
-                </a>
-            `;
-
-        }
-
-
-        if (project.attachment) {
-
-            html += `
-                <a
-                    class="btn btn-dark"
-                    href="${project.attachment.data}"
-                    download="${escapeHTML(
-                        project.attachment.name
-                    )}"
-                >
-                    📎 Download Attachment
-                </a>
-            `;
-
-        }
-
-
-        html += `</div>`;
-
-
-        document.getElementById("detailsContent")
-            .innerHTML = html;
-
-
-        openModal("projectModal");
-
-    }
-
-
-    /* ========================================================
-       10. OPEN PROJECT FORM
-    ======================================================== */
-
-    function openProjectForm(project = null) {
-
-        document.getElementById("projectFormTitle")
-            .textContent =
-                project
-                ? "Edit Project"
-                : "Add Project";
-
-
-        document.getElementById("editingProjectId")
-            .value =
-                project ? project.id : "";
-
-
-        document.getElementById("projectName")
-            .value =
-                project?.name || "";
-
-
-        document.getElementById("projectCategory")
-            .value =
-                project?.category || "";
-
-
-        document.getElementById("projectShortDescription")
-            .value =
-                project?.shortDescription || "";
-
-
-        document.getElementById("projectDetails")
-            .value =
-                project?.details || "";
-
-
-        document.getElementById("projectCreatedBy")
-            .value =
-                project?.createdBy || "HAICO Tech & Design";
-
-
-        document.getElementById("projectBrand")
-            .value =
-                project?.brand || "";
-
-
-        document.getElementById("projectTechnologies")
-            .value =
-                project?.technologies || "";
-
-
-        document.getElementById("projectStatus")
-            .value =
-                project?.status || "Completed";
-
-
-        document.getElementById("projectLiveLink")
-            .value =
-                project?.liveLink || "";
-
-
-        document.getElementById("projectGithubLink")
-            .value =
-                project?.githubLink || "";
-
-
-        document.getElementById("projectWhatsapp")
-            .value =
-                project?.whatsapp || "";
-
-
-        document.getElementById("projectOtherLink")
-            .value =
-                project?.otherLink || "";
-
-
-        document.getElementById("projectFeatured")
-            .checked =
-                project?.featured || false;
-
-
-        document.getElementById("projectFormModal")
-            .classList.add("active");
-
-    }
-
-
-    /* ========================================================
-       11. SAVE PROJECT
-    ======================================================== */
-
-    async function saveProject(event) {
-
-        event.preventDefault();
-
-
-        const id =
-            document.getElementById("editingProjectId")
-                .value;
-
-
-        const imageFile =
-            document.getElementById("projectImage")
-                .files[0];
-
-
-        const attachmentFile =
-            document.getElementById("projectAttachment")
-                .files[0];
-
-
-        const existing =
-            data.projects.find(
-                project => project.id === id
-            );
-
-
-        let image =
-            existing?.image || "";
-
-
-        if (imageFile) {
-
-            image =
-                await fileToBase64(imageFile);
-
-        }
-
-
-        let attachment =
-            existing?.attachment || null;
-
-
-        if (attachmentFile) {
-
-            attachment = {
-
-                name: attachmentFile.name,
-
-                type: attachmentFile.type,
-
-                data:
-                    await fileToBase64(
-                        attachmentFile
-                    )
-
-            };
-
-        }
-
-
-        const project = {
-
-            id:
-                id ||
-                crypto.randomUUID(),
-
-            name:
-                document.getElementById("projectName")
-                    .value.trim(),
-
-            category:
-                document.getElementById("projectCategory")
-                    .value.trim(),
-
-            shortDescription:
-                document.getElementById("projectShortDescription")
-                    .value.trim(),
-
-            details:
-                document.getElementById("projectDetails")
-                    .value.trim(),
-
-            createdBy:
-                document.getElementById("projectCreatedBy")
-                    .value.trim(),
-
-            brand:
-                document.getElementById("projectBrand")
-                    .value.trim(),
-
-            technologies:
-                document.getElementById("projectTechnologies")
-                    .value.trim(),
-
-            status:
-                document.getElementById("projectStatus")
-                    .value,
-
-            image,
-
-            liveLink:
-                document.getElementById("projectLiveLink")
-                    .value.trim(),
-
-            githubLink:
-                document.getElementById("projectGithubLink")
-                    .value.trim(),
-
-            whatsapp:
-                document.getElementById("projectWhatsapp")
-                    .value.trim(),
-
-            otherLink:
-                document.getElementById("projectOtherLink")
-                    .value.trim(),
-
-            attachment,
-
-            featured:
-                document.getElementById("projectFeatured")
-                    .checked,
-
-            updatedAt:
-                new Date().toISOString(),
-
-            createdAt:
-                existing?.createdAt ||
-                new Date().toISOString()
-
-        };
-
-
-        if (existing) {
-
-            const index =
-                data.projects.findIndex(
-                    item => item.id === id
-                );
-
-            data.projects[index] = project;
-
-            showToast("Project updated successfully.");
-
-        } else {
-
-            data.projects.push(project);
-
-            showToast("Project added successfully.");
-
-        }
-
-
-        saveData();
-
-        renderProjects();
-
-        renderAdminProjects();
-
-        closeModal("projectFormModal");
-
-    }
-
-
-    /* ========================================================
-       12. ADMIN PROJECT LIST
-    ======================================================== */
-
-    function renderAdminProjects() {
-
-        const container =
-            document.getElementById("adminProjectList");
-
-        container.innerHTML = "";
-
-
-        data.projects.forEach(project => {
-
-            container.innerHTML += `
-
-                <div class="admin-project">
-
-                    <div>
-
-                        <strong>
-                            ${escapeHTML(project.name)}
-                        </strong>
-
-                        <div style="color:#6b7280">
-                            ${escapeHTML(project.category)}
-                            •
-                            ${escapeHTML(project.status)}
-                        </div>
-
-                    </div>
-
-                    <div class="admin-project-actions">
-
-                        <button
-                            class="btn btn-dark"
-                            onclick="editProject('${project.id}')"
-                        >
-                            Edit
-                        </button>
-
-                        <button
-                            class="btn btn-danger"
-                            onclick="deleteProject('${project.id}')"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
+                    <p>
+                        Manage HAICO services.
+                    </p>
 
                 </div>
 
-            `;
+            </div>
 
-        });
+            <form id="serviceForm" class="admin-form">
 
-
-        document.getElementById("totalProjects")
-            .textContent =
-                data.projects.length;
-
-
-        document.getElementById("featuredProjects")
-            .textContent =
-                data.projects.filter(
-                    project => project.featured
-                ).length;
-
-
-        document.getElementById("totalCategories")
-            .textContent =
-                new Set(
-                    data.projects.map(
-                        project => project.category
-                    )
-                ).size;
-
-    }
-
-
-    /* ========================================================
-       13. EDIT PROJECT
-    ======================================================== */
-
-    function editProject(id) {
-
-        const project =
-            data.projects.find(
-                item => item.id === id
-            );
-
-        if (project) {
-
-            openProjectForm(project);
-
-        }
-
-    }
-
-
-    /* ========================================================
-       14. DELETE PROJECT
-    ======================================================== */
-
-    function deleteProject(id) {
-
-        const project =
-            data.projects.find(
-                item => item.id === id
-            );
-
-        if (!project) return;
-
-
-        const confirmDelete =
-            confirm(
-                `Delete "${project.name}"?`
-            );
-
-
-        if (!confirmDelete) return;
-
-
-        data.projects =
-            data.projects.filter(
-                item => item.id !== id
-            );
-
-
-        saveData();
-
-        renderProjects();
-
-        renderAdminProjects();
-
-        showToast("Project deleted.");
-
-    }
-
-
-    /* ========================================================
-       15. ADMIN LOGIN
-    ======================================================== */
-
-    function openLoginModal() {
-
-        document.getElementById("loginModal")
-            .classList.add("active");
-
-    }
-
-
-    function adminLogin(event) {
-
-        event.preventDefault();
-
-
-        const username =
-            document.getElementById("adminUsername")
-                .value.trim();
-
-
-        const password =
-            document.getElementById("adminPassword")
-                .value;
-
-
-        if (
-            username === ADMIN_USERNAME &&
-            password === ADMIN_PASSWORD
-        ) {
-
-            sessionStorage.setItem(
-                "haicoAdmin",
-                "true"
-            );
-
-
-            closeModal("loginModal");
-
-
-            document.getElementById("publicHeader")
-                .style.display = "none";
-
-
-            document.querySelector(".hero")
-                .style.display = "none";
-
-
-            document.querySelector("main.container")
-                .style.display = "none";
-
-
-            document.querySelector("footer")
-                .style.display = "none";
-
-
-            document.getElementById("adminPanel")
-                .style.display = "block";
-
-
-            renderAdminProjects();
-
-            showToast("Welcome, Admin.");
-
-        } else {
-
-            showToast(
-                "Incorrect username or password."
-            );
-
-        }
-
-    }
-
-
-    /* ========================================================
-       16. ADMIN LOGOUT
-    ======================================================== */
-
-    function adminLogout() {
-
-        sessionStorage.removeItem(
-            "haicoAdmin"
-        );
-
-
-        document.getElementById("publicHeader")
-            .style.display = "block";
-
-
-        document.querySelector(".hero")
-            .style.display = "block";
-
-
-        document.querySelector("main.container")
-            .style.display = "block";
-
-
-        document.querySelector("footer")
-            .style.display = "block";
-
-
-        document.getElementById("adminPanel")
-            .style.display = "none";
-
-
-        showToast("Logged out.");
-
-        window.scrollTo(0, 0);
-
-    }
-
-
-    /* ========================================================
-       17. BRAND SETTINGS
-    ======================================================== */
-
-    async function saveBrandSettings(event) {
-
-        event.preventDefault();
-
-
-        const logoFile =
-            document.getElementById("logoInput")
-                .files[0];
-
-
-        data.brand.name =
-            document.getElementById("brandInput")
-                .value.trim();
-
-
-        data.brand.tagline =
-            document.getElementById("taglineInput")
-                .value.trim();
-
-
-        data.brand.about =
-            document.getElementById("aboutInput")
-                .value.trim();
-
-
-        data.brand.whatsapp =
-            document.getElementById("whatsappInput")
-                .value.trim();
-
-
-        if (logoFile) {
-
-            data.brand.logo =
-                await fileToBase64(logoFile);
-
-        }
-
-
-        saveData();
-
-        renderBrand();
-
-        showToast("Brand settings saved.");
-
-    }
-
-
-    function loadBrandForm() {
-
-        document.getElementById("brandInput")
-            .value = data.brand.name;
-
-        document.getElementById("taglineInput")
-            .value = data.brand.tagline;
-
-        document.getElementById("aboutInput")
-            .value = data.brand.about;
-
-        document.getElementById("whatsappInput")
-            .value = data.brand.whatsapp;
-
-    }
-
-
-    /* ========================================================
-       18. SERVICES ADMIN
-    ======================================================== */
-
-    function addService(event) {
-
-        event.preventDefault();
-
-
-        data.services.push({
-
-            id: crypto.randomUUID(),
-
-            name:
-                document.getElementById("serviceName")
-                    .value.trim(),
-
-            icon:
-                document.getElementById("serviceIcon")
-                    .value.trim(),
-
-            description:
-                document.getElementById("serviceDescription")
-                    .value.trim()
-
-        });
-
-
-        saveData();
-
-        renderServices();
-
-        event.target.reset();
-
-        showToast("Service added.");
-
-    }
-
-
-    function renderAdminServices() {
-
-        const container =
-            document.getElementById(
-                "adminServicesList"
-            );
-
-        container.innerHTML = "";
-
-
-        data.services.forEach(service => {
-
-            container.innerHTML += `
-
-                <div
-                    style="
-                        border:1px solid #e5e7eb;
-                        padding:15px;
-                        border-radius:10px;
-                        margin-bottom:10px;
-                    "
+                <input
+                    type="hidden"
+                    id="serviceId"
                 >
 
-                    <strong>
-                        ${escapeHTML(service.icon)}
-                        ${escapeHTML(service.name)}
-                    </strong>
+                <input
+                    type="text"
+                    id="serviceName"
+                    placeholder="Service name"
+                    required
+                >
 
-                    <p>
-                        ${escapeHTML(service.description)}
-                    </p>
+                <input
+                    type="text"
+                    id="serviceIcon"
+                    placeholder="Icon e.g. 🌐"
+                >
+
+                <textarea
+                    id="serviceDescription"
+                    placeholder="Service description"
+                    required
+                ></textarea>
+
+                <div class="form-actions">
 
                     <button
-                        class="btn btn-danger"
-                        onclick="deleteService('${service.id}')"
+                        type="submit"
+                        class="btn primary-btn"
                     >
-                        Delete
+                        Save Service
+                    </button>
+
+                    <button
+                        type="button"
+                        id="cancelServiceBtn"
+                        class="btn cancel-btn"
+                    >
+                        Cancel
                     </button>
 
                 </div>
 
-            `;
+            </form>
 
-        });
+            <div
+                id="adminServicesContainer"
+                class="admin-list"
+            >
+            </div>
 
-    }
-
-
-    function deleteService(id) {
-
-        if (!confirm("Delete this service?")) return;
-
-
-        data.services =
-            data.services.filter(
-                service => service.id !== id
-            );
+        </div>
 
 
-        saveData();
+        <!-- BRAND TAB -->
 
-        renderServices();
+        <div id="brandTab" class="admin-tab-content">
 
-        showToast("Service deleted.");
+            <div class="admin-section-title">
 
-    }
+                <div>
 
+                    <h3>Brand Settings</h3>
 
-    /* ========================================================
-       19. SOCIAL LINKS
-    ======================================================== */
+                    <p>
+                        Update HAICO public information.
+                    </p>
 
-    function renderSocialLinks() {
+                </div>
 
-        const container =
-            document.getElementById(
-                "socialLinks"
-            );
+            </div>
 
-        container.innerHTML = "";
+            <form id="brandForm" class="admin-form">
 
-
-        const links = [
-
-            ["💬 WhatsApp", data.social.whatsapp],
-
-            ["📘 Facebook", data.social.facebook],
-
-            ["📸 Instagram", data.social.instagram],
-
-            ["🎵 TikTok", data.social.tiktok],
-
-            ["▶️ YouTube", data.social.youtube],
-
-            ["💻 GitHub", data.social.github]
-
-        ];
-
-
-        links.forEach(([name, url]) => {
-
-            if (!url) return;
-
-
-            container.innerHTML += `
-
-                <a
-                    class="social-link"
-                    href="${safeURL(url)}"
-                    target="_blank"
-                    rel="noopener"
+                <input
+                    type="text"
+                    id="brandName"
+                    placeholder="Brand name"
+                    required
                 >
-                    ${name}
-                </a>
 
-            `;
+                <input
+                    type="text"
+                    id="brandTagline"
+                    placeholder="Tagline"
+                >
 
-        });
+                <textarea
+                    id="brandAbout"
+                    placeholder="About HAICO"
+                    required
+                ></textarea>
+
+                <input
+                    type="text"
+                    id="brandLogo"
+                    placeholder="Logo URL"
+                >
 
-    }
+                <input
+                    type="text"
+                    id="brandPhone"
+                    placeholder="Phone"
+                >
 
+                <input
+                    type="email"
+                    id="brandEmail"
+                    placeholder="Email"
+                >
 
-    function loadSocialForm() {
+                <input
+                    type="text"
+                    id="brandWhatsapp"
+                    placeholder="WhatsApp number"
+                >
 
-        document.getElementById("socialWhatsapp")
-            .value = data.social.whatsapp;
+                <button
+                    type="submit"
+                    class="btn primary-btn"
+                >
+                    Save Brand Settings
+                </button>
 
-        document.getElementById("socialFacebook")
-            .value = data.social.facebook;
+                <p id="brandMessage" class="form-message"></p>
 
-        document.getElementById("socialInstagram")
-            .value = data.social.instagram;
+            </form>
 
-        document.getElementById("socialTiktok")
-            .value = data.social.tiktok;
+        </div>
 
-        document.getElementById("socialYoutube")
-            .value = data.social.youtube;
 
-        document.getElementById("socialGithub")
-            .value = data.social.github;
+        <!-- SOCIAL TAB -->
 
-    }
+        <div id="socialTab" class="admin-tab-content">
 
+            <div class="admin-section-title">
 
-    function saveSocialLinks(event) {
+                <div>
 
-        event.preventDefault();
+                    <h3>Social Links</h3>
 
+                    <p>
+                        Manage your social media links.
+                    </p>
 
-        data.social.whatsapp =
-            document.getElementById("socialWhatsapp")
-                .value.trim();
+                </div>
 
-        data.social.facebook =
-            document.getElementById("socialFacebook")
-                .value.trim();
+            </div>
 
-        data.social.instagram =
-            document.getElementById("socialInstagram")
-                .value.trim();
+            <form id="socialForm" class="admin-form">
 
-        data.social.tiktok =
-            document.getElementById("socialTiktok")
-                .value.trim();
+                <input
+                    type="hidden"
+                    id="socialId"
+                >
 
-        data.social.youtube =
-            document.getElementById("socialYoutube")
-                .value.trim();
+                <input
+                    type="text"
+                    id="socialPlatform"
+                    placeholder="Platform e.g. TikTok"
+                    required
+                >
 
-        data.social.github =
-            document.getElementById("socialGithub")
-                .value.trim();
+                <input
+                    type="url"
+                    id="socialUrl"
+                    placeholder="https://..."
+                    required
+                >
 
+                <input
+                    type="text"
+                    id="socialIcon"
+                    placeholder="Icon e.g. 🎵"
+                >
 
-        saveData();
+                <div class="form-actions">
 
-        renderSocialLinks();
+                    <button
+                        type="submit"
+                        class="btn primary-btn"
+                    >
+                        Save Social Link
+                    </button>
 
-        showToast("Social links saved.");
+                    <button
+                        type="button"
+                        id="cancelSocialBtn"
+                        class="btn cancel-btn"
+                    >
+                        Cancel
+                    </button>
 
-    }
+                </div>
 
+            </form>
 
-    /* ========================================================
-       20. ADMIN SECTIONS
-    ======================================================== */
+            <div
+                id="adminSocialContainer"
+                class="admin-list"
+            >
+            </div>
 
-    function showAdminSection(sectionId) {
+        </div>
 
-        const sections = [
+    </div>
 
-            "projectsAdmin",
-            "brandAdmin",
-            "servicesAdmin",
-            "socialAdmin"
+</div>
 
-        ];
 
+<!-- ================= ADD / EDIT PROJECT MODAL ================= -->
 
-        sections.forEach(id => {
+<div class="modal" id="projectFormModal">
 
-            document.getElementById(id)
-                .style.display =
-                    id === sectionId
-                    ? "block"
-                    : "none";
+    <div class="modal-box large-modal">
 
-        });
+        <button
+            class="modal-close"
+            id="closeProjectFormModal"
+        >
+            ×
+        </button>
 
+        <div class="modal-heading">
 
-        if (sectionId === "brandAdmin") {
+            <div class="admin-icon">
+                💻
+            </div>
 
-            loadBrandForm();
+            <h2 id="projectFormTitle">
+                Add Project
+            </h2>
 
-        }
+            <p>
+                Project information will be saved online.
+            </p>
 
+        </div>
 
-        if (sectionId === "socialAdmin") {
 
-            loadSocialForm();
+        <form id="projectForm" class="admin-form">
 
-        }
+            <input
+                type="hidden"
+                id="projectId"
+            >
 
-    }
 
+            <label>Project Name</label>
 
-    /* ========================================================
-       21. BACKUP DATA
-    ======================================================== */
+            <input
+                type="text"
+                id="projectName"
+                placeholder="Project name"
+                required
+            >
 
-    function exportData() {
 
-        const blob =
-            new Blob(
-                [
-                    JSON.stringify(
-                        data,
-                        null,
-                        2
-                    )
-                ],
-                {
-                    type: "application/json"
-                }
-            );
+            <label>Category</label>
 
+            <input
+                type="text"
+                id="projectCategory"
+                placeholder="e.g. Management System"
+                required
+            >
 
-        const url =
-            URL.createObjectURL(blob);
 
+            <label>Short Description</label>
 
-        const link =
-            document.createElement("a");
+            <textarea
+                id="projectDescription"
+                placeholder="Short project description"
+                required
+            ></textarea>
 
 
-        link.href = url;
+            <label>Full Details</label>
 
-        link.download =
-            "haico-link-hub-backup.json";
+            <textarea
+                id="projectDetailsText"
+                placeholder="Complete project details"
+            ></textarea>
 
 
-        link.click();
+            <label>Created By</label>
 
+            <input
+                type="text"
+                id="projectCreatedBy"
+                placeholder="Created by"
+                value="HAICO TECH & DESIGN"
+            >
 
-        URL.revokeObjectURL(url);
 
+            <label>Technologies</label>
 
-        showToast("Backup downloaded.");
+            <input
+                type="text"
+                id="projectTechnologies"
+                placeholder="HTML, CSS, JavaScript, Supabase"
+            >
 
-    }
 
+            <label>Status</label>
 
-    /* ========================================================
-       22. RESTORE DATA
-    ======================================================== */
+            <select id="projectStatus">
 
-    function importData(event) {
+                <option value="Active">
+                    Active
+                </option>
 
-        const file =
-            event.target.files[0];
+                <option value="Development">
+                    In Development
+                </option>
 
-        if (!file) return;
+                <option value="Completed">
+                    Completed
+                </option>
 
+                <option value="Coming Soon">
+                    Coming Soon
+                </option>
 
-        const reader =
-            new FileReader();
+            </select>
 
 
-        reader.onload = function () {
+            <label>Project Image</label>
 
-            try {
+            <input
+                type="file"
+                id="projectImage"
+                accept="image/*"
+            >
 
-                const imported =
-                    JSON.parse(
-                        reader.result
-                    );
+            <small>
+                Image will be uploaded to Supabase Storage.
+            </small>
 
 
-                if (
-                    !imported.brand ||
-                    !imported.projects
-                ) {
+            <label>Live Link</label>
 
-                    throw new Error(
-                        "Invalid backup."
-                    );
+            <input
+                type="url"
+                id="projectLiveLink"
+                placeholder="https://..."
+            >
 
-                }
 
+            <label>GitHub Link</label>
 
-                data = imported;
+            <input
+                type="url"
+                id="projectGithubLink"
+                placeholder="https://github.com/..."
+            >
 
-                saveData();
 
-                renderAll();
+            <label>WhatsApp Link</label>
 
-                showToast(
-                    "Data restored successfully."
-                );
+            <input
+                type="url"
+                id="projectWhatsappLink"
+                placeholder="https://wa.me/..."
+            >
 
-            } catch (error) {
 
-                showToast(
-                    "Invalid backup file."
-                );
+            <label>Attachment</label>
 
-            }
+            <input
+                type="file"
+                id="projectAttachment"
+            >
 
-        };
+            <small>
+                PDF, ZIP or other project file.
+            </small>
 
 
-        reader.readAsText(file);
+            <label class="checkbox-row">
 
-    }
+                <input
+                    type="checkbox"
+                    id="projectFeatured"
+                >
 
+                <span>
+                    Featured Project
+                </span>
 
-    /* ========================================================
-       23. MODALS
-    ======================================================== */
+            </label>
 
-    function openModal(id) {
 
-        document.getElementById(id)
-            .classList.add("active");
+            <div class="form-actions">
 
-    }
+                <button
+                    type="submit"
+                    class="btn primary-btn"
+                    id="saveProjectBtn"
+                >
+                    Save Project
+                </button>
 
+                <button
+                    type="button"
+                    id="cancelProjectBtn"
+                    class="btn cancel-btn"
+                >
+                    Cancel
+                </button>
 
-    function closeModal(id) {
+            </div>
 
-        document.getElementById(id)
-            .classList.remove("active");
+            <p
+                id="projectFormMessage"
+                class="form-message"
+            ></p>
 
-    }
+        </form>
 
+    </div>
 
-    window.addEventListener(
-        "click",
-        function(event) {
+</div>
 
-            if (
-                event.target.classList
-                    .contains("modal")
-            ) {
 
-                event.target
-                    .classList
-                    .remove("active");
+<!-- ================= TOAST ================= -->
 
-            }
+<div id="toast" class="toast"></div>
 
-        }
-    );
 
+<!-- ================= JAVASCRIPT ================= -->
 
-    /* ========================================================
-       24. NAVIGATION
-    ======================================================== */
-
-    function scrollToSection(id) {
-
-        document.getElementById(id)
-            .scrollIntoView({
-                behavior: "smooth"
-            });
-
-    }
-
-
-    /* ========================================================
-       25. TOAST
-    ======================================================== */
-
-    function showToast(message) {
-
-        const toast =
-            document.getElementById("toast");
-
-
-        toast.textContent = message;
-
-        toast.classList.add("show");
-
-
-        setTimeout(() => {
-
-            toast.classList.remove("show");
-
-        }, 3000);
-
-    }
-
-
-    /* ========================================================
-       26. SECURITY / HTML ESCAPING
-    ======================================================== */
-
-    function escapeHTML(value) {
-
-        return String(value ?? "")
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-
-    }
-
-
-    function safeURL(url) {
-
-        if (!url) return "#";
-
-        try {
-
-            const parsed =
-                new URL(url);
-
-            if (
-                parsed.protocol === "http:" ||
-                parsed.protocol === "https:"
-            ) {
-
-                return parsed.href;
-
-            }
-
-        } catch (error) {}
-
-        return "#";
-
-    }
-
-
-    /* ========================================================
-       27. RENDER EVERYTHING
-    ======================================================== */
-
-    function renderAll() {
-
-        renderBrand();
-
-        renderServices();
-
-        renderProjects();
-
-        renderSocialLinks();
-
-        renderAdminProjects();
-
-        document.getElementById("currentYear")
-            .textContent =
-                new Date().getFullYear();
-
-    }
-
-
-    /* ========================================================
-       28. INITIALIZE
-    ======================================================== */
-
-    renderAll();
-
-
-    /*
-       Kama browser ilifunguliwa na admin session bado ipo,
-       tunaweza kurudisha admin panel.
-    */
-
-    if (
-        sessionStorage.getItem("haicoAdmin")
-        === "true"
-    ) {
-
-        document.getElementById("publicHeader")
-            .style.display = "none";
-
-        document.querySelector(".hero")
-            .style.display = "none";
-
-        document.querySelector("main.container")
-            .style.display = "none";
-
-        document.querySelector("footer")
-            .style.display = "none";
-
-        document.getElementById("adminPanel")
-            .style.display = "block";
-
-        renderAdminProjects();
-
-    }
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
-```
