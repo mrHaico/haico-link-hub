@@ -7,17 +7,13 @@
 /* =====================================================
    SUPABASE CONFIGURATION
 ===================================================== */
-
-const SUPABASE_URL =
-    "https://lhgjvezxmeedbyiibbin.supabase.co";
+const SUPABASE_URL = "https://lhgjvezxmeedbyiibbin.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_Nj4CRhnyMm2Psb209Rnq8w_rXiZLBbB";
-
+    "sb_publishable_Nj4CRhnyMm2Psb209Rnq8w_rXiZLBbX";
 
 const SITE_URL =
     "https://mrhaico.github.io/haico-link-hub/";
-
 
 /* =====================================================
    CREATE SUPABASE CLIENT
