@@ -10,299 +10,129 @@
 
     <meta
         name="description"
-        content="HAICO Link Hub - Your Idea. Our Creativity. One Digital Solution."
+        content="HAICO TECH AND DESIGN - Website, Apps, Graphic Design, Management Systems, E-Commerce and Digital Solutions."
     >
 
     <meta
         name="keywords"
-        content="HAICO, HAICO Tech and Design, websites, apps, graphic design, e-commerce, digital solutions"
+        content="HAICO Tech, Website Design, Apps, Graphic Design, Tanzania, Digital Solutions"
     >
 
-    <meta name="author" content="HAICO TECH AND DESIGN">
+    <meta name="theme-color" content="#0b1f3a">
 
-    <title>HAICO Link Hub | HAICO TECH AND DESIGN</title>
+    <title>HAICO TECH AND DESIGN | Digital Solutions</title>
 
-    <!-- Google Font -->
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
+    <!-- =====================================================
+         SUPABASE
+         ===================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-    <!-- Icons -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-
-    <!-- Main CSS -->
+    <!-- =====================================================
+         STYLESHEET
+         ===================================================== -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <!-- =========================================================
-         PAGE LOADER
-    ========================================================== -->
+    <!-- =====================================================
+         GLOBAL LOADER
+         ===================================================== -->
     <div id="pageLoader" class="page-loader">
-        <div class="loader-content">
-            <div class="loader-logo">
-                HAICO
-            </div>
-
-            <div class="loader-spinner"></div>
-
-            <p>Loading HAICO Link Hub...</p>
-        </div>
+        <div class="loader-logo">H</div>
+        <div class="loader-spinner"></div>
+        <p>HAICO TECH AND DESIGN</p>
     </div>
 
 
-    <!-- =========================================================
-         TOAST CONTAINER
-    ========================================================== -->
-    <div
-        id="toastContainer"
-        class="toast-container"
-        aria-live="polite"
-    ></div>
+    <!-- =====================================================
+         TOAST
+         ===================================================== -->
+    <div id="toast" class="toast"></div>
 
 
-    <!-- =========================================================
-         NAVIGATION
-    ========================================================== -->
-    <header id="siteHeader" class="site-header">
+    <!-- =====================================================
+         PUBLIC WEBSITE
+         ===================================================== -->
+    <div id="publicApp">
 
-        <div class="container nav-container">
+        <!-- HEADER -->
+        <header class="site-header" id="siteHeader">
 
-            <!-- Logo -->
-            <a href="#home" class="brand" aria-label="HAICO Link Hub Home">
+            <div class="container nav-container">
 
-                <div class="brand-mark">
-                    <span>H</span>
-                </div>
+                <a href="#home" class="brand">
+                    <span class="brand-mark">H</span>
 
-                <div class="brand-text">
-                    <strong>HAICO</strong>
-                    <small>TECH & DESIGN</small>
-                </div>
-
-            </a>
-
-          
-<a href="admin/login.html" class="admin-login-btn">
-    <span class="admin-login-icon">🔐</span>
-    <span>Admin Login</span>
-</a>
-
-
-
-            <!-- Desktop Navigation -->
-            <nav id="mainNav" class="main-nav">
-
-                <a
-                    href="#home"
-                    class="nav-link active"
-                >
-                    Home
+                    <span class="brand-text">
+                        <strong>HAICO</strong>
+                        <small>TECH AND DESIGN</small>
+                    </span>
                 </a>
 
-                <a
-                    href="#about"
-                    class="nav-link"
-                >
-                    About
-                </a>
-
-                <a
-                    href="#services"
-                    class="nav-link"
-                >
-                    Services
-                </a>
-
-                <a
-                    href="#projects"
-                    class="nav-link"
-                >
-                    Projects
-                </a>
-
-                <a
-                    href="#contact"
-                    class="nav-link"
-                >
-                    Contact
-                </a>
-
-            </nav>
-
-
-            <!-- Navigation Actions -->
-            <div class="nav-actions">
 
                 <button
-                    id="themeToggle"
-                    class="icon-button"
                     type="button"
-                    aria-label="Toggle dark mode"
-                    title="Toggle theme"
+                    class="mobile-menu-btn"
+                    id="mobileMenuBtn"
+                    aria-label="Open navigation"
                 >
-                    <i class="fa-solid fa-moon"></i>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
 
-                <a
-                    href="#contact"
-                    class="nav-cta"
-                >
-                    Let's Talk
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a>
 
-                <button
-                    id="menuToggle"
-                    class="menu-toggle"
-                    type="button"
-                    aria-label="Open menu"
-                    aria-expanded="false"
-                >
-                    <i class="fa-solid fa-bars"></i>
-                </button>
+                <nav class="main-nav" id="mainNav">
+
+                    <a href="#home" class="nav-link active">
+                        Home
+                    </a>
+
+                    <a href="#about" class="nav-link">
+                        About
+                    </a>
+
+                    <a href="#services" class="nav-link">
+                        Services
+                    </a>
+
+                    <a href="#projects" class="nav-link">
+                        Projects
+                    </a>
+
+                    <a href="#contact" class="nav-link">
+                        Contact
+                    </a>
+
+                    <a
+                        href="#"
+                        class="admin-login-btn"
+                        id="openAdminLogin"
+                    >
+                        <span class="admin-icon">🔐</span>
+                        <span>Admin Login</span>
+                    </a>
+
+                </nav>
 
             </div>
 
-        </div>
-
-    </header>
+        </header>
 
 
-    <!-- =========================================================
-         MOBILE MENU
-    ========================================================== -->
-    <div
-        id="mobileMenuOverlay"
-        class="mobile-menu-overlay"
-    ></div>
+        <!-- HERO -->
+        <section class="hero" id="home">
 
-    <aside
-        id="mobileMenu"
-        class="mobile-menu"
-        aria-hidden="true"
-    >
+            <div class="hero-background"></div>
 
-        <div class="mobile-menu-header">
+            <div class="container hero-content">
 
-            <a href="#home" class="brand">
+                <div class="hero-text reveal">
 
-                <div class="brand-mark">
-                    <span>H</span>
-                </div>
-
-                <div class="brand-text">
-                    <strong>HAICO</strong>
-                    <small>TECH & DESIGN</small>
-                </div>
-
-            </a>
-
-            <button
-                id="mobileMenuClose"
-                class="icon-button"
-                type="button"
-                aria-label="Close menu"
-            >
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-
-        </div>
-
-
-        <nav class="mobile-nav">
-
-            <a href="#home">
-                <i class="fa-solid fa-house"></i>
-                <span>Home</span>
-            </a>
-
-            <a href="#about">
-                <i class="fa-solid fa-circle-info"></i>
-                <span>About</span>
-            </a>
-
-            <a href="#services">
-                <i class="fa-solid fa-layer-group"></i>
-                <span>Services</span>
-            </a>
-
-            <a href="#projects">
-                <i class="fa-solid fa-folder-open"></i>
-                <span>Projects</span>
-            </a>
-
-            <a href="#contact">
-                <i class="fa-solid fa-envelope"></i>
-                <span>Contact</span>
-            </a>
-
-        </nav>
-
-
-        <div class="mobile-menu-footer">
-
-            <a
-                href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services."
-                target="_blank"
-                rel="noopener noreferrer"
-                class="whatsapp-button"
-            >
-                <i class="fa-brands fa-whatsapp"></i>
-                Chat on WhatsApp
-            </a>
-
-        </div>
-
-    </aside>
-
-
-    <!-- =========================================================
-         MAIN CONTENT
-    ========================================================== -->
-    <main>
-
-
-        <!-- =====================================================
-             HERO SECTION
-        ====================================================== -->
-        <section
-            id="home"
-            class="hero-section"
-        >
-
-            <div class="hero-background">
-                <div class="hero-orb hero-orb-one"></div>
-                <div class="hero-orb hero-orb-two"></div>
-                <div class="hero-grid"></div>
-            </div>
-
-
-            <div class="container hero-container">
-
-                <div class="hero-content">
-
-                    <div class="hero-badge">
-                        <span class="status-dot"></span>
-                        Digital solutions for modern businesses
-                    </div>
-
+                    <span class="eyebrow">
+                        DIGITAL SOLUTIONS • TANZANIA
+                    </span>
 
                     <h1>
                         Your Idea.
@@ -310,204 +140,107 @@
                         One Digital Solution.
                     </h1>
 
-
-                    <p class="hero-description">
-                        We transform ideas into powerful digital experiences
-                        through websites, applications, graphic design,
-                        management systems, e-commerce and innovative
-                        digital solutions.
+                    <p>
+                        We transform ideas into professional digital
+                        experiences through websites, applications,
+                        graphic design, management systems,
+                        e-commerce and modern digital solutions.
                     </p>
-
 
                     <div class="hero-actions">
 
                         <a
-                            href="#projects"
-                            class="primary-button"
+                            href="#services"
+                            class="btn btn-primary"
                         >
-                            Explore Projects
-                            <i class="fa-solid fa-arrow-right"></i>
+                            Explore Services
+                            <span>→</span>
                         </a>
 
                         <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20have%20a%20project%20idea%20and%20I%27d%20like%20to%20discuss%20it."
+                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20would%20like%20to%20know%20more%20about%20your%20digital%20services."
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="secondary-button"
+                            class="btn btn-outline"
                         >
-                            <i class="fa-brands fa-whatsapp"></i>
-                            Start a Project
+                            WhatsApp Us
                         </a>
 
                     </div>
 
+                    <div class="hero-contact">
+                        <span>📍 Tanzania</span>
+                        <span>•</span>
+                        <span>Available for digital projects</span>
+                    </div>
 
-                    <div class="hero-trust">
+                </div>
 
-                        <div class="trust-item">
-                            <i class="fa-solid fa-circle-check"></i>
-                            Professional
+
+                <div class="hero-card reveal">
+
+                    <div class="hero-card-glow"></div>
+
+                    <div class="hero-card-inner">
+
+                        <div class="mini-brand">
+                            <span>H</span>
+                            <div>
+                                <strong>HAICO</strong>
+                                <small>TECH & DESIGN</small>
+                            </div>
                         </div>
 
-                        <div class="trust-item">
-                            <i class="fa-solid fa-circle-check"></i>
-                            Creative
+                        <div class="hero-card-title">
+                            <span>01</span>
+                            <h3>
+                                Digital Innovation
+                            </h3>
                         </div>
 
-                        <div class="trust-item">
-                            <i class="fa-solid fa-circle-check"></i>
-                            Digital
+                        <p>
+                            Build. Design. Connect. Grow.
+                        </p>
+
+                        <div class="hero-card-grid">
+
+                            <div>
+                                <strong>Web</strong>
+                                <small>Development</small>
+                            </div>
+
+                            <div>
+                                <strong>Apps</strong>
+                                <small>Solutions</small>
+                            </div>
+
+                            <div>
+                                <strong>Design</strong>
+                                <small>Creative</small>
+                            </div>
+
+                            <div>
+                                <strong>Systems</strong>
+                                <small>Management</small>
+                            </div>
+
                         </div>
 
                     </div>
 
                 </div>
 
-
-                <!-- Hero Visual -->
-                <div class="hero-visual">
-
-                    <div class="hero-card main-hero-card">
-
-                        <div class="hero-card-top">
-
-                            <div class="mini-brand">
-                                <div class="mini-brand-icon">
-                                    H
-                                </div>
-
-                                <div>
-                                    <strong>HAICO</strong>
-                                    <span>LINK HUB</span>
-                                </div>
-                            </div>
-
-                            <span class="live-badge">
-                                <span></span>
-                                Live
-                            </span>
-
-                        </div>
-
-
-                        <div class="hero-dashboard-preview">
-
-                            <div class="preview-sidebar">
-
-                                <div class="preview-side-logo">
-                                    H
-                                </div>
-
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>
-
-                            </div>
-
-
-                            <div class="preview-main">
-
-                                <div class="preview-heading">
-                                    <div>
-                                        <small>Welcome to</small>
-                                        <strong>HAICO Digital Hub</strong>
-                                    </div>
-
-                                    <div class="preview-avatar">
-                                        H
-                                    </div>
-                                </div>
-
-
-                                <div class="preview-stats">
-
-                                    <div class="preview-stat">
-                                        <small>Projects</small>
-                                        <strong>24+</strong>
-                                    </div>
-
-                                    <div class="preview-stat">
-                                        <small>Solutions</small>
-                                        <strong>06</strong>
-                                    </div>
-
-                                </div>
-
-
-                                <div class="preview-chart">
-
-                                    <div class="chart-header">
-                                        <span>Digital Growth</span>
-                                        <i class="fa-solid fa-chart-line"></i>
-                                    </div>
-
-                                    <div class="chart-bars">
-                                        <span style="height:35%"></span>
-                                        <span style="height:50%"></span>
-                                        <span style="height:42%"></span>
-                                        <span style="height:68%"></span>
-                                        <span style="height:58%"></span>
-                                        <span style="height:78%"></span>
-                                        <span style="height:92%"></span>
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="floating-card floating-card-one">
-                        <div class="floating-icon">
-                            <i class="fa-solid fa-code"></i>
-                        </div>
-
-                        <div>
-                            <strong>Web Solutions</strong>
-                            <span>Modern & Responsive</span>
-                        </div>
-                    </div>
-
-
-                    <div class="floating-card floating-card-two">
-                        <div class="floating-icon">
-                            <i class="fa-solid fa-palette"></i>
-                        </div>
-
-                        <div>
-                            <strong>Creative Design</strong>
-                            <span>Ideas into visuals</span>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="hero-scroll">
-                <span>Scroll to explore</span>
-                <i class="fa-solid fa-arrow-down"></i>
             </div>
 
         </section>
 
 
-        <!-- =====================================================
-             ABOUT SECTION
-        ====================================================== -->
-        <section
-            id="about"
-            class="section about-section"
-        >
+        <!-- ABOUT -->
+        <section class="section about-section" id="about">
 
             <div class="container">
 
-                <div class="section-heading centered">
+                <div class="section-heading reveal">
 
                     <span class="section-label">
                         ABOUT HAICO
@@ -515,14 +248,14 @@
 
                     <h2>
                         Turning ideas into
-                        <span>digital reality.</span>
+                        <span>digital solutions.</span>
                     </h2>
 
                     <p>
-                        HAICO TECH AND DESIGN is a technology and creative
-                        digital solutions brand focused on helping individuals,
-                        businesses and organizations build a stronger digital
-                        presence.
+                        HAICO TECH AND DESIGN focuses on creating
+                        useful, modern and professional digital
+                        solutions for individuals, organizations
+                        and businesses.
                     </p>
 
                 </div>
@@ -530,112 +263,58 @@
 
                 <div class="about-grid">
 
-                    <div class="about-visual">
-
-                        <div class="about-main-card">
-
-                            <div class="about-card-pattern"></div>
-
-                            <div class="about-card-content">
-
-                                <div class="about-logo-large">
-                                    H
-                                </div>
-
-                                <span>HAICO</span>
-
-                                <strong>
-                                    Technology meets creativity.
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="experience-card">
-
-                            <strong>Digital</strong>
-                            <span>Solutions</span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="about-content">
-
-                        <span class="content-kicker">
-                            WHO WE ARE
-                        </span>
+                    <div class="about-content reveal">
 
                         <h3>
-                            Technology designed around
-                            <span>your vision.</span>
+                            Technology with creativity.
                         </h3>
 
                         <p>
-                            We believe every great digital product starts
-                            with a clear idea. Our role is to transform that
-                            idea into a professional, useful and memorable
-                            digital experience.
+                            Our goal is to make technology practical,
+                            accessible and valuable. From a simple
+                            business website to a complete management
+                            system, we combine technology and creative
+                            design to create solutions that solve real
+                            problems.
                         </p>
 
                         <p>
-                            From a simple business website to a complete
-                            management system, e-commerce platform or creative
-                            brand identity, HAICO combines technology and
-                            design to deliver practical solutions.
+                            We believe every idea deserves a digital
+                            identity that is professional, useful and
+                            ready for growth.
                         </p>
-
-
-                        <div class="about-features">
-
-                            <div class="about-feature">
-                                <i class="fa-solid fa-lightbulb"></i>
-
-                                <div>
-                                    <strong>Creative Thinking</strong>
-                                    <span>
-                                        Fresh ideas built around your goals.
-                                    </span>
-                                </div>
-                            </div>
-
-
-                            <div class="about-feature">
-                                <i class="fa-solid fa-laptop-code"></i>
-
-                                <div>
-                                    <strong>Digital Development</strong>
-                                    <span>
-                                        Functional and responsive solutions.
-                                    </span>
-                                </div>
-                            </div>
-
-
-                            <div class="about-feature">
-                                <i class="fa-solid fa-handshake"></i>
-
-                                <div>
-                                    <strong>Client Focus</strong>
-                                    <span>
-                                        Solutions designed with people in mind.
-                                    </span>
-                                </div>
-                            </div>
-
-                        </div>
-
 
                         <a
                             href="#contact"
-                            class="text-button"
+                            class="text-link"
                         >
-                            Work with HAICO
-                            <i class="fa-solid fa-arrow-right"></i>
+                            Start your project →
                         </a>
+
+                    </div>
+
+
+                    <div class="about-stats reveal">
+
+                        <div class="stat-card">
+                            <strong>06</strong>
+                            <span>Core Services</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <strong>∞</strong>
+                            <span>Ideas to Build</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <strong>24/7</strong>
+                            <span>Digital Access</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <strong>01</strong>
+                            <span>Digital Partner</span>
+                        </div>
 
                     </div>
 
@@ -646,194 +325,96 @@
         </section>
 
 
-        <!-- =====================================================
-             SERVICES SECTION
-        ====================================================== -->
-        <section
-            id="services"
-            class="section services-section"
-        >
+        <!-- SERVICES -->
+        <section class="section services-section" id="services">
 
             <div class="container">
 
-                <div class="section-heading">
+                <div class="section-heading center reveal">
 
-                    <div>
-                        <span class="section-label">
-                            WHAT WE DO
-                        </span>
+                    <span class="section-label">
+                        WHAT WE DO
+                    </span>
 
-                        <h2>
-                            Digital services
-                            <span>built for impact.</span>
-                        </h2>
-                    </div>
+                    <h2>
+                        Professional
+                        <span>Digital Services</span>
+                    </h2>
 
                     <p>
-                        Explore our core services designed to help your
-                        business, organization or personal brand grow
-                        digitally.
+                        Solutions designed around your idea,
+                        business and digital goals.
                     </p>
 
                 </div>
 
 
-                <!-- Dynamic services from Supabase -->
-                <div
-                    id="servicesGrid"
-                    class="services-grid"
-                >
+                <div class="services-grid">
 
-                    <!-- Default fallback cards -->
-
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            01
-                        </div>
-
-                        <div class="service-icon">
-                            <i class="fa-solid fa-globe"></i>
-                        </div>
-
-                        <h3>Website Development</h3>
-
+                    <article class="service-card reveal">
+                        <div class="service-number">01</div>
+                        <div class="service-icon">🌐</div>
+                        <h3>Website</h3>
                         <p>
-                            Professional, responsive and modern websites
-                            designed for businesses, organizations and
-                            personal brands.
+                            Modern responsive websites for
+                            businesses, organizations, institutions
+                            and personal brands.
                         </p>
-
-                        <a href="#contact" class="service-link">
-                            Learn more
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
                     </article>
 
 
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            02
-                        </div>
-
-                        <div class="service-icon">
-                            <i class="fa-solid fa-mobile-screen-button"></i>
-                        </div>
-
-                        <h3>Apps & Systems</h3>
-
+                    <article class="service-card reveal">
+                        <div class="service-number">02</div>
+                        <div class="service-icon">📱</div>
+                        <h3>Apps</h3>
                         <p>
-                            Custom digital applications and management
-                            systems designed around real-world needs.
+                            Practical mobile and web application
+                            solutions designed around real user needs.
                         </p>
-
-                        <a href="#contact" class="service-link">
-                            Learn more
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
                     </article>
 
 
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            03
-                        </div>
-
-                        <div class="service-icon">
-                            <i class="fa-solid fa-pen-nib"></i>
-                        </div>
-
+                    <article class="service-card reveal">
+                        <div class="service-number">03</div>
+                        <div class="service-icon">🎨</div>
                         <h3>Graphic Design</h3>
-
                         <p>
-                            Creative visual designs for brands, social media,
-                            marketing campaigns and digital communication.
+                            Creative branding, posters, social media
+                            graphics and professional visual content.
                         </p>
-
-                        <a href="#contact" class="service-link">
-                            Learn more
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
                     </article>
 
 
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            04
-                        </div>
-
-                        <div class="service-icon">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                        </div>
-
-                        <h3>E-Commerce</h3>
-
-                        <p>
-                            Online stores and digital commerce solutions that
-                            help businesses reach customers online.
-                        </p>
-
-                        <a href="#contact" class="service-link">
-                            Learn more
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
-                    </article>
-
-
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            05
-                        </div>
-
-                        <div class="service-icon">
-                            <i class="fa-solid fa-chart-line"></i>
-                        </div>
-
+                    <article class="service-card reveal">
+                        <div class="service-number">04</div>
+                        <div class="service-icon">⚙️</div>
                         <h3>Management Systems</h3>
-
                         <p>
-                            Digital systems for managing students, businesses,
-                            projects, records and everyday operations.
+                            Digital systems for managing students,
+                            businesses, records, operations and data.
                         </p>
-
-                        <a href="#contact" class="service-link">
-                            Learn more
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
                     </article>
 
 
-                    <article class="service-card">
-
-                        <div class="service-number">
-                            06
-                        </div>
-
-                        <div class="service-icon">
-                            <i class="fa-solid fa-rocket"></i>
-                        </div>
-
-                        <h3>Digital Solutions</h3>
-
+                    <article class="service-card reveal">
+                        <div class="service-number">05</div>
+                        <div class="service-icon">🛒</div>
+                        <h3>E-Commerce</h3>
                         <p>
-                            Practical technology solutions created to solve
-                            unique digital challenges and opportunities.
+                            Online shops and digital commerce
+                            experiences for products and services.
                         </p>
+                    </article>
 
-                        <a href="#contact" class="service-link">
-                            Learn more
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
 
+                    <article class="service-card reveal">
+                        <div class="service-number">06</div>
+                        <div class="service-icon">💡</div>
+                        <h3>Digital Solutions</h3>
+                        <p>
+                            Customized technology solutions that
+                            help transform ideas into useful products.
+                        </p>
                     </article>
 
                 </div>
@@ -843,153 +424,85 @@
         </section>
 
 
-        <!-- =====================================================
-             PROJECTS SECTION
-        ====================================================== -->
-        <section
-            id="projects"
-            class="section projects-section"
-        >
+        <!-- PROJECTS -->
+        <section class="section projects-section" id="projects">
 
             <div class="container">
 
-                <div class="section-heading">
+                <div class="section-heading reveal">
 
-                    <div>
+                    <span class="section-label">
+                        OUR WORK
+                    </span>
 
-                        <span class="section-label">
-                            OUR WORK
-                        </span>
-
-                        <h2>
-                            Selected
-                            <span>projects.</span>
-                        </h2>
-
-                    </div>
+                    <h2>
+                        Selected
+                        <span>Projects</span>
+                    </h2>
 
                     <p>
-                        A growing collection of digital projects created
-                        through technology, creativity and problem solving.
+                        Explore digital projects created and managed
+                        by HAICO TECH AND DESIGN.
                     </p>
 
                 </div>
 
 
-                <!-- Project Filters -->
                 <div
+                    class="project-filters reveal"
                     id="projectFilters"
-                    class="project-filters"
                 >
-
                     <button
-                        class="filter-button active"
                         type="button"
+                        class="filter-btn active"
                         data-filter="all"
                     >
-                        All Projects
+                        All
                     </button>
 
                     <button
-                        class="filter-button"
                         type="button"
-                        data-filter="web"
+                        class="filter-btn"
+                        data-filter="website"
                     >
                         Websites
                     </button>
 
                     <button
-                        class="filter-button"
                         type="button"
+                        class="filter-btn"
                         data-filter="app"
                     >
                         Apps
                     </button>
 
                     <button
-                        class="filter-button"
                         type="button"
-                        data-filter="design"
-                    >
-                        Design
-                    </button>
-
-                    <button
-                        class="filter-button"
-                        type="button"
+                        class="filter-btn"
                         data-filter="system"
                     >
                         Systems
                     </button>
 
-                </div>
-
-
-                <!-- Projects Loading -->
-                <div
-                    id="projectsLoading"
-                    class="projects-loading"
-                >
-
-                    <div class="loading-spinner"></div>
-
-                    <p>Loading projects...</p>
-
-                </div>
-
-
-                <!-- Dynamic Projects -->
-                <div
-                    id="projectsGrid"
-                    class="projects-grid"
-                ></div>
-
-
-                <!-- Empty Projects State -->
-                <div
-                    id="projectsEmpty"
-                    class="empty-state"
-                    hidden
-                >
-
-                    <div class="empty-icon">
-                        <i class="fa-solid fa-folder-open"></i>
-                    </div>
-
-                    <h3>No projects available</h3>
-
-                    <p>
-                        Projects will appear here when they are published.
-                    </p>
-
-                </div>
-
-
-                <!-- Projects Error -->
-                <div
-                    id="projectsError"
-                    class="empty-state error-state"
-                    hidden
-                >
-
-                    <div class="empty-icon">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                    </div>
-
-                    <h3>Unable to load projects</h3>
-
-                    <p>
-                        Please refresh the page and try again.
-                    </p>
-
                     <button
-                        id="retryProjects"
-                        class="secondary-button"
                         type="button"
+                        class="filter-btn"
+                        data-filter="design"
                     >
-                        <i class="fa-solid fa-rotate-right"></i>
-                        Try Again
+                        Design
                     </button>
+                </div>
+
+
+                <div
+                    class="projects-grid"
+                    id="projectsGrid"
+                >
+
+                    <div class="project-loading">
+                        <div class="small-spinner"></div>
+                        <p>Loading projects...</p>
+                    </div>
 
                 </div>
 
@@ -998,250 +511,38 @@
         </section>
 
 
-        <!-- =====================================================
-             PROJECT MODAL
-        ====================================================== -->
-        <div
-            id="projectModal"
-            class="modal"
-            aria-hidden="true"
-        >
-
-            <div class="modal-overlay" data-close-modal></div>
-
-            <div
-                class="modal-content project-modal-content"
-                role="dialog"
-                aria-modal="true"
-                aria-labelledby="projectModalTitle"
-            >
-
-                <button
-                    class="modal-close"
-                    type="button"
-                    data-close-modal
-                    aria-label="Close project details"
-                >
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-
-
-                <div
-                    id="projectModalImage"
-                    class="project-modal-image"
-                ></div>
-
-
-                <div class="project-modal-body">
-
-                    <span
-                        id="projectModalCategory"
-                        class="project-category"
-                    >
-                        Project
-                    </span>
-
-                    <h2 id="projectModalTitle">
-                        Project Title
-                    </h2>
-
-                    <p id="projectModalDescription">
-                        Project description.
-                    </p>
-
-
-                    <div
-                        id="projectModalMeta"
-                        class="project-modal-meta"
-                    ></div>
-
-
-                    <div class="project-modal-actions">
-
-                        <a
-                            id="projectModalLink"
-                            href="#"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="primary-button"
-                        >
-                            View Project
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                        </a>
-
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20am%20interested%20in%20a%20project%20similar%20to%20one%20of%20your%20projects."
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="secondary-button"
-                        >
-                            <i class="fa-brands fa-whatsapp"></i>
-                            Discuss Similar Project
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- =====================================================
-             WHY HAICO SECTION
-        ====================================================== -->
-        <section class="section why-section">
+        <!-- CTA -->
+        <section class="cta-section">
 
             <div class="container">
 
-                <div class="why-grid">
+                <div class="cta-card reveal">
 
-                    <div class="why-content">
-
+                    <div>
                         <span class="section-label">
-                            WHY HAICO
+                            HAVE AN IDEA?
                         </span>
 
                         <h2>
-                            More than design.
-                            <span>We build solutions.</span>
+                            Let's build something
+                            <span>great.</span>
                         </h2>
 
                         <p>
-                            We combine creativity, technology and practical
-                            thinking to create digital products that are
-                            useful, professional and easy to experience.
+                            Tell us what you want to create and
+                            let's turn your idea into a digital
+                            solution.
                         </p>
-
-
-                        <div class="why-list">
-
-                            <div class="why-item">
-
-                                <div class="why-icon">
-                                    <i class="fa-solid fa-bolt"></i>
-                                </div>
-
-                                <div>
-                                    <strong>Modern Solutions</strong>
-                                    <p>
-                                        We use modern approaches to create
-                                        better digital experiences.
-                                    </p>
-                                </div>
-
-                            </div>
-
-
-                            <div class="why-item">
-
-                                <div class="why-icon">
-                                    <i class="fa-solid fa-mobile-screen"></i>
-                                </div>
-
-                                <div>
-                                    <strong>Mobile Friendly</strong>
-                                    <p>
-                                        Our interfaces are designed to work
-                                        across phones, tablets and computers.
-                                    </p>
-                                </div>
-
-                            </div>
-
-
-                            <div class="why-item">
-
-                                <div class="why-icon">
-                                    <i class="fa-solid fa-shield-halved"></i>
-                                </div>
-
-                                <div>
-                                    <strong>Reliable Structure</strong>
-                                    <p>
-                                        We build projects with maintainability
-                                        and future growth in mind.
-                                    </p>
-                                </div>
-
-                            </div>
-
-                        </div>
-
                     </div>
 
-
-                    <div class="why-visual">
-
-                        <div class="why-card">
-
-                            <div class="why-card-header">
-
-                                <div class="why-avatar">
-                                    H
-                                </div>
-
-                                <div>
-                                    <strong>HAICO Digital</strong>
-                                    <span>Creative Technology</span>
-                                </div>
-
-                                <i class="fa-solid fa-ellipsis"></i>
-
-                            </div>
-
-
-                            <div class="why-card-body">
-
-                                <div class="metric">
-                                    <span>Creativity</span>
-                                    <strong>95%</strong>
-                                </div>
-
-                                <div class="metric-bar">
-                                    <span style="width:95%"></span>
-                                </div>
-
-
-                                <div class="metric">
-                                    <span>Technology</span>
-                                    <strong>92%</strong>
-                                </div>
-
-                                <div class="metric-bar">
-                                    <span style="width:92%"></span>
-                                </div>
-
-
-                                <div class="metric">
-                                    <span>Digital Experience</span>
-                                    <strong>96%</strong>
-                                </div>
-
-                                <div class="metric-bar">
-                                    <span style="width:96%"></span>
-                                </div>
-
-                            </div>
-
-
-                            <div class="why-card-footer">
-
-                                <span>
-                                    <i class="fa-solid fa-circle-check"></i>
-                                    Ready to build
-                                </span>
-
-                                <span>
-                                    HAICO
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
+                    <a
+                        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20have%20a%20digital%20project%20idea."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-gold"
+                    >
+                        Start a Project →
+                    </a>
 
                 </div>
 
@@ -1250,114 +551,28 @@
         </section>
 
 
-        <!-- =====================================================
-             CTA SECTION
-        ====================================================== -->
-        <section class="cta-section">
-
-            <div class="cta-background">
-                <div class="cta-orb"></div>
-            </div>
+        <!-- CONTACT -->
+        <section class="section contact-section" id="contact">
 
             <div class="container">
-
-                <div class="cta-content">
-
-                    <span class="section-label">
-                        HAVE AN IDEA?
-                    </span>
-
-                    <h2>
-                        Let's turn your idea
-                        <span>into something real.</span>
-                    </h2>
-
-                    <p>
-                        Tell us what you want to build and let's create
-                        a digital solution that works for you.
-                    </p>
-
-
-                    <div class="cta-actions">
-
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20want%20to%20start%20a%20project."
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="primary-button light-button"
-                        >
-                            <i class="fa-brands fa-whatsapp"></i>
-                            Start on WhatsApp
-                        </a>
-
-                        <a
-                            href="#contact"
-                            class="secondary-button light-outline"
-                        >
-                            Contact HAICO
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =====================================================
-             CONTACT SECTION
-        ====================================================== -->
-        <section
-            id="contact"
-            class="section contact-section"
-        >
-
-            <div class="container">
-
-                <div class="section-heading centered">
-
-                    <span class="section-label">
-                        CONTACT US
-                    </span>
-
-                    <h2>
-                        Let's build
-                        <span>something great.</span>
-                    </h2>
-
-                    <p>
-                        Have a question, project idea or business challenge?
-                        Get in touch with HAICO.
-                    </p>
-
-                </div>
-
 
                 <div class="contact-grid">
 
-                    <!-- Contact Information -->
-                    <div class="contact-info">
+                    <div class="contact-info reveal">
 
-                        <div class="contact-info-header">
+                        <span class="section-label">
+                            CONTACT US
+                        </span>
 
-                            <span class="content-kicker">
-                                GET IN TOUCH
-                            </span>
+                        <h2>
+                            Let's talk about
+                            <span>your idea.</span>
+                        </h2>
 
-                            <h3>
-                                We're ready to
-                                <span>hear from you.</span>
-                            </h3>
-
-                            <p>
-                                Choose the easiest way to reach HAICO
-                                TECH AND DESIGN.
-                            </p>
-
-                        </div>
+                        <p>
+                            Have a project, business idea or digital
+                            challenge? Contact HAICO TECH AND DESIGN.
+                        </p>
 
 
                         <div class="contact-items">
@@ -1368,18 +583,11 @@
                                 rel="noopener noreferrer"
                                 class="contact-item"
                             >
-
-                                <div class="contact-icon whatsapp-icon">
-                                    <i class="fa-brands fa-whatsapp"></i>
-                                </div>
-
+                                <span class="contact-icon">💬</span>
                                 <div>
-                                    <span>WhatsApp</span>
+                                    <small>WhatsApp</small>
                                     <strong>+255 718 170 176</strong>
                                 </div>
-
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-
                             </a>
 
 
@@ -1387,63 +595,22 @@
                                 href="mailto:ayoubhafidhi1@gmail.com"
                                 class="contact-item"
                             >
-
-                                <div class="contact-icon">
-                                    <i class="fa-solid fa-envelope"></i>
-                                </div>
-
+                                <span class="contact-icon">✉️</span>
                                 <div>
-                                    <span>Email</span>
-                                    <strong>ayoubhafidhi1@gmail.com</strong>
+                                    <small>Email</small>
+                                    <strong>
+                                        ayoubhafidhi1@gmail.com
+                                    </strong>
                                 </div>
-
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-
                             </a>
 
 
                             <div class="contact-item">
-
-                                <div class="contact-icon">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                </div>
-
+                                <span class="contact-icon">📍</span>
                                 <div>
-                                    <span>Location</span>
+                                    <small>Location</small>
                                     <strong>Tanzania</strong>
                                 </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="social-links">
-
-                            <span>Follow HAICO</span>
-
-                            <div class="social-icons">
-
-                                <!-- Add official social URLs here when available -->
-
-                                <a
-                                    href="https://wa.me/255718170176"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="WhatsApp"
-                                    title="WhatsApp"
-                                >
-                                    <i class="fa-brands fa-whatsapp"></i>
-                                </a>
-
-                                <a
-                                    href="mailto:ayoubhafidhi1@gmail.com"
-                                    aria-label="Email"
-                                    title="Email"
-                                >
-                                    <i class="fa-solid fa-envelope"></i>
-                                </a>
-
                             </div>
 
                         </div>
@@ -1451,54 +618,28 @@
                     </div>
 
 
-                    <!-- Contact Form -->
-                    <div class="contact-form-card">
+                    <div class="contact-form-card reveal">
 
-                        <div class="form-header">
-
-                            <span class="form-label">
-                                SEND A MESSAGE
-                            </span>
-
-                            <h3>
-                                Tell us about your project.
-                            </h3>
-
-                        </div>
-
-
-                        <form
-                            id="contactForm"
-                            novalidate
-                        >
+                        <form id="contactForm">
 
                             <div class="form-row">
 
                                 <div class="form-group">
-
                                     <label for="contactName">
-                                        Full Name
+                                        Name
                                     </label>
 
                                     <input
                                         type="text"
                                         id="contactName"
                                         name="name"
-                                        placeholder="Your full name"
-                                        autocomplete="name"
+                                        placeholder="Your name"
                                         required
                                     >
-
-                                    <small
-                                        class="field-error"
-                                        data-error-for="contactName"
-                                    ></small>
-
                                 </div>
 
 
                                 <div class="form-group">
-
                                     <label for="contactEmail">
                                         Email
                                     </label>
@@ -1507,88 +648,73 @@
                                         type="email"
                                         id="contactEmail"
                                         name="email"
-                                        placeholder="you@example.com"
-                                        autocomplete="email"
+                                        placeholder="Your email"
                                         required
                                     >
+                                </div>
 
-                                    <small
-                                        class="field-error"
-                                        data-error-for="contactEmail"
-                                    ></small>
+                            </div>
 
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+                                    <label for="contactPhone">
+                                        Phone
+                                    </label>
+
+                                    <input
+                                        type="tel"
+                                        id="contactPhone"
+                                        name="phone"
+                                        placeholder="+255..."
+                                    >
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="contactService">
+                                        Service
+                                    </label>
+
+                                    <select
+                                        id="contactService"
+                                        name="service"
+                                    >
+                                        <option value="">
+                                            Select service
+                                        </option>
+
+                                        <option value="Website">
+                                            Website
+                                        </option>
+
+                                        <option value="Apps">
+                                            Apps
+                                        </option>
+
+                                        <option value="Graphic Design">
+                                            Graphic Design
+                                        </option>
+
+                                        <option value="Management Systems">
+                                            Management Systems
+                                        </option>
+
+                                        <option value="E-Commerce">
+                                            E-Commerce
+                                        </option>
+
+                                        <option value="Digital Solutions">
+                                            Digital Solutions
+                                        </option>
+                                    </select>
                                 </div>
 
                             </div>
 
 
                             <div class="form-group">
-
-                                <label for="contactPhone">
-                                    Phone / WhatsApp
-                                </label>
-
-                                <input
-                                    type="tel"
-                                    id="contactPhone"
-                                    name="phone"
-                                    placeholder="+255..."
-                                    autocomplete="tel"
-                                >
-
-                            </div>
-
-
-                            <div class="form-group">
-
-                                <label for="contactService">
-                                    Service
-                                </label>
-
-                                <select
-                                    id="contactService"
-                                    name="service"
-                                >
-
-                                    <option value="">
-                                        Select a service
-                                    </option>
-
-                                    <option value="Website Development">
-                                        Website Development
-                                    </option>
-
-                                    <option value="Apps & Systems">
-                                        Apps & Systems
-                                    </option>
-
-                                    <option value="Graphic Design">
-                                        Graphic Design
-                                    </option>
-
-                                    <option value="E-Commerce">
-                                        E-Commerce
-                                    </option>
-
-                                    <option value="Management Systems">
-                                        Management Systems
-                                    </option>
-
-                                    <option value="Digital Solutions">
-                                        Digital Solutions
-                                    </option>
-
-                                    <option value="Other">
-                                        Other
-                                    </option>
-
-                                </select>
-
-                            </div>
-
-
-                            <div class="form-group">
-
                                 <label for="contactMessage">
                                     Message
                                 </label>
@@ -1596,45 +722,23 @@
                                 <textarea
                                     id="contactMessage"
                                     name="message"
-                                    rows="5"
-                                    placeholder="Tell us about your idea or project..."
+                                    rows="6"
+                                    placeholder="Tell us about your project..."
                                     required
                                 ></textarea>
-
-                                <small
-                                    class="field-error"
-                                    data-error-for="contactMessage"
-                                ></small>
-
                             </div>
 
 
                             <button
                                 type="submit"
+                                class="btn btn-primary submit-btn"
                                 id="contactSubmit"
-                                class="primary-button form-submit"
                             >
-
-                                <span class="button-text">
+                                <span>
                                     Send Message
                                 </span>
-
-                                <span
-                                    class="button-loading"
-                                    hidden
-                                >
-                                    <i class="fa-solid fa-spinner fa-spin"></i>
-                                    Sending...
-                                </span>
-
-                                <i class="fa-solid fa-paper-plane"></i>
-
+                                <span>→</span>
                             </button>
-
-                            <p class="form-note">
-                                <i class="fa-solid fa-lock"></i>
-                                Your message is handled securely.
-                            </p>
 
                         </form>
 
@@ -1646,128 +750,1533 @@
 
         </section>
 
-    </main>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+
+            <div class="container">
+
+                <div class="footer-grid">
+
+                    <div class="footer-brand">
+
+                        <a href="#home" class="brand">
+                            <span class="brand-mark">H</span>
+
+                            <span class="brand-text">
+                                <strong>HAICO</strong>
+                                <small>
+                                    TECH AND DESIGN
+                                </small>
+                            </span>
+                        </a>
+
+                        <p>
+                            Your Idea. Our Creativity.
+                            One Digital Solution.
+                        </p>
+
+                    </div>
 
 
-    <!-- =========================================================
-         FOOTER
-    ========================================================== -->
-    <footer class="site-footer">
+                    <div class="footer-links">
 
-        <div class="container">
+                        <h4>Explore</h4>
 
-            <div class="footer-main">
+                        <a href="#about">About</a>
+                        <a href="#services">Services</a>
+                        <a href="#projects">Projects</a>
+                        <a href="#contact">Contact</a>
 
-                <div class="footer-brand">
+                    </div>
 
-                    <a href="#home" class="brand">
 
-                        <div class="brand-mark">
-                            <span>H</span>
-                        </div>
+                    <div class="footer-links">
 
-                        <div class="brand-text">
-                            <strong>HAICO</strong>
-                            <small>TECH & DESIGN</small>
-                        </div>
+                        <h4>Services</h4>
 
-                    </a>
+                        <a href="#services">Website</a>
+                        <a href="#services">Apps</a>
+                        <a href="#services">Graphic Design</a>
+                        <a href="#services">Digital Solutions</a>
 
-                    <p>
-                        Your Idea. Our Creativity.
-                        One Digital Solution.
-                    </p>
+                    </div>
 
-                    <a
-                        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="footer-whatsapp"
-                    >
-                        <i class="fa-brands fa-whatsapp"></i>
-                        Chat with us
-                    </a>
+
+                    <div class="footer-links">
+
+                        <h4>Connect</h4>
+
+                        <a
+                            href="https://wa.me/255718170176"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            WhatsApp
+                        </a>
+
+                        <a href="mailto:ayoubhafidhi1@gmail.com">
+                            Email
+                        </a>
+
+                        <a
+                            href="#"
+                            id="footerAdminLogin"
+                        >
+                            Admin Login
+                        </a>
+
+                    </div>
 
                 </div>
 
 
-                <div class="footer-column">
-
-                    <h4>Explore</h4>
-
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#services">Services</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#contact">Contact</a>
-
-                </div>
-
-
-                <div class="footer-column">
-
-                    <h4>Services</h4>
-
-                    <a href="#services">Website</a>
-                    <a href="#services">Apps</a>
-                    <a href="#services">Graphic Design</a>
-                    <a href="#services">Management Systems</a>
-                    <a href="#services">E-Commerce</a>
-
-                </div>
-
-
-                <div class="footer-column">
-
-                    <h4>Contact</h4>
-
-                    <a
-                        href="https://wa.me/255718170176"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        +255 718 170 176
-                    </a>
-
-                    <a href="mailto:ayoubhafidhi1@gmail.com">
-                        ayoubhafidhi1@gmail.com
-                    </a>
+                <div class="footer-bottom">
 
                     <span>
-                        Tanzania
+                        ©
+                        <span id="currentYear"></span>
+                        HAICO TECH AND DESIGN.
+                        All rights reserved.
+                    </span>
+
+                    <span>
+                        Built with creativity & technology.
                     </span>
 
                 </div>
 
             </div>
 
+        </footer>
 
-            <div class="footer-bottom">
+    </div>
 
-                <p>
-                    ©
-                    <span id="currentYear"></span>
-                    HAICO TECH AND DESIGN.
-                    All rights reserved.
+
+    <!-- =====================================================
+         ADMIN APPLICATION
+         SAME index.html
+         ===================================================== -->
+    <div
+        id="adminApp"
+        class="admin-app hidden"
+    >
+
+        <!-- ADMIN HEADER -->
+        <header class="admin-header">
+
+            <div class="admin-header-left">
+
+                <button
+                    type="button"
+                    id="adminSidebarToggle"
+                    class="sidebar-toggle"
+                >
+                    ☰
+                </button>
+
+                <div class="admin-brand">
+
+                    <span class="admin-brand-mark">
+                        H
+                    </span>
+
+                    <div>
+                        <strong>HAICO</strong>
+                        <small>ADMIN PANEL</small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="admin-header-right">
+
+                <span
+                    class="admin-user-email"
+                    id="adminUserEmail"
+                >
+                    Admin
+                </span>
+
+                <button
+                    type="button"
+                    class="admin-logout-btn"
+                    id="logoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- ADMIN SIDEBAR -->
+        <aside
+            class="admin-sidebar"
+            id="adminSidebar"
+        >
+
+            <div class="sidebar-profile">
+
+                <div
+                    class="sidebar-avatar"
+                    id="sidebarAvatar"
+                >
+                    H
+                </div>
+
+                <div>
+                    <strong id="sidebarAdminName">
+                        Administrator
+                    </strong>
+
+                    <small>
+                        HAICO TECH AND DESIGN
+                    </small>
+                </div>
+
+            </div>
+
+
+            <nav class="admin-nav">
+
+                <button
+                    type="button"
+                    class="admin-nav-item active"
+                    data-admin-page="dashboard"
+                >
+                    <span>📊</span>
+                    Dashboard
+                </button>
+
+
+                <button
+                    type="button"
+                    class="admin-nav-item"
+                    data-admin-page="projects"
+                >
+                    <span>📁</span>
+                    Projects
+                </button>
+
+
+                <button
+                    type="button"
+                    class="admin-nav-item"
+                    data-admin-page="messages"
+                >
+                    <span>💬</span>
+                    Messages
+                    <span
+                        class="message-count"
+                        id="messageCount"
+                    >
+                        0
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="admin-nav-item"
+                    data-admin-page="profile"
+                >
+                    <span>👤</span>
+                    Profile
+                </button>
+
+
+                <button
+                    type="button"
+                    class="admin-nav-item"
+                    data-admin-page="settings"
+                >
+                    <span>⚙️</span>
+                    Settings
+                </button>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <button
+                    type="button"
+                    id="backToWebsite"
+                    class="back-website-btn"
+                >
+                    ← Public Website
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ADMIN MAIN -->
+        <main class="admin-main">
+
+            <!-- DASHBOARD PAGE -->
+            <section
+                class="admin-page active"
+                id="adminDashboardPage"
+            >
+
+                <div class="admin-page-header">
+
+                    <div>
+                        <span class="section-label">
+                            ADMINISTRATION
+                        </span>
+
+                        <h1>
+                            Dashboard
+                        </h1>
+
+                        <p id="adminGreeting">
+                            Welcome back.
+                        </p>
+                    </div>
+
+                    <div class="dashboard-date">
+                        <span id="dashboardDate"></span>
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-stats">
+
+                    <div class="dashboard-stat">
+
+                        <div class="dashboard-stat-icon blue">
+                            📁
+                        </div>
+
+                        <div>
+                            <span>Total Projects</span>
+                            <strong id="totalProjects">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="dashboard-stat-icon gold">
+                            💬
+                        </div>
+
+                        <div>
+                            <span>Total Messages</span>
+                            <strong id="totalMessages">
+                                0
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="dashboard-stat-icon green">
+                            🌐
+                        </div>
+
+                        <div>
+                            <span>Website Status</span>
+                            <strong>
+                                Online
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <div class="dashboard-stat">
+
+                        <div class="dashboard-stat-icon purple">
+                            🔐
+                        </div>
+
+                        <div>
+                            <span>Security</span>
+                            <strong>
+                                Active
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <div>
+                                <h3>
+                                    Quick Actions
+                                </h3>
+
+                                <p>
+                                    Manage your website.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-admin-action="projects"
+                            >
+                                <span>➕</span>
+                                <div>
+                                    <strong>
+                                        Add Project
+                                    </strong>
+                                    <small>
+                                        Publish a new project
+                                    </small>
+                                </div>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-admin-action="messages"
+                            >
+                                <span>💬</span>
+                                <div>
+                                    <strong>
+                                        View Messages
+                                    </strong>
+                                    <small>
+                                        Read customer inquiries
+                                    </small>
+                                </div>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-admin-action="profile"
+                            >
+                                <span>👤</span>
+                                <div>
+                                    <strong>
+                                        My Profile
+                                    </strong>
+                                    <small>
+                                        Account information
+                                    </small>
+                                </div>
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="quick-action"
+                                data-admin-action="settings"
+                            >
+                                <span>⚙️</span>
+                                <div>
+                                    <strong>
+                                        Settings
+                                    </strong>
+                                    <small>
+                                        System preferences
+                                    </small>
+                                </div>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <div>
+                                <h3>
+                                    Recent Projects
+                                </h3>
+
+                                <p>
+                                    Latest portfolio updates.
+                                </p>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="card-link"
+                                data-admin-action="projects"
+                            >
+                                View All
+                            </button>
+
+                        </div>
+
+                        <div id="recentProjects">
+                            <div class="empty-mini">
+                                No projects yet.
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="admin-card recent-messages-card">
+
+                    <div class="admin-card-header">
+
+                        <div>
+                            <h3>
+                                Recent Messages
+                            </h3>
+
+                            <p>
+                                Latest customer inquiries.
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="card-link"
+                            data-admin-action="messages"
+                        >
+                            View All
+                        </button>
+
+                    </div>
+
+                    <div id="recentMessages">
+                        <div class="empty-mini">
+                            No messages yet.
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROJECTS PAGE -->
+            <section
+                class="admin-page"
+                id="adminProjectsPage"
+            >
+
+                <div class="admin-page-header">
+
+                    <div>
+                        <span class="section-label">
+                            PORTFOLIO
+                        </span>
+
+                        <h1>
+                            Projects
+                        </h1>
+
+                        <p>
+                            Add, edit and manage your public projects.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        id="addProjectBtn"
+                    >
+                        + Add Project
+                    </button>
+
+                </div>
+
+
+                <div class="admin-card">
+
+                    <div
+                        class="admin-projects-table"
+                        id="adminProjectsList"
+                    >
+                        <div class="table-loading">
+                            <div class="small-spinner"></div>
+                            Loading projects...
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- MESSAGES PAGE -->
+            <section
+                class="admin-page"
+                id="adminMessagesPage"
+            >
+
+                <div class="admin-page-header">
+
+                    <div>
+                        <span class="section-label">
+                            COMMUNICATION
+                        </span>
+
+                        <h1>
+                            Messages
+                        </h1>
+
+                        <p>
+                            Customer messages received from the website.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-outline-dark"
+                        id="refreshMessagesBtn"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+
+                <div class="admin-card">
+
+                    <div
+                        class="messages-list"
+                        id="adminMessagesList"
+                    >
+                        <div class="table-loading">
+                            <div class="small-spinner"></div>
+                            Loading messages...
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- PROFILE PAGE -->
+            <section
+                class="admin-page"
+                id="adminProfilePage"
+            >
+
+                <div class="admin-page-header">
+
+                    <div>
+                        <span class="section-label">
+                            ACCOUNT
+                        </span>
+
+                        <h1>
+                            Profile
+                        </h1>
+
+                        <p>
+                            Your administrator account information.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="profile-layout">
+
+                    <div class="admin-card profile-card">
+
+                        <div class="large-avatar" id="profileAvatar">
+                            H
+                        </div>
+
+                        <h2 id="profileName">
+                            Administrator
+                        </h2>
+
+                        <p id="profileEmail">
+                            -
+                        </p>
+
+                        <span class="role-badge">
+                            Administrator
+                        </span>
+
+                    </div>
+
+
+                    <div class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <div>
+                                <h3>
+                                    Account Details
+                                </h3>
+
+                                <p>
+                                    Information from Supabase Auth.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-details">
+
+                            <div class="detail-row">
+                                <span>Email</span>
+                                <strong id="detailEmail">
+                                    -
+                                </strong>
+                            </div>
+
+                            <div class="detail-row">
+                                <span>User ID</span>
+                                <strong
+                                    id="detailUserId"
+                                    class="break-text"
+                                >
+                                    -
+                                </strong>
+                            </div>
+
+                            <div class="detail-row">
+                                <span>Account Created</span>
+                                <strong id="detailCreated">
+                                    -
+                                </strong>
+                            </div>
+
+                            <div class="detail-row">
+                                <span>Last Sign In</span>
+                                <strong id="detailLastLogin">
+                                    -
+                                </strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SETTINGS PAGE -->
+            <section
+                class="admin-page"
+                id="adminSettingsPage"
+            >
+
+                <div class="admin-page-header">
+
+                    <div>
+                        <span class="section-label">
+                            SYSTEM
+                        </span>
+
+                        <h1>
+                            Settings
+                        </h1>
+
+                        <p>
+                            Manage your administration preferences.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="settings-grid">
+
+                    <div class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <div>
+                                <h3>
+                                    Website
+                                </h3>
+
+                                <p>
+                                    Public website configuration.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="setting-row">
+
+                            <div>
+                                <strong>
+                                    Public Website
+                                </strong>
+
+                                <small>
+                                    HAICO Link Hub is publicly accessible.
+                                </small>
+                            </div>
+
+                            <span class="status-pill success">
+                                Online
+                            </span>
+
+                        </div>
+
+
+                        <div class="setting-row">
+
+                            <div>
+                                <strong>
+                                    Supabase
+                                </strong>
+
+                                <small>
+                                    Database and authentication service.
+                                </small>
+                            </div>
+
+                            <span class="status-pill success">
+                                Connected
+                            </span>
+
+                        </div>
+
+
+                        <div class="setting-row">
+
+                            <div>
+                                <strong>
+                                    Storage
+                                </strong>
+
+                                <small>
+                                    Project image storage.
+                                </small>
+                            </div>
+
+                            <span
+                                class="status-pill"
+                                id="storageStatus"
+                            >
+                                Checking
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="admin-card">
+
+                        <div class="admin-card-header">
+
+                            <div>
+                                <h3>
+                                    Security
+                                </h3>
+
+                                <p>
+                                    Your account security options.
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="setting-button"
+                            id="settingsResetPassword"
+                        >
+                            <span>🔑</span>
+
+                            <div>
+                                <strong>
+                                    Change Password
+                                </strong>
+
+                                <small>
+                                    Send a password reset email.
+                                </small>
+                            </div>
+
+                            <span>→</span>
+                        </button>
+
+
+                        <button
+                            type="button"
+                            class="setting-button danger"
+                            id="settingsLogout"
+                        >
+                            <span>🚪</span>
+
+                            <div>
+                                <strong>
+                                    Sign Out
+                                </strong>
+
+                                <small>
+                                    End your current admin session.
+                                </small>
+                            </div>
+
+                            <span>→</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADMIN LOGIN MODAL
+         ===================================================== -->
+    <div
+        class="modal-overlay"
+        id="adminLoginModal"
+        aria-hidden="true"
+    >
+
+        <div class="auth-modal">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeAdminLogin"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+
+            <div class="auth-logo">
+                H
+            </div>
+
+
+            <span class="section-label">
+                ADMINISTRATION
+            </span>
+
+            <h2>
+                Welcome Back
+            </h2>
+
+            <p class="auth-description">
+                Sign in to manage your HAICO Link Hub.
+            </p>
+
+
+            <div
+                id="loginAlert"
+                class="auth-alert"
+            ></div>
+
+
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="adminEmail">
+                        Email Address
+                    </label>
+
+                    <div class="input-with-icon">
+
+                        <span>✉</span>
+
+                        <input
+                            type="email"
+                            id="adminEmail"
+                            placeholder="Enter admin email"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="adminPassword">
+                        Password
+                    </label>
+
+                    <div class="input-with-icon">
+
+                        <span>🔒</span>
+
+                        <input
+                            type="password"
+                            id="adminPassword"
+                            placeholder="Enter password"
+                            autocomplete="current-password"
+                            minlength="6"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            id="toggleAdminPassword"
+                            class="password-eye"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-options">
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="rememberAdmin"
+                            checked
+                        >
+                        Remember me
+                    </label>
+
+                    <button
+                        type="button"
+                        id="forgotPasswordBtn"
+                    >
+                        Forgot Password?
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-submit"
+                    id="adminLoginSubmit"
+                >
+                    <span id="loginSubmitText">
+                        Sign In
+                    </span>
+
+                    <span
+                        id="loginSubmitSpinner"
+                        class="button-spinner"
+                    ></span>
+                </button>
+
+            </form>
+
+
+            <div class="auth-footer">
+                <button
+                    type="button"
+                    id="authBackWebsite"
+                >
+                    ← Back to website
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FORGOT PASSWORD MODAL
+         ===================================================== -->
+    <div
+        class="modal-overlay"
+        id="forgotPasswordModal"
+        aria-hidden="true"
+    >
+
+        <div class="auth-modal small-modal">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeForgotPassword"
+            >
+                ×
+            </button>
+
+
+            <div class="auth-logo gold-logo">
+                🔑
+            </div>
+
+
+            <span class="section-label">
+                ACCOUNT RECOVERY
+            </span>
+
+            <h2>
+                Forgot Password?
+            </h2>
+
+            <p class="auth-description">
+                Enter your admin email and we will send
+                you a secure password reset link.
+            </p>
+
+
+            <div
+                id="forgotAlert"
+                class="auth-alert"
+            ></div>
+
+
+            <form id="forgotForm">
+
+                <div class="form-group">
+
+                    <label for="forgotEmail">
+                        Email Address
+                    </label>
+
+                    <div class="input-with-icon">
+
+                        <span>✉</span>
+
+                        <input
+                            type="email"
+                            id="forgotEmail"
+                            placeholder="Enter your admin email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-submit"
+                    id="forgotSubmit"
+                >
+                    <span id="forgotSubmitText">
+                        Send Reset Link
+                    </span>
+
+                    <span
+                        id="forgotSpinner"
+                        class="button-spinner"
+                    ></span>
+                </button>
+
+            </form>
+
+
+            <div class="auth-footer">
+                <button
+                    type="button"
+                    id="backToLogin"
+                >
+                    ← Back to Login
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         RESET PASSWORD MODAL
+         ===================================================== -->
+    <div
+        class="modal-overlay"
+        id="resetPasswordModal"
+        aria-hidden="true"
+    >
+
+        <div class="auth-modal small-modal">
+
+            <div class="auth-logo gold-logo">
+                🔐
+            </div>
+
+
+            <span class="section-label">
+                SECURE RECOVERY
+            </span>
+
+            <h2>
+                Set New Password
+            </h2>
+
+            <p class="auth-description">
+                Create a new password for your admin account.
+            </p>
+
+
+            <div
+                id="resetAlert"
+                class="auth-alert"
+            ></div>
+
+
+            <form id="resetForm">
+
+                <div class="form-group">
+
+                    <label for="newPassword">
+                        New Password
+                    </label>
+
+                    <div class="input-with-icon">
+
+                        <span>🔒</span>
+
+                        <input
+                            type="password"
+                            id="newPassword"
+                            placeholder="New password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <div class="input-with-icon">
+
+                        <span>🔒</span>
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            placeholder="Confirm password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="auth-submit"
+                    id="resetSubmit"
+                >
+                    Update Password
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PROJECT MODAL
+         ===================================================== -->
+    <div
+        class="modal-overlay"
+        id="projectModal"
+        aria-hidden="true"
+    >
+
+        <div class="project-modal">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeProjectModal"
+            >
+                ×
+            </button>
+
+
+            <div class="project-modal-header">
+
+                <span class="section-label">
+                    PROJECT
+                </span>
+
+                <h2 id="projectModalTitle">
+                    Add Project
+                </h2>
+
+            </div>
+
+
+            <div
+                id="projectFormAlert"
+                class="auth-alert"
+            ></div>
+
+
+            <form id="projectForm">
+
+                <input
+                    type="hidden"
+                    id="projectId"
+                >
+
+
+                <div class="form-group">
+
+                    <label for="projectTitle">
+                        Project Title *
+                    </label>
+
+                    <input
+                        type="text"
+                        id="projectTitle"
+                        placeholder="e.g. HAICO Hotel Management System"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="projectCategory">
+                            Category *
+                        </label>
+
+                        <select
+                            id="projectCategory"
+                            required
+                        >
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                            <option value="website">
+                                Website
+                            </option>
+
+                            <option value="app">
+                                App
+                            </option>
+
+                            <option value="system">
+                                System
+                            </option>
+
+                            <option value="design">
+                                Design
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="projectYear">
+                            Year
+                        </label>
+
+                        <input
+                            type="text"
+                            id="projectYear"
+                            placeholder="2026"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="projectDescription">
+                        Description *
+                    </label>
+
+                    <textarea
+                        id="projectDescription"
+                        rows="5"
+                        placeholder="Describe the project..."
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="projectUrl">
+                        Project URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="projectUrl"
+                        placeholder="https://example.com"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="projectImage">
+                        Project Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="projectImage"
+                        accept="image/*"
+                    >
+
+                    <small class="file-help">
+                        JPG, PNG or WEBP. Recommended 1200 × 800.
+                    </small>
+
+                    <div
+                        id="projectImagePreview"
+                        class="image-preview"
+                    ></div>
+
+                </div>
+
+
+                <div class="modal-form-actions">
+
+                    <button
+                        type="button"
+                        class="btn btn-cancel"
+                        id="cancelProject"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        id="saveProjectBtn"
+                    >
+                        <span id="saveProjectText">
+                            Save Project
+                        </span>
+
+                        <span
+                            id="saveProjectSpinner"
+                            class="button-spinner"
+                        ></span>
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PROJECT VIEW MODAL
+         ===================================================== -->
+    <div
+        class="modal-overlay"
+        id="projectViewModal"
+        aria-hidden="true"
+    >
+
+        <div class="project-view-modal">
+
+            <button
+                type="button"
+                class="modal-close"
+                id="closeProjectView"
+            >
+                ×
+            </button>
+
+            <img
+                id="viewProjectImage"
+                src=""
+                alt="Project"
+            >
+
+            <div class="project-view-content">
+
+                <span
+                    class="project-category"
+                    id="viewProjectCategory"
+                >
+                    PROJECT
+                </span>
+
+                <h2 id="viewProjectTitle">
+                    Project
+                </h2>
+
+                <p id="viewProjectDescription">
+                    Description
                 </p>
 
-                <div class="footer-bottom-links">
+                <div class="project-view-meta">
 
-                    <a href="#home">
-                        Privacy
-                    </a>
+                    <span id="viewProjectYear">
+                        —
+                    </span>
 
-                    <a href="#home">
-                        Terms
-                    </a>
-
-                    <!-- Admin access -->
                     <a
-                        href="admin.html"
-                        class="admin-access"
+                        href="#"
+                        id="viewProjectLink"
+                        target="_blank"
+                        rel="noopener noreferrer"
                     >
-                        <i class="fa-solid fa-lock"></i>
-                        Admin
+                        Visit Project →
                     </a>
 
                 </div>
@@ -1776,52 +2285,12 @@
 
         </div>
 
-    </footer>
+    </div>
 
 
-    <!-- =========================================================
-         BACK TO TOP
-    ========================================================== -->
-    <button
-        id="backToTop"
-        class="back-to-top"
-        type="button"
-        aria-label="Back to top"
-        title="Back to top"
-    >
-        <i class="fa-solid fa-arrow-up"></i>
-    </button>
-
-
-    <!-- =========================================================
-         WHATSAPP FLOATING BUTTON
-    ========================================================== -->
-    <a
-        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20would%20like%20to%20make%20an%20inquiry."
-        target="_blank"
-        rel="noopener noreferrer"
-        class="whatsapp-float"
-        aria-label="Contact HAICO on WhatsApp"
-        title="Chat with HAICO on WhatsApp"
-    >
-        <i class="fa-brands fa-whatsapp"></i>
-        <span class="whatsapp-tooltip">
-            Chat with us
-        </span>
-    </a>
-
-
-    <!-- =========================================================
-         SUPABASE
-         NOTE:
-         app.js will initialize Supabase.
-         Replace the placeholders in app.js with your project's
-         public Supabase URL and anon key.
-    ========================================================== -->
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <!-- Main JavaScript -->
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
     <script src="app.js"></script>
 
 </body>
