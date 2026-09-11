@@ -1,41 +1,33 @@
-/* =====================================================
+/* =========================================================
    HAICO LINK HUB
-   SUPABASE APPLICATION
-===================================================== */
+   Supabase + Auth + Storage + Database
+   ========================================================= */
 
-
-/* =====================================================
-   SUPABASE CONFIGURATION
-===================================================== */
-const SUPABASE_URL = "https://lhgjvezxmeedbyiibbin.supabase.co";
+const SUPABASE_URL =
+    "https://lhgjvezxmeedbyiibbin.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
     "sb_publishable_Nj4CRhnyMm2Psb209Rnq8w_rXiZLBbX";
 
+/*
+ IMPORTANT:
+ This URL must also exist in:
+ Supabase > Authentication > URL Configuration
+*/
 const SITE_URL =
     "https://mrhaico.github.io/haico-link-hub/";
 
-/* =====================================================
-   CREATE SUPABASE CLIENT
-===================================================== */
+const { createClient } = supabase;
 
-const db = supabase.createClient(
+const db = createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
 );
 
 
-/* =====================================================
-   STORAGE BUCKETS
-===================================================== */
-
-const PROJECT_IMAGE_BUCKET = "project-images";
-const ATTACHMENT_BUCKET = "attachments";
-
-
-/* =====================================================
-   GLOBAL STATE
-===================================================== */
+/* =========================================================
+   STATE
+   ========================================================= */
 
 let projects = [];
 let services = [];
@@ -44,696 +36,329 @@ let brandSettings = null;
 let currentUser = null;
 
 
-/* =====================================================
-   DOM HELPER
-===================================================== */
+/* =========================================================
+   HELPERS
+   ========================================================= */
 
-function $(id) {
-    return document.getElementById(id);
+const $ = (id) => document.getElementById(id);
+
+function showModal(id) {
+    $(id).classList.add("show");
 }
 
+function hideModal(id) {
+    $(id).classList.remove("show");
+}
 
-/* =====================================================
-   INITIALIZATION
-===================================================== */
+function message(id, text, success = false) {
+    const el = $(id);
 
-document.addEventListener("DOMContentLoaded", async () => {
+    if (!el) return;
 
-    setupEventListeners();
+    el.textContent = text;
+    el.style.color = success
+        ? "#16855b"
+        : "#d64545";
+}
 
-    $("year").textContent = new Date().getFullYear();
+function toast(text) {
+    const el = $("toast");
 
-    try {
-
-        await loadAllData();
-
-        await checkAuthentication();
-
-    } catch (error) {
-
-        console.error("Initialization error:", error);
-
-    }
+    el.textContent = text;
+    el.classList.add("show");
 
     setTimeout(() => {
-
-        $("loadingScreen").classList.add("hidden");
-
-    }, 500);
-
-});
-
-
-/* =====================================================
-   EVENT LISTENERS
-===================================================== */
-
-function setupEventListeners() {
-
-
-    /* Public Login */
-
-    $("openLoginBtn").addEventListener(
-        "click",
-        openLogin
-    );
-
-
-    $("footerAdminBtn").addEventListener(
-        "click",
-        openLogin
-    );
-
-
-    $("mobileLoginBtn").addEventListener(
-        "click",
-        () => {
-
-            $("mobileNav").classList.remove("open");
-
-            openLogin();
-
-        }
-    );
-
-
-    /* Mobile menu */
-
-    $("mobileMenuBtn").addEventListener(
-        "click",
-        () => {
-
-            $("mobileNav").classList.toggle("open");
-
-        }
-    );
-
-
-    /* Login close */
-
-    $("closeLoginBtn").addEventListener(
-        "click",
-        closeLogin
-    );
-
-
-    /* Login form */
-
-    $("loginForm").addEventListener(
-        "submit",
-        handleLogin
-    );
-
-
-    /* Password show/hide */
-
-    $("togglePassword").addEventListener(
-        "click",
-        togglePassword
-    );
-
-
-    /* Forgot password */
-
-    $("forgotPasswordBtn").addEventListener(
-        "click",
-        openForgotPassword
-    );
-
-
-    $("closeForgotBtn").addEventListener(
-        "click",
-        closeForgotPassword
-    );
-
-
-    $("backToLoginBtn").addEventListener(
-        "click",
-        () => {
-
-            closeForgotPassword();
-
-            openLogin();
-
-        }
-    );
-
-
-    $("forgotPasswordForm").addEventListener(
-        "submit",
-        handleForgotPassword
-    );
-
-
-    /* Reset password */
-
-    $("resetPasswordForm").addEventListener(
-        "submit",
-        handlePasswordReset
-    );
-
-
-    /* Admin */
-
-    $("closeAdminBtn").addEventListener(
-        "click",
-        closeAdminDashboard
-    );
-
-
-    $("logoutBtn").addEventListener(
-        "click",
-        handleLogout
-    );
-
-
-    $("mobileAdminMenu").addEventListener(
-        "click",
-        () => {
-
-            $("adminSidebar")?.classList.toggle("open");
-
-            document
-                .querySelector(".admin-sidebar")
-                .classList.toggle("open");
-
-        }
-    );
-
-
-    /* Admin navigation */
-
-    document
-        .querySelectorAll(".admin-nav-btn")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const view =
-                        button.dataset.view;
-
-                    showAdminView(view);
-
-                    document
-                        .querySelector(".admin-sidebar")
-                        .classList.remove("open");
-
-                }
-            );
-
-        });
-
-
-    /* Dashboard shortcut */
-
-    document
-        .querySelectorAll("[data-go-view]")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    showAdminView(
-                        button.dataset.goView
-                    );
-
-                }
-            );
-
-        });
-
-
-    /* Project */
-
-    $("addProjectBtn").addEventListener(
-        "click",
-        () => openProjectForm()
-    );
-
-
-    $("projectForm").addEventListener(
-        "submit",
-        handleProjectSubmit
-    );
-
-
-    $("cancelProjectBtn").addEventListener(
-        "click",
-        closeProjectForm
-    );
-
-
-    $("cancelProjectBtn2").addEventListener(
-        "click",
-        closeProjectForm
-    );
-
-
-    $("closeProjectModal").addEventListener(
-        "click",
-        closeProjectDetails
-    );
-
-
-    /* Services */
-
-    $("serviceForm").addEventListener(
-        "submit",
-        handleServiceSubmit
-    );
-
-
-    $("cancelServiceBtn").addEventListener(
-        "click",
-        resetServiceForm
-    );
-
-
-    /* Brand */
-
-    $("brandForm").addEventListener(
-        "submit",
-        handleBrandSubmit
-    );
-
-
-    /* Social */
-
-    $("socialForm").addEventListener(
-        "submit",
-        handleSocialSubmit
-    );
-
-
-    $("cancelSocialBtn").addEventListener(
-        "click",
-        resetSocialForm
-    );
-
-
-    /* Search */
-
-    $("searchInput").addEventListener(
-        "input",
-        renderProjects
-    );
-
-
-    $("categoryFilter").addEventListener(
-        "change",
-        renderProjects
-    );
-
-
-    /* Overlay clicks */
-
-    $("loginOverlay").addEventListener(
-        "click",
-        event => {
-
-            if (event.target === $("loginOverlay")) {
-                closeLogin();
-            }
-
-        }
-    );
-
-
-    $("forgotOverlay").addEventListener(
-        "click",
-        event => {
-
-            if (event.target === $("forgotOverlay")) {
-                closeForgotPassword();
-            }
-
-        }
-    );
-
-
-    $("projectModal").addEventListener(
-        "click",
-        event => {
-
-            if (event.target === $("projectModal")) {
-                closeProjectDetails();
-            }
-
-        }
-    );
-
-
+        el.classList.remove("show");
+    }, 3000);
+}
+
+function escapeHTML(value = "") {
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function normalizeWhatsapp(number = "") {
+    return String(number)
+        .replace(/\D/g, "");
 }
 
 
-/* =====================================================
-   LOAD ALL DATA
-===================================================== */
-
-async function loadAllData() {
-
-    await Promise.all([
-        loadBrandSettings(),
-        loadServices(),
-        loadProjects(),
-        loadSocialLinks()
-    ]);
-
-    renderEverything();
-
-}
-
-
-/* =====================================================
-   BRAND
-===================================================== */
-
-async function loadBrandSettings() {
-
-    const {
-        data,
-        error
-    } = await db
-        .from("brand_settings")
-        .select("*")
-        .limit(1)
-        .maybeSingle();
-
-
-    if (error) {
-
-        console.error(
-            "Brand loading error:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    brandSettings = data || null;
-
-}
-
-
-/* =====================================================
-   SERVICES
-===================================================== */
-
-async function loadServices() {
-
-    const {
-        data,
-        error
-    } = await db
-        .from("services")
-        .select("*")
-        .order("created_at", {
-            ascending: true
-        });
-
-
-    if (error) {
-
-        console.error(
-            "Services loading error:",
-            error
-        );
-
-        services = [];
-
-        return;
-
-    }
-
-
-    services = data || [];
-
-}
-
-
-/* =====================================================
-   PROJECTS
-===================================================== */
-
-async function loadProjects() {
-
-    const {
-        data,
-        error
-    } = await db
-        .from("projects")
-        .select("*")
-        .order("created_at", {
-            ascending: false
-        });
-
-
-    if (error) {
-
-        console.error(
-            "Projects loading error:",
-            error
-        );
-
-        projects = [];
-
-        return;
-
-    }
-
-
-    projects = data || [];
-
-}
-
-
-/* =====================================================
-   SOCIAL LINKS
-===================================================== */
-
-async function loadSocialLinks() {
-
-    const {
-        data,
-        error
-    } = await db
-        .from("social_links")
-        .select("*")
-        .order("created_at", {
-            ascending: true
-        });
-
-
-    if (error) {
-
-        console.error(
-            "Social links loading error:",
-            error
-        );
-
-        socialLinks = [];
-
-        return;
-
-    }
-
-
-    socialLinks = data || [];
-
-}
-
-
-/* =====================================================
-   RENDER EVERYTHING
-===================================================== */
-
-function renderEverything() {
-
-    renderBrand();
-
-    renderServices();
-
-    renderProjects();
-
-    renderSocialLinks();
-
-    renderAdminProjects();
-
-    renderAdminServices();
-
-    renderAdminSocial();
-
-    updateStats();
-
-}
-
-
-/* =====================================================
-   BRAND RENDER
-===================================================== */
+/* =========================================================
+   PUBLIC BRAND
+   ========================================================= */
 
 function renderBrand() {
 
-    if (!brandSettings) {
-        return;
-    }
-
-
     const brand =
-        brandSettings.brand_name ||
-        "HAICO TECH & DESIGN";
+        brandSettings || {};
 
+    const name =
+        brand.brand_name ||
+        "HAICO Link Hub";
 
     const tagline =
-        brandSettings.tagline ||
+        brand.tagline ||
         "Your Idea. Our Creativity. One Digital Solution.";
 
-
-    const about =
-        brandSettings.about_text ||
-        "We create practical digital solutions.";
-
-
-    const phone =
-        brandSettings.phone ||
-        "+255 718 170 176";
-
-
-    const email =
-        brandSettings.email ||
-        "ayoubhafidhi1@gmail.com";
-
-
-    const whatsapp =
-        brandSettings.whatsapp ||
-        phone;
-
-
-    $("heroBrand").textContent = brand;
+    $("heroBrand").textContent = name;
+    $("headerBrand").textContent = name;
+    $("footerBrand").textContent = name;
 
     $("heroTagline").textContent = tagline;
+    $("authTagline").textContent = tagline;
 
-    $("aboutBrandName").textContent = brand;
+    $("aboutText").textContent =
+        brand.about_text ||
+        "Welcome to HAICO Link Hub. Discover digital projects, websites, applications, management systems and creative digital solutions.";
 
-    $("aboutText").textContent = about;
+    if (brand.phone) {
 
-    $("phoneText").textContent = phone;
+        $("phoneText").textContent =
+            brand.phone;
 
-    $("emailText").textContent = email;
+        $("phoneText").href =
+            "tel:" + brand.phone;
+    }
 
-    $("contactPhoneText").textContent = phone;
+    if (brand.email) {
 
-    $("contactEmailText").textContent = email;
+        $("emailContact").textContent =
+            brand.email;
 
-    $("footerBrand").textContent = brand;
+        $("emailContact").href =
+            "mailto:" + brand.email;
+    }
 
-    $("headerBrand").textContent = brand;
+    if (brand.whatsapp) {
 
+        const number =
+            normalizeWhatsapp(brand.whatsapp);
 
-    $("loginBrandName").textContent = brand;
+        $("whatsappContact").href =
+            "https://wa.me/" + number;
 
-    $("loginBrandTagline").textContent = tagline;
-
-
-    $("brandName").value = brand;
-
-    $("brandTagline").value = tagline;
-
-    $("brandAbout").value = about;
-
-    $("brandPhone").value = phone;
-
-    $("brandEmail").value = email;
-
-    $("brandWhatsapp").value = whatsapp;
-
-    $("brandLogo").value =
-        brandSettings.logo_url || "";
-
-
-    $("emailContact").href =
-        `mailto:${email}`;
-
-
-    $("whatsappContact").href =
-        makeWhatsAppLink(whatsapp);
-
+        $("whatsappContact").textContent =
+            "Chat on WhatsApp";
+    }
 }
 
 
-/* =====================================================
-   SERVICES RENDER
-===================================================== */
+/* =========================================================
+   LOAD BRAND
+   ========================================================= */
+
+async function loadBrand() {
+
+    const { data, error } =
+        await db
+            .from("brand_settings")
+            .select("*")
+            .limit(1)
+            .maybeSingle();
+
+    if (error) {
+
+        console.error("Brand error:", error);
+
+        return;
+    }
+
+    brandSettings = data;
+
+    renderBrand();
+
+    if (brandSettings) {
+
+        $("brandName").value =
+            brandSettings.brand_name || "";
+
+        $("brandTagline").value =
+            brandSettings.tagline || "";
+
+        $("brandAbout").value =
+            brandSettings.about_text || "";
+
+        $("brandLogo").value =
+            brandSettings.logo_url || "";
+
+        $("brandPhone").value =
+            brandSettings.phone || "";
+
+        $("brandEmail").value =
+            brandSettings.email || "";
+
+        $("brandWhatsapp").value =
+            brandSettings.whatsapp || "";
+    }
+}
+
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+
+async function loadServices() {
+
+    const { data, error } =
+        await db
+            .from("services")
+            .select("*")
+            .order("id", { ascending: true });
+
+    if (error) {
+
+        console.error("Services error:", error);
+
+        return;
+    }
+
+    services = data || [];
+
+    renderServices();
+    renderAdminServices();
+    updateStats();
+}
 
 function renderServices() {
 
     const container =
         $("servicesContainer");
 
-
     if (!services.length) {
 
         container.innerHTML = `
-            <div class="empty-message">
+            <div class="about-card">
                 No services available yet.
             </div>
         `;
 
         return;
-
     }
 
+    container.innerHTML =
+        services.map(service => `
+
+            <article class="service-card">
+
+                <div class="service-icon">
+                    ${escapeHTML(service.icon || "🛠")}
+                </div>
+
+                <h3>
+                    ${escapeHTML(service.name)}
+                </h3>
+
+                <p>
+                    ${escapeHTML(service.description || "")}
+                </p>
+
+            </article>
+
+        `).join("");
+}
+
+function renderAdminServices() {
+
+    const container =
+        $("adminServicesContainer");
+
+    if (!services.length) {
+
+        container.innerHTML =
+            "<p>No services found.</p>";
+
+        return;
+    }
 
     container.innerHTML =
-        services.map(service => {
+        services.map(service => `
 
-            return `
-                <article class="service-card">
+            <div class="admin-item">
 
-                    <div class="service-icon">
-                        ${escapeHTML(
-                            service.icon || "◆"
-                        )}
-                    </div>
+                <div class="admin-item-info">
 
                     <h3>
-                        ${escapeHTML(
-                            service.name || "Service"
-                        )}
+                        ${escapeHTML(service.icon || "🛠")}
+                        ${escapeHTML(service.name)}
                     </h3>
 
                     <p>
-                        ${escapeHTML(
-                            service.description || ""
-                        )}
+                        ${escapeHTML(service.description || "")}
                     </p>
 
-                </article>
-            `;
+                </div>
 
-        }).join("");
+                <div class="admin-item-actions">
 
+                    <button
+                        class="small-btn"
+                        onclick="editService('${service.id}')"
+                    >
+                        Edit
+                    </button>
+
+                    <button
+                        class="small-btn danger"
+                        onclick="deleteService('${service.id}')"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
 }
 
 
-/* =====================================================
-   PROJECT CATEGORIES
-===================================================== */
+/* =========================================================
+   PROJECTS
+   ========================================================= */
+
+async function loadProjects() {
+
+    const { data, error } =
+        await db
+            .from("projects")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+    if (error) {
+
+        console.error("Projects error:", error);
+
+        $("projectsContainer").innerHTML = `
+            <div class="about-card">
+                Unable to load projects.
+            </div>
+        `;
+
+        return;
+    }
+
+    projects = data || [];
+
+    renderCategoryFilter();
+    renderProjects();
+    renderAdminProjects();
+    updateStats();
+}
+
 
 function renderCategoryFilter() {
 
     const select =
         $("categoryFilter");
 
-
     const current =
         select.value;
-
 
     const categories =
         [...new Set(
@@ -743,97 +368,63 @@ function renderCategoryFilter() {
         )]
         .sort();
 
-
-    select.innerHTML = `
-        <option value="all">
-            All Categories
-        </option>
-
-        ${categories.map(category => `
-            <option value="${escapeAttribute(category)}">
+    select.innerHTML =
+        `<option value="">All Categories</option>` +
+        categories.map(category => `
+            <option value="${escapeHTML(category)}">
                 ${escapeHTML(category)}
             </option>
-        `).join("")}
-    `;
+        `).join("");
 
-
-    if (
-        categories.includes(current)
-    ) {
-
-        select.value = current;
-
-    }
-
+    select.value = current;
 }
 
 
-/* =====================================================
-   PROJECT RENDER
-===================================================== */
-
 function renderProjects() {
-
-    renderCategoryFilter();
-
 
     const container =
         $("projectsContainer");
 
-
     const search =
-        $("searchInput")
-            .value
-            .trim()
-            .toLowerCase();
-
+        $("searchInput").value
+            .toLowerCase()
+            .trim();
 
     const category =
         $("categoryFilter").value;
 
-
-    let filtered =
+    const filtered =
         projects.filter(project => {
 
-            const text = [
-                project.name,
-                project.category,
-                project.description,
-                project.details,
-                project.technologies
-            ]
-                .join(" ")
-                .toLowerCase();
+            const searchable = `
+                ${project.name || ""}
+                ${project.category || ""}
+                ${project.description || ""}
+                ${project.technologies || ""}
+                ${project.brand || ""}
+            `.toLowerCase();
 
-
-            const matchesSearch =
+            const matchSearch =
                 !search ||
-                text.includes(search);
+                searchable.includes(search);
 
-
-            const matchesCategory =
-                category === "all" ||
+            const matchCategory =
+                !category ||
                 project.category === category;
 
-
-            return (
-                matchesSearch &&
-                matchesCategory
-            );
-
+            return matchSearch && matchCategory;
         });
 
 
     if (!filtered.length) {
 
         container.innerHTML = `
-            <div class="empty-message">
+            <div class="about-card">
                 No projects found.
             </div>
         `;
 
         return;
-
     }
 
 
@@ -841,1212 +432,297 @@ function renderProjects() {
         filtered.map(project => {
 
             const image =
-                project.image_url;
-
+                project.image_url
+                    ? `
+                        <img
+                            class="project-image"
+                            src="${escapeHTML(project.image_url)}"
+                            alt="${escapeHTML(project.name)}"
+                        >
+                    `
+                    : `
+                        <div class="project-no-image">
+                            🚀
+                        </div>
+                    `;
 
             return `
+
                 <article class="project-card">
 
-                    <div class="project-image">
-
-                        ${
-                            image
-                            ?
-                            `<img
-                                src="${escapeAttribute(image)}"
-                                alt="${escapeAttribute(project.name || "Project")}"
-                            >`
-                            :
-                            `<div class="project-placeholder">
-                                H
-                            </div>`
-                        }
-
-                    </div>
+                    ${image}
 
                     <div class="project-content">
 
                         <span class="project-category">
-                            ${escapeHTML(
-                                project.category || "Project"
-                            )}
+                            ${escapeHTML(project.category || "Project")}
                         </span>
 
                         <h3>
-                            ${escapeHTML(
-                                project.name || "Untitled Project"
-                            )}
+                            ${escapeHTML(project.name)}
                         </h3>
 
                         <p>
-                            ${escapeHTML(
-                                project.description || ""
-                            )}
+                            ${escapeHTML(project.description || "")}
                         </p>
 
-                        <div class="project-meta">
-
-                            <span class="status-badge">
-                                ${escapeHTML(
-                                    project.status || "Completed"
-                                )}
-                            </span>
+                        <div class="project-actions">
 
                             <button
-                                class="view-project-btn"
-                                onclick="openProjectDetails('${project.id}')"
+                                class="small-btn primary"
+                                onclick="viewProject('${project.id}')"
                             >
-                                View Details →
+                                View Details
                             </button>
+
+                            ${
+                                project.live_link
+                                ? `
+                                    <a
+                                        class="small-btn"
+                                        href="${escapeHTML(project.live_link)}"
+                                        target="_blank"
+                                    >
+                                        Live
+                                    </a>
+                                `
+                                : ""
+                            }
+
+                            ${
+                                project.whatsapp_link
+                                ? `
+                                    <a
+                                        class="small-btn"
+                                        href="${escapeHTML(project.whatsapp_link)}"
+                                        target="_blank"
+                                    >
+                                        WhatsApp
+                                    </a>
+                                `
+                                : ""
+                            }
 
                         </div>
 
                     </div>
 
                 </article>
+
             `;
 
         }).join("");
-
 }
 
 
-/* =====================================================
-   SOCIAL RENDER
-===================================================== */
-
-function renderSocialLinks() {
+function renderAdminProjects() {
 
     const container =
-        $("socialContainer");
+        $("adminProjectsContainer");
 
+    if (!projects.length) {
 
-    if (!socialLinks.length) {
-
-        container.innerHTML = "";
+        container.innerHTML =
+            "<p>No projects found.</p>";
 
         return;
-
     }
-
 
     container.innerHTML =
-        socialLinks.map(link => {
+        projects.map(project => `
 
-            return `
-                <a
-                    class="social-link"
-                    href="${escapeAttribute(link.url)}"
-                    target="_blank"
-                    rel="noopener noreferrer"
+            <div class="admin-item">
+
+                <div class="admin-item-info">
+
+                    <h3>
+                        ${escapeHTML(project.name)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(project.category || "")}
+                        ·
+                        ${escapeHTML(project.status || "")}
+                    </p>
+
+                </div>
+
+                <div class="admin-item-actions">
+
+                    <button
+                        class="small-btn"
+                        onclick="viewProject('${project.id}')"
+                    >
+                        View
+                    </button>
+
+                    <button
+                        class="small-btn"
+                        onclick="editProject('${project.id}')"
+                    >
+                        Edit
+                    </button>
+
+                    <button
+                        class="small-btn danger"
+                        onclick="deleteProject('${project.id}')"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+}
+
+
+/* =========================================================
+   PROJECT DETAILS
+   ========================================================= */
+
+function viewProject(id) {
+
+    const project =
+        projects.find(p => String(p.id) === String(id));
+
+    if (!project) return;
+
+    const image =
+        project.image_url
+            ? `
+                <img
+                    src="${escapeHTML(project.image_url)}"
+                    class="detail-image"
+                    alt="${escapeHTML(project.name)}"
                 >
-                    ${escapeHTML(
-                        link.icon || "●"
-                    )}
-                    ${escapeHTML(
-                        link.platform || "Social"
-                    )}
-                </a>
-            `;
+            `
+            : "";
 
-        }).join("");
+    $("projectDetails").innerHTML = `
 
-}
+        ${image}
 
+        <span class="project-category">
+            ${escapeHTML(project.category || "")}
+        </span>
 
-/* =====================================================
-   AUTH CHECK
-===================================================== */
+        <h1>
+            ${escapeHTML(project.name)}
+        </h1>
 
-async function checkAuthentication() {
+        <div class="detail-meta">
 
-    const {
-        data,
-        error
-    } = await db.auth.getSession();
-
-
-    if (error) {
-
-        console.error(
-            "Session error:",
-            error
-        );
-
-        return;
-
-    }
-
-
-    if (data.session) {
-
-        currentUser =
-            data.session.user;
-
-    }
-
-
-    db.auth.onAuthStateChange(
-        async (event, session) => {
-
-            console.log(
-                "Auth event:",
-                event
-            );
-
-
-            if (event === "SIGNED_IN") {
-
-                currentUser =
-                    session?.user || null;
-
-                closeLogin();
-
-                closeForgotPassword();
-
-                openAdminDashboard();
-
-                updateAdminUser();
-
+            ${
+                project.status
+                ? `<span>Status: ${escapeHTML(project.status)}</span>`
+                : ""
             }
 
-
-            if (event === "SIGNED_OUT") {
-
-                currentUser = null;
-
-                closeAdminDashboard();
-
+            ${
+                project.brand
+                ? `<span>Brand: ${escapeHTML(project.brand)}</span>`
+                : ""
             }
 
-
-            if (
-                event === "PASSWORD_RECOVERY"
-            ) {
-
-                currentUser =
-                    session?.user || null;
-
-                closeLogin();
-
-                closeForgotPassword();
-
-                $("resetOverlay")
-                    .classList.remove("hidden");
-
-                document.body.classList.add(
-                    "no-scroll"
-                );
-
+            ${
+                project.created_by
+                ? `<span>Created by: ${escapeHTML(project.created_by)}</span>`
+                : ""
             }
 
-        }
-    );
-
-}
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-async function handleLogin(event) {
-
-    event.preventDefault();
-
-
-    const email =
-        $("loginEmail").value.trim();
-
-
-    const password =
-        $("loginPassword").value;
-
-
-    setMessage(
-        $("loginMessage"),
-        "Signing in...",
-        "success"
-    );
-
-
-    $("loginSubmitBtn").disabled = true;
-
-
-    try {
-
-        const {
-            data,
-            error
-        } = await db.auth.signInWithPassword({
-
-            email: email,
-
-            password: password
-
-        });
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        currentUser =
-            data.user;
-
-
-        setMessage(
-            $("loginMessage"),
-            "Login successful.",
-            "success"
-        );
-
-
-        closeLogin();
-
-        openAdminDashboard();
-
-        updateAdminUser();
-
-
-    } catch (error) {
-
-        console.error(
-            "Login error:",
-            error
-        );
-
-
-        setMessage(
-            $("loginMessage"),
-            getAuthErrorMessage(error),
-            "error"
-        );
-
-
-    } finally {
-
-        $("loginSubmitBtn").disabled = false;
-
-    }
-
-}
-
-
-/* =====================================================
-   FORGOT PASSWORD
-   SUPABASE AUTH API
-===================================================== */
-
-async function handleForgotPassword(event) {
-
-    event.preventDefault();
-
-
-    const email =
-        $("forgotEmail")
-            .value
-            .trim();
-
-
-    if (!email) {
-
-        setMessage(
-            $("forgotMessage"),
-            "Please enter your email address.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        $("forgotSubmitBtn");
-
-
-    button.disabled = true;
-
-    button.textContent =
-        "Sending...";
-
-
-    setMessage(
-        $("forgotMessage"),
-        "Connecting to Supabase Auth...",
-        "success"
-    );
-
-
-    try {
-
-        /*
-         * THIS IS THE PASSWORD RESET API
-         *
-         * The user receives a secure email
-         * from Supabase.
-         */
-
-        const {
-            data,
-            error
-        } = await db.auth.resetPasswordForEmail(
-            email,
-            {
-                redirectTo: SITE_URL
+            ${
+                project.technologies
+                ? `<span>Tech: ${escapeHTML(project.technologies)}</span>`
+                : ""
             }
-        );
 
+        </div>
 
-        if (error) {
+        <h3>Description</h3>
 
-            throw error;
+        <p>
+            ${escapeHTML(project.description || "No description.")}
+        </p>
 
+        ${
+            project.details
+            ? `
+                <br>
+                <h3>Details</h3>
+                <p>
+                    ${escapeHTML(project.details)}
+                </p>
+            `
+            : ""
         }
 
+        <div class="detail-links">
 
-        console.log(
-            "Password reset response:",
-            data
-        );
+            ${
+                project.live_link
+                ? `
+                    <a
+                        href="${escapeHTML(project.live_link)}"
+                        target="_blank"
+                    >
+                        🌐 Live Website
+                    </a>
+                `
+                : ""
+            }
 
+            ${
+                project.github_link
+                ? `
+                    <a
+                        href="${escapeHTML(project.github_link)}"
+                        target="_blank"
+                    >
+                        💻 GitHub
+                    </a>
+                `
+                : ""
+            }
 
-        setMessage(
-            $("forgotMessage"),
-            "Reset link sent. Check your email inbox and spam folder.",
-            "success"
-        );
+            ${
+                project.whatsapp_link
+                ? `
+                    <a
+                        href="${escapeHTML(project.whatsapp_link)}"
+                        target="_blank"
+                    >
+                        💬 WhatsApp
+                    </a>
+                `
+                : ""
+            }
 
+            ${
+                project.attachment_url
+                ? `
+                    <a
+                        href="${escapeHTML(project.attachment_url)}"
+                        target="_blank"
+                        download
+                    >
+                        📎 Download
+                    </a>
+                `
+                : ""
+            }
 
-    } catch (error) {
+        </div>
+    `;
 
-        console.error(
-            "Forgot password error:",
-            error
-        );
-
-
-        setMessage(
-            $("forgotMessage"),
-            getAuthErrorMessage(error),
-            "error"
-        );
-
-
-    } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-            "Send Reset Link";
-
-    }
-
+    showModal("projectModal");
 }
 
 
-/* =====================================================
-   PASSWORD RESET
-===================================================== */
-
-async function handlePasswordReset(event) {
-
-    event.preventDefault();
-
-
-    const password =
-        $("newPassword").value;
-
-
-    const confirm =
-        $("confirmPassword").value;
-
-
-    if (password.length < 6) {
-
-        setMessage(
-            $("resetMessage"),
-            "Password must contain at least 6 characters.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if (password !== confirm) {
-
-        setMessage(
-            $("resetMessage"),
-            "Passwords do not match.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        $("resetSubmitBtn");
-
-
-    button.disabled = true;
-
-    button.textContent =
-        "Updating...";
-
-
-    try {
-
-        const {
-            data,
-            error
-        } = await db.auth.updateUser({
-
-            password: password
-
-        });
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        console.log(
-            "Password updated:",
-            data
-        );
-
-
-        setMessage(
-            $("resetMessage"),
-            "Password updated successfully. You can now use your new password.",
-            "success"
-        );
-
-
-        $("resetPasswordForm").reset();
-
-
-        setTimeout(() => {
-
-            $("resetOverlay")
-                .classList.add("hidden");
-
-            document.body.classList.remove(
-                "no-scroll"
-            );
-
-            openLogin();
-
-        }, 1800);
-
-
-    } catch (error) {
-
-        console.error(
-            "Password update error:",
-            error
-        );
-
-
-        setMessage(
-            $("resetMessage"),
-            getAuthErrorMessage(error),
-            "error"
-        );
-
-
-    } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-            "Update Password";
-
-    }
-
-}
-
-
-/* =====================================================
-   PASSWORD TOGGLE
-===================================================== */
-
-function togglePassword() {
-
-    const input =
-        $("loginPassword");
-
-
-    if (input.type === "password") {
-
-        input.type = "text";
-
-        $("togglePassword").textContent =
-            "Hide";
-
-    } else {
-
-        input.type = "password";
-
-        $("togglePassword").textContent =
-            "Show";
-
-    }
-
-}
-
-
-/* =====================================================
-   OPEN LOGIN
-===================================================== */
-
-function openLogin() {
-
-    $("loginOverlay")
-        .classList.remove("hidden");
-
-    document.body.classList.add(
-        "no-scroll"
-    );
-
-}
-
-
-/* =====================================================
-   CLOSE LOGIN
-===================================================== */
-
-function closeLogin() {
-
-    $("loginOverlay")
-        .classList.add("hidden");
-
-    document.body.classList.remove(
-        "no-scroll"
-    );
-
-    setMessage(
-        $("loginMessage"),
-        "",
-        ""
-    );
-
-}
-
-
-/* =====================================================
-   FORGOT OPEN
-===================================================== */
-
-function openForgotPassword() {
-
-    closeLogin();
-
-    $("forgotOverlay")
-        .classList.remove("hidden");
-
-    $("forgotEmail").value =
-        $("loginEmail").value.trim();
-
-    document.body.classList.add(
-        "no-scroll"
-    );
-
-}
-
-
-/* =====================================================
-   FORGOT CLOSE
-===================================================== */
-
-function closeForgotPassword() {
-
-    $("forgotOverlay")
-        .classList.add("hidden");
-
-    if (
-        $("resetOverlay").classList.contains(
-            "hidden"
-        )
-    ) {
-
-        document.body.classList.remove(
-            "no-scroll"
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   ADMIN DASHBOARD
-===================================================== */
-
-function openAdminDashboard() {
-
-    $("adminDashboard")
-        .classList.remove("hidden");
-
-    document.body.classList.add(
-        "no-scroll"
-    );
-
-    updateAdminUser();
-
-    updateStats();
-
-}
-
-
-/* =====================================================
-   CLOSE ADMIN DASHBOARD
-===================================================== */
-
-function closeAdminDashboard() {
-
-    $("adminDashboard")
-        .classList.add("hidden");
-
-    document.body.classList.remove(
-        "no-scroll"
-    );
-
-}
-
-
-/* =====================================================
-   UPDATE ADMIN USER
-===================================================== */
-
-function updateAdminUser() {
-
-    if (!currentUser) {
-        return;
-    }
-
-
-    $("adminUserEmail").textContent =
-        currentUser.email || "Admin";
-
-
-    $("adminWelcome").textContent =
-        `Welcome, ${currentUser.email || "Admin"}. Manage your HAICO Link Hub here.`;
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-async function handleLogout() {
-
-    const confirmed =
-        confirm(
-            "Are you sure you want to logout?"
-        );
-
-
-    if (!confirmed) {
-        return;
-    }
-
-
-    const {
-        error
-    } = await db.auth.signOut();
-
-
-    if (error) {
-
-        showToast(
-            error.message,
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    currentUser = null;
-
-    closeAdminDashboard();
-
-    showToast(
-        "You have been logged out.",
-        "success"
-    );
-
-}
-
-
-/* =====================================================
-   ADMIN NAVIGATION
-===================================================== */
-
-function showAdminView(viewId) {
-
-    document
-        .querySelectorAll(".admin-view")
-        .forEach(view => {
-
-            view.classList.remove("active");
-
-        });
-
-
-    const target =
-        $(viewId);
-
-
-    if (target) {
-
-        target.classList.add("active");
-
-    }
-
-
-    document
-        .querySelectorAll(".admin-nav-btn")
-        .forEach(button => {
-
-            button.classList.toggle(
-                "active",
-                button.dataset.view === viewId
-            );
-
-        });
-
-
-    const titles = {
-
-        overviewView:
-            "Dashboard Overview",
-
-        projectsView:
-            "Manage Projects",
-
-        servicesView:
-            "Manage Services",
-
-        brandView:
-            "Brand Settings",
-
-        socialView:
-            "Social Links"
-
-    };
-
-
-    $("adminPageTitle").textContent =
-        titles[viewId] || "Admin Dashboard";
-
-}
-
-
-/* =====================================================
-   UPDATE STATS
-===================================================== */
-
-function updateStats() {
-
-    $("projectCount").textContent =
-        projects.length;
-
-
-    $("serviceCount").textContent =
-        services.length;
-
-
-    $("socialCount").textContent =
-        socialLinks.length;
-
-
-    $("featuredCount").textContent =
-        projects.filter(
-            project => project.featured === true
-        ).length;
-
-}
-
-
-/* =====================================================
-   PROJECT FORM
-===================================================== */
-
-function openProjectForm(project = null) {
-
-    $("projectFormModal")
-        .classList.remove("hidden");
-
-    document.body.classList.add(
-        "no-scroll"
-    );
-
-
-    if (!project) {
-
-        $("projectForm").reset();
-
-        $("projectId").value = "";
-
-        $("projectFormTitle").textContent =
-            "Add Project";
-
-        $("projectCreatedBy").value =
-            currentUser?.email || "HAICO";
-
-        $("projectBrand").value =
-            brandSettings?.brand_name ||
-            "HAICO TECH & DESIGN";
-
-        return;
-
-    }
-
-
-    $("projectFormTitle").textContent =
-        "Edit Project";
-
-
-    $("projectId").value =
-        project.id || "";
-
-
-    $("projectName").value =
-        project.name || "";
-
-
-    $("projectCategory").value =
-        project.category || "";
-
-
-    $("projectDescription").value =
-        project.description || "";
-
-
-    $("projectDetailsText").value =
-        project.details || "";
-
-
-    $("projectCreatedBy").value =
-        project.created_by || "";
-
-
-    $("projectBrand").value =
-        project.brand ||
-        brandSettings?.brand_name ||
-        "";
-
-
-    $("projectTechnologies").value =
-        project.technologies || "";
-
-
-    $("projectStatus").value =
-        project.status ||
-        "Completed";
-
-
-    $("projectLiveLink").value =
-        project.live_link || "";
-
-
-    $("projectGithubLink").value =
-        project.github_link || "";
-
-
-    $("projectWhatsappLink").value =
-        project.whatsapp_link || "";
-
-
-    $("projectFeatured").checked =
-        project.featured === true;
-
-
-    $("projectImage").value = "";
-
-    $("projectAttachment").value = "";
-
-}
-
-
-/* =====================================================
-   CLOSE PROJECT FORM
-===================================================== */
-
-function closeProjectForm() {
-
-    $("projectFormModal")
-        .classList.add("hidden");
-
-    document.body.classList.remove(
-        "no-scroll"
-    );
-
-    $("projectForm").reset();
-
-    setMessage(
-        $("projectFormMessage"),
-        "",
-        ""
-    );
-
-}
-
-
-/* =====================================================
-   PROJECT SUBMIT
-===================================================== */
-
-async function handleProjectSubmit(event) {
-
-    event.preventDefault();
-
-
-    if (!currentUser) {
-
-        showToast(
-            "Please login as administrator first.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    const button =
-        $("saveProjectBtn");
-
-
-    button.disabled = true;
-
-    button.textContent =
-        "Saving...";
-
-
-    try {
-
-        const id =
-            $("projectId").value.trim();
-
-
-        const imageFile =
-            $("projectImage").files[0];
-
-
-        const attachmentFile =
-            $("projectAttachment").files[0];
-
-
-        let imageUrl = null;
-
-        let attachmentUrl = null;
-
-
-        /*
-         * EDIT PROJECT
-         */
-
-        if (id) {
-
-            const oldProject =
-                projects.find(
-                    project =>
-                        String(project.id) ===
-                        String(id)
-                );
-
-
-            imageUrl =
-                oldProject?.image_url ||
-                null;
-
-
-            attachmentUrl =
-                oldProject?.attachment_url ||
-                null;
-
-        }
-
-
-        /*
-         * IMAGE UPLOAD
-         */
-
-        if (imageFile) {
-
-            imageUrl =
-                await uploadFile(
-                    imageFile,
-                    PROJECT_IMAGE_BUCKET,
-                    "projects"
-                );
-
-        }
-
-
-        /*
-         * ATTACHMENT UPLOAD
-         */
-
-        if (attachmentFile) {
-
-            attachmentUrl =
-                await uploadFile(
-                    attachmentFile,
-                    ATTACHMENT_BUCKET,
-                    "projects"
-                );
-
-        }
-
-
-        const projectData = {
-
-            name:
-                $("projectName").value.trim(),
-
-            category:
-                $("projectCategory").value.trim(),
-
-            description:
-                $("projectDescription").value.trim(),
-
-            details:
-                $("projectDetailsText").value.trim(),
-
-            created_by:
-                $("projectCreatedBy").value.trim() ||
-                currentUser.email,
-
-            brand:
-                $("projectBrand").value.trim() ||
-                brandSettings?.brand_name ||
-                "HAICO",
-
-            technologies:
-                $("projectTechnologies").value.trim(),
-
-            status:
-                $("projectStatus").value,
-
-            live_link:
-                $("projectLiveLink").value.trim() ||
-                null,
-
-            github_link:
-                $("projectGithubLink").value.trim() ||
-                null,
-
-            whatsapp_link:
-                $("projectWhatsappLink").value.trim() ||
-                null,
-
-            image_url:
-                imageUrl,
-
-            attachment_url:
-                attachmentUrl,
-
-            featured:
-                $("projectFeatured").checked
-
-        };
-
-
-        let result;
-
-
-        if (id) {
-
-            result =
-                await db
-                    .from("projects")
-                    .update(projectData)
-                    .eq("id", id);
-
-        } else {
-
-            result =
-                await db
-                    .from("projects")
-                    .insert(projectData);
-
-        }
-
-
-        if (result.error) {
-
-            throw result.error;
-
-        }
-
-
-        await loadProjects();
-
-        renderProjects();
-
-        renderAdminProjects();
-
-        updateStats();
-
-        closeProjectForm();
-
-
-        showToast(
-            id
-                ? "Project updated successfully."
-                : "Project added successfully.",
-            "success"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Project save error:",
-            error
-        );
-
-
-        setMessage(
-            $("projectFormMessage"),
-            error.message ||
-            "Failed to save project.",
-            "error"
-        );
-
-
-    } finally {
-
-        button.disabled = false;
-
-        button.textContent =
-            "Save Project";
-
-    }
-
-}
-
-
-/* =====================================================
-   UPLOAD FILE
-===================================================== */
+/* =========================================================
+   IMAGE / FILE UPLOAD
+   ========================================================= */
 
 async function uploadFile(
     file,
@@ -2054,502 +730,333 @@ async function uploadFile(
     folder
 ) {
 
+    if (!file) return null;
+
     const extension =
         file.name.includes(".")
-            ? file.name
-                .split(".")
-                .pop()
-                .toLowerCase()
-            : "";
+            ? file.name.split(".").pop()
+            : "file";
 
+    const fileName =
+        `${folder}/${Date.now()}-${Math.random()
+            .toString(36)
+            .substring(2)}.${extension}`;
 
-    const randomName =
-        `${Date.now()}-${crypto.randomUUID()}`;
-
-
-    const filePath =
-        `${folder}/${randomName}${extension ? "." + extension : ""}`;
-
-
-    const {
-        error
-    } = await db.storage
-        .from(bucket)
-        .upload(
-            filePath,
-            file,
-            {
-                cacheControl: "3600",
+    const { error } =
+        await db.storage
+            .from(bucket)
+            .upload(fileName, file, {
                 upsert: false
-            }
-        );
-
+            });
 
     if (error) {
-
         throw error;
-
     }
 
-
-    const {
-        data
-    } = db.storage
-        .from(bucket)
-        .getPublicUrl(filePath);
-
+    const { data } =
+        db.storage
+            .from(bucket)
+            .getPublicUrl(fileName);
 
     return data.publicUrl;
-
 }
 
 
-/* =====================================================
-   ADMIN PROJECT LIST
-===================================================== */
+/* =========================================================
+   ADD / EDIT PROJECT
+   ========================================================= */
 
-function renderAdminProjects() {
+function openNewProjectForm() {
 
-    const container =
-        $("adminProjectsContainer");
+    $("projectForm").reset();
 
+    $("projectId").value = "";
 
-    if (!projects.length) {
+    $("projectFormTitle").textContent =
+        "Add Project";
 
-        container.innerHTML = `
-            <div class="admin-form-card">
-                No projects have been added yet.
-            </div>
-        `;
+    $("projectFormMessage").textContent = "";
 
-        return;
-
-    }
-
-
-    container.innerHTML =
-        projects.map(project => {
-
-            return `
-                <div class="admin-list-item">
-
-                    <div class="admin-item-image">
-
-                        ${
-                            project.image_url
-                            ?
-                            `<img
-                                src="${escapeAttribute(project.image_url)}"
-                                alt=""
-                            >`
-                            :
-                            `<div
-                                style="
-                                    width:100%;
-                                    height:100%;
-                                    display:flex;
-                                    align-items:center;
-                                    justify-content:center;
-                                    color:white;
-                                    font-weight:900;
-                                "
-                            >
-                                H
-                            </div>`
-                        }
-
-                    </div>
-
-
-                    <div class="admin-item-info">
-
-                        <strong>
-                            ${escapeHTML(
-                                project.name || "Untitled"
-                            )}
-                        </strong>
-
-                        <span>
-                            ${escapeHTML(
-                                project.category || "Project"
-                            )}
-                            ·
-                            ${escapeHTML(
-                                project.status || ""
-                            )}
-                        </span>
-
-                    </div>
-
-
-                    <div class="admin-item-actions">
-
-                        <button
-                            class="edit-btn"
-                            onclick="editProject('${project.id}')"
-                        >
-                            Edit
-                        </button>
-
-                        <button
-                            class="delete-btn"
-                            onclick="deleteProject('${project.id}')"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
-
+    showModal("projectFormModal");
 }
 
 
-/* =====================================================
-   EDIT PROJECT
-===================================================== */
-
-window.editProject = function(id) {
+function editProject(id) {
 
     const project =
-        projects.find(
-            item =>
-                String(item.id) ===
-                String(id)
-        );
+        projects.find(p => String(p.id) === String(id));
+
+    if (!project) return;
+
+    $("projectId").value =
+        project.id;
+
+    $("projectName").value =
+        project.name || "";
+
+    $("projectCategory").value =
+        project.category || "";
+
+    $("projectDescription").value =
+        project.description || "";
+
+    $("projectDetailsText").value =
+        project.details || "";
+
+    $("projectCreatedBy").value =
+        project.created_by || "";
+
+    $("projectBrand").value =
+        project.brand || "";
+
+    $("projectTechnologies").value =
+        project.technologies || "";
+
+    $("projectStatus").value =
+        project.status || "Completed";
+
+    $("projectLiveLink").value =
+        project.live_link || "";
+
+    $("projectGithubLink").value =
+        project.github_link || "";
+
+    $("projectWhatsappLink").value =
+        project.whatsapp_link || "";
+
+    $("projectFeatured").checked =
+        !!project.featured;
+
+    $("projectFormTitle").textContent =
+        "Edit Project";
+
+    $("projectFormMessage").textContent = "";
+
+    showModal("projectFormModal");
+}
 
 
-    if (!project) {
+$("projectForm").addEventListener(
+    "submit",
+    async (event) => {
 
-        showToast(
-            "Project not found.",
-            "error"
-        );
+        event.preventDefault();
 
-        return;
+        if (!currentUser) {
+            toast("Please login first.");
+            return;
+        }
 
+        const button =
+            $("saveProjectBtn");
+
+        button.disabled = true;
+        button.textContent = "Saving...";
+
+        try {
+
+            const id =
+                $("projectId").value;
+
+            let imageUrl = null;
+            let attachmentUrl = null;
+
+            const imageFile =
+                $("projectImage").files[0];
+
+            const attachmentFile =
+                $("projectAttachment").files[0];
+
+
+            if (imageFile) {
+
+                imageUrl =
+                    await uploadFile(
+                        imageFile,
+                        "project-images",
+                        "projects"
+                    );
+            }
+
+
+            if (attachmentFile) {
+
+                attachmentUrl =
+                    await uploadFile(
+                        attachmentFile,
+                        "attachments",
+                        "projects"
+                    );
+            }
+
+
+            const projectData = {
+
+                name:
+                    $("projectName").value.trim(),
+
+                category:
+                    $("projectCategory").value.trim(),
+
+                description:
+                    $("projectDescription").value.trim(),
+
+                details:
+                    $("projectDetailsText").value.trim(),
+
+                created_by:
+                    $("projectCreatedBy").value.trim(),
+
+                brand:
+                    $("projectBrand").value.trim() ||
+                    brandSettings?.brand_name ||
+                    "HAICO",
+
+                technologies:
+                    $("projectTechnologies").value.trim(),
+
+                status:
+                    $("projectStatus").value,
+
+                live_link:
+                    $("projectLiveLink").value.trim() || null,
+
+                github_link:
+                    $("projectGithubLink").value.trim() || null,
+
+                whatsapp_link:
+                    $("projectWhatsappLink").value.trim() || null,
+
+                featured:
+                    $("projectFeatured").checked
+            };
+
+
+            if (imageUrl) {
+                projectData.image_url =
+                    imageUrl;
+            }
+
+            if (attachmentUrl) {
+                projectData.attachment_url =
+                    attachmentUrl;
+            }
+
+
+            let result;
+
+            if (id) {
+
+                result =
+                    await db
+                        .from("projects")
+                        .update(projectData)
+                        .eq("id", id);
+
+            } else {
+
+                result =
+                    await db
+                        .from("projects")
+                        .insert([
+                            projectData
+                        ]);
+            }
+
+
+            if (result.error) {
+                throw result.error;
+            }
+
+
+            hideModal("projectFormModal");
+
+            $("projectForm").reset();
+
+            toast(
+                id
+                    ? "Project updated successfully."
+                    : "Project added successfully."
+            );
+
+            await loadProjects();
+
+        } catch (error) {
+
+            console.error(error);
+
+            message(
+                "projectFormMessage",
+                error.message
+            );
+
+        } finally {
+
+            button.disabled = false;
+            button.textContent = "Save Project";
+        }
     }
+);
 
 
-    openProjectForm(project);
-
-};
-
-
-/* =====================================================
+/* =========================================================
    DELETE PROJECT
-===================================================== */
+   ========================================================= */
 
-window.deleteProject = async function(id) {
+async function deleteProject(id) {
 
-    const confirmed =
-        confirm(
-            "Delete this project permanently?"
-        );
+    if (!currentUser) return;
 
-
-    if (!confirmed) {
+    if (!confirm("Delete this project?")) {
         return;
     }
 
-
-    try {
-
-        const {
-            error
-        } = await db
+    const { error } =
+        await db
             .from("projects")
             .delete()
             .eq("id", id);
 
+    if (error) {
 
-        if (error) {
+        toast(error.message);
 
-            throw error;
-
-        }
-
-
-        await loadProjects();
-
-        renderProjects();
-
-        renderAdminProjects();
-
-        updateStats();
-
-
-        showToast(
-            "Project deleted successfully.",
-            "success"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Delete project error:",
-            error
-        );
-
-
-        showToast(
-            error.message,
-            "error"
-        );
-
-    }
-
-};
-
-
-/* =====================================================
-   PROJECT DETAILS
-===================================================== */
-
-window.openProjectDetails = function(id) {
-
-    const project =
-        projects.find(
-            item =>
-                String(item.id) ===
-                String(id)
-        );
-
-
-    if (!project) {
         return;
     }
 
+    toast("Project deleted.");
 
-    const links = [];
-
-
-    if (project.live_link) {
-
-        links.push(`
-            <a
-                href="${escapeAttribute(project.live_link)}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Live Website
-            </a>
-        `);
-
-    }
-
-
-    if (project.github_link) {
-
-        links.push(`
-            <a
-                href="${escapeAttribute(project.github_link)}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                GitHub
-            </a>
-        `);
-
-    }
-
-
-    if (project.whatsapp_link) {
-
-        links.push(`
-            <a
-                href="${escapeAttribute(project.whatsapp_link)}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                WhatsApp
-            </a>
-        `);
-
-    }
-
-
-    if (project.attachment_url) {
-
-        links.push(`
-            <a
-                href="${escapeAttribute(project.attachment_url)}"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Download Attachment
-            </a>
-        `);
-
-    }
-
-
-    $("projectDetails").innerHTML = `
-
-        ${
-            project.image_url
-            ?
-            `<div class="project-detail-image">
-                <img
-                    src="${escapeAttribute(project.image_url)}"
-                    alt="${escapeAttribute(project.name || "Project")}"
-                >
-            </div>`
-            :
-            ""
-        }
-
-
-        <span class="project-detail-category">
-            ${escapeHTML(
-                project.category || "Project"
-            )}
-        </span>
-
-
-        <h2>
-            ${escapeHTML(
-                project.name || "Untitled Project"
-            )}
-        </h2>
-
-
-        <p class="project-detail-description">
-            ${escapeHTML(
-                project.description || ""
-            )}
-        </p>
-
-
-        ${
-            project.details
-            ?
-            `
-            <div style="margin-top:20px;">
-                <h3>Project Details</h3>
-
-                <p style="color:#6b7280;margin-top:8px;">
-                    ${escapeHTML(project.details)}
-                </p>
-            </div>
-            `
-            :
-            ""
-        }
-
-
-        ${
-            project.technologies
-            ?
-            `
-            <div style="margin-top:20px;">
-                <h3>Technologies</h3>
-
-                <p style="color:#6b7280;margin-top:8px;">
-                    ${escapeHTML(project.technologies)}
-                </p>
-            </div>
-            `
-            :
-            ""
-        }
-
-
-        ${
-            project.created_by
-            ?
-            `
-            <div style="margin-top:20px;">
-                <strong>Created by:</strong>
-                ${escapeHTML(project.created_by)}
-            </div>
-            `
-            :
-            ""
-        }
-
-
-        <div class="project-detail-links">
-            ${links.join("")}
-        </div>
-
-    `;
-
-
-    $("projectModal")
-        .classList.remove("hidden");
-
-    document.body.classList.add(
-        "no-scroll"
-    );
-
-};
-
-
-/* =====================================================
-   CLOSE PROJECT DETAILS
-===================================================== */
-
-function closeProjectDetails() {
-
-    $("projectModal")
-        .classList.add("hidden");
-
-    document.body.classList.remove(
-        "no-scroll"
-    );
-
+    await loadProjects();
 }
 
 
-/* =====================================================
-   SERVICE SUBMIT
-===================================================== */
+/* =========================================================
+   SERVICES CRUD
+   ========================================================= */
 
-async function handleServiceSubmit(event) {
+$("serviceForm").addEventListener(
+    "submit",
+    async event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
+        const id =
+            $("serviceId").value;
 
-    if (!currentUser) {
+        const serviceData = {
 
-        showToast(
-            "Please login first.",
-            "error"
-        );
+            name:
+                $("serviceName").value.trim(),
 
-        return;
+            icon:
+                $("serviceIcon").value.trim(),
 
-    }
+            description:
+                $("serviceDescription").value.trim()
+        };
 
-
-    const id =
-        $("serviceId").value.trim();
-
-
-    const serviceData = {
-
-        name:
-            $("serviceName").value.trim(),
-
-        icon:
-            $("serviceIcon").value.trim() ||
-            "◆",
-
-        description:
-            $("serviceDescription").value.trim()
-
-    };
-
-
-    try {
 
         let result;
-
 
         if (id) {
 
@@ -2564,298 +1071,121 @@ async function handleServiceSubmit(event) {
             result =
                 await db
                     .from("services")
-                    .insert(serviceData);
-
+                    .insert([
+                        serviceData
+                    ]);
         }
 
 
         if (result.error) {
 
-            throw result.error;
+            message(
+                "serviceMessage",
+                result.error.message
+            );
 
+            return;
         }
 
 
+        message(
+            "serviceMessage",
+            "Service saved successfully.",
+            true
+        );
+
+        $("serviceForm").reset();
+        $("serviceId").value = "";
+
         await loadServices();
-
-        renderServices();
-
-        renderAdminServices();
-
-        updateStats();
-
-        resetServiceForm();
-
-
-        showToast(
-            id
-                ? "Service updated."
-                : "Service added.",
-            "success"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Service save error:",
-            error
-        );
-
-
-        showToast(
-            error.message,
-            "error"
-        );
-
     }
-
-}
-
-
-/* =====================================================
-   SERVICE LIST
-===================================================== */
-
-function renderAdminServices() {
-
-    const container =
-        $("adminServicesContainer");
+);
 
 
-    if (!services.length) {
-
-        container.innerHTML = `
-            <div class="admin-form-card">
-                No services available.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        services.map(service => {
-
-            return `
-                <div class="admin-list-item">
-
-                    <div class="service-icon">
-                        ${escapeHTML(
-                            service.icon || "◆"
-                        )}
-                    </div>
-
-                    <div class="admin-item-info">
-
-                        <strong>
-                            ${escapeHTML(
-                                service.name || ""
-                            )}
-                        </strong>
-
-                        <span>
-                            ${escapeHTML(
-                                service.description || ""
-                            )}
-                        </span>
-
-                    </div>
-
-                    <div class="admin-item-actions">
-
-                        <button
-                            class="edit-btn"
-                            onclick="editService('${service.id}')"
-                        >
-                            Edit
-                        </button>
-
-                        <button
-                            class="delete-btn"
-                            onclick="deleteService('${service.id}')"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
-
-}
-
-
-/* =====================================================
-   EDIT SERVICE
-===================================================== */
-
-window.editService = function(id) {
+function editService(id) {
 
     const service =
         services.find(
-            item =>
-                String(item.id) ===
-                String(id)
+            s => String(s.id) === String(id)
         );
 
-
-    if (!service) {
-        return;
-    }
-
+    if (!service) return;
 
     $("serviceId").value =
         service.id;
 
-
     $("serviceName").value =
         service.name || "";
-
 
     $("serviceIcon").value =
         service.icon || "";
 
-
     $("serviceDescription").value =
         service.description || "";
 
-
-    $("serviceFormTitle").textContent =
-        "Edit Service";
-
-
-    showAdminView("servicesView");
-
-};
+    $("servicesTab").scrollIntoView();
+}
 
 
-/* =====================================================
-   DELETE SERVICE
-===================================================== */
+async function deleteService(id) {
 
-window.deleteService = async function(id) {
-
-    if (
-        !confirm(
-            "Delete this service?"
-        )
-    ) {
+    if (!confirm("Delete this service?")) {
         return;
     }
 
-
-    try {
-
-        const {
-            error
-        } = await db
+    const { error } =
+        await db
             .from("services")
             .delete()
             .eq("id", id);
 
+    if (error) {
 
-        if (error) {
-            throw error;
-        }
+        toast(error.message);
 
-
-        await loadServices();
-
-        renderServices();
-
-        renderAdminServices();
-
-        updateStats();
-
-
-        showToast(
-            "Service deleted.",
-            "success"
-        );
-
-
-    } catch (error) {
-
-        showToast(
-            error.message,
-            "error"
-        );
-
+        return;
     }
 
-};
+    toast("Service deleted.");
 
-
-/* =====================================================
-   RESET SERVICE FORM
-===================================================== */
-
-function resetServiceForm() {
-
-    $("serviceForm").reset();
-
-    $("serviceId").value = "";
-
-    $("serviceFormTitle").textContent =
-        "Add Service";
-
+    await loadServices();
 }
 
 
-/* =====================================================
-   BRAND SUBMIT
-===================================================== */
+/* =========================================================
+   BRAND UPDATE
+   ========================================================= */
 
-async function handleBrandSubmit(event) {
+$("brandForm").addEventListener(
+    "submit",
+    async event => {
 
-    event.preventDefault();
+        event.preventDefault();
 
+        const brandData = {
 
-    if (!currentUser) {
+            brand_name:
+                $("brandName").value.trim(),
 
-        showToast(
-            "Please login first.",
-            "error"
-        );
+            tagline:
+                $("brandTagline").value.trim(),
 
-        return;
+            about_text:
+                $("brandAbout").value.trim(),
 
-    }
+            logo_url:
+                $("brandLogo").value.trim() || null,
 
+            phone:
+                $("brandPhone").value.trim(),
 
-    const brandData = {
+            email:
+                $("brandEmail").value.trim(),
 
-        brand_name:
-            $("brandName").value.trim(),
+            whatsapp:
+                $("brandWhatsapp").value.trim()
+        };
 
-        tagline:
-            $("brandTagline").value.trim(),
-
-        about_text:
-            $("brandAbout").value.trim(),
-
-        logo_url:
-            $("brandLogo").value.trim() ||
-            null,
-
-        phone:
-            $("brandPhone").value.trim(),
-
-        email:
-            $("brandEmail").value.trim(),
-
-        whatsapp:
-            $("brandWhatsapp").value.trim()
-
-    };
-
-
-    try {
 
         let result;
 
@@ -2866,116 +1196,187 @@ async function handleBrandSubmit(event) {
                 await db
                     .from("brand_settings")
                     .update(brandData)
-                    .eq(
-                        "id",
-                        brandSettings.id
-                    );
+                    .eq("id", brandSettings.id);
 
         } else {
 
             result =
                 await db
                     .from("brand_settings")
-                    .insert(brandData);
-
+                    .insert([
+                        brandData
+                    ]);
         }
 
 
         if (result.error) {
 
-            throw result.error;
+            message(
+                "brandMessage",
+                result.error.message
+            );
 
+            return;
         }
 
 
-        await loadBrandSettings();
-
-        renderBrand();
-
-
-        setMessage(
-            $("brandMessage"),
+        message(
+            "brandMessage",
             "Brand settings saved successfully.",
-            "success"
+            true
         );
 
+        await loadBrand();
 
-        showToast(
-            "Brand settings updated.",
-            "success"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Brand update error:",
-            error
-        );
+        toast("Brand updated.");
+    }
+);
 
 
-        setMessage(
-            $("brandMessage"),
-            error.message,
-            "error"
-        );
+/* =========================================================
+   SOCIAL LINKS
+   ========================================================= */
 
+async function loadSocialLinks() {
+
+    const { data, error } =
+        await db
+            .from("social_links")
+            .select("*")
+            .order("id", {
+                ascending: true
+            });
+
+    if (error) {
+
+        console.error(error);
+
+        return;
     }
 
+    socialLinks = data || [];
+
+    renderSocialLinks();
+    renderAdminSocialLinks();
+
+    updateStats();
 }
 
 
-/* =====================================================
-   SOCIAL SUBMIT
-===================================================== */
+function renderSocialLinks() {
 
-async function handleSocialSubmit(event) {
+    const container =
+        $("socialContainer");
 
-    event.preventDefault();
+    if (!socialLinks.length) {
 
-
-    if (!currentUser) {
-
-        showToast(
-            "Please login first.",
-            "error"
-        );
+        container.innerHTML = "";
 
         return;
-
     }
 
+    container.innerHTML =
+        socialLinks.map(link => `
 
-    const id =
-        $("socialId").value.trim();
+            <a
+                class="social-link"
+                href="${escapeHTML(link.url)}"
+                target="_blank"
+                rel="noopener"
+            >
+                ${escapeHTML(link.icon || "🔗")}
+                ${escapeHTML(link.platform)}
+            </a>
 
-
-    const socialData = {
-
-        platform:
-            $("socialPlatform").value.trim(),
-
-        url:
-            $("socialUrl").value.trim(),
-
-        icon:
-            $("socialIcon").value.trim() ||
-            "●"
-
-    };
+        `).join("");
+}
 
 
-    try {
+function renderAdminSocialLinks() {
+
+    const container =
+        $("adminSocialContainer");
+
+    if (!socialLinks.length) {
+
+        container.innerHTML =
+            "<p>No social links found.</p>";
+
+        return;
+    }
+
+    container.innerHTML =
+        socialLinks.map(link => `
+
+            <div class="admin-item">
+
+                <div class="admin-item-info">
+
+                    <h3>
+                        ${escapeHTML(link.icon || "🔗")}
+                        ${escapeHTML(link.platform)}
+                    </h3>
+
+                    <p>
+                        ${escapeHTML(link.url)}
+                    </p>
+
+                </div>
+
+                <div class="admin-item-actions">
+
+                    <button
+                        class="small-btn"
+                        onclick="editSocial('${link.id}')"
+                    >
+                        Edit
+                    </button>
+
+                    <button
+                        class="small-btn danger"
+                        onclick="deleteSocial('${link.id}')"
+                    >
+                        Delete
+                    </button>
+
+                </div>
+
+            </div>
+
+        `).join("");
+}
+
+
+$("socialForm").addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        const id =
+            $("socialId").value;
+
+        const data = {
+
+            platform:
+                $("socialPlatform").value.trim(),
+
+            url:
+                $("socialUrl").value.trim(),
+
+            icon:
+                $("socialIcon").value.trim()
+        };
+
 
         let result;
-
 
         if (id) {
 
             result =
                 await db
                     .from("social_links")
-                    .update(socialData)
+                    .update(data)
                     .eq("id", id);
 
         } else {
@@ -2983,461 +1384,743 @@ async function handleSocialSubmit(event) {
             result =
                 await db
                     .from("social_links")
-                    .insert(socialData);
-
+                    .insert([data]);
         }
 
 
         if (result.error) {
 
-            throw result.error;
+            message(
+                "socialMessage",
+                result.error.message
+            );
 
+            return;
         }
 
 
+        message(
+            "socialMessage",
+            "Social link saved successfully.",
+            true
+        );
+
+        $("socialForm").reset();
+        $("socialId").value = "";
+
         await loadSocialLinks();
-
-        renderSocialLinks();
-
-        renderAdminSocial();
-
-        updateStats();
-
-        resetSocialForm();
-
-
-        showToast(
-            id
-                ? "Social link updated."
-                : "Social link added.",
-            "success"
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Social save error:",
-            error
-        );
-
-
-        showToast(
-            error.message,
-            "error"
-        );
-
     }
-
-}
-
-
-/* =====================================================
-   SOCIAL LIST
-===================================================== */
-
-function renderAdminSocial() {
-
-    const container =
-        $("adminSocialContainer");
+);
 
 
-    if (!socialLinks.length) {
-
-        container.innerHTML = `
-            <div class="admin-form-card">
-                No social links available.
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    container.innerHTML =
-        socialLinks.map(link => {
-
-            return `
-                <div class="admin-list-item">
-
-                    <div class="service-icon">
-                        ${escapeHTML(
-                            link.icon || "●"
-                        )}
-                    </div>
-
-                    <div class="admin-item-info">
-
-                        <strong>
-                            ${escapeHTML(
-                                link.platform || "Social"
-                            )}
-                        </strong>
-
-                        <span>
-                            ${escapeHTML(
-                                link.url || ""
-                            )}
-                        </span>
-
-                    </div>
-
-                    <div class="admin-item-actions">
-
-                        <button
-                            class="edit-btn"
-                            onclick="editSocial('${link.id}')"
-                        >
-                            Edit
-                        </button>
-
-                        <button
-                            class="delete-btn"
-                            onclick="deleteSocial('${link.id}')"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
-
-                </div>
-            `;
-
-        }).join("");
-
-}
-
-
-/* =====================================================
-   EDIT SOCIAL
-===================================================== */
-
-window.editSocial = function(id) {
+function editSocial(id) {
 
     const link =
         socialLinks.find(
-            item =>
-                String(item.id) ===
-                String(id)
+            s => String(s.id) === String(id)
         );
 
-
-    if (!link) {
-        return;
-    }
-
+    if (!link) return;
 
     $("socialId").value =
         link.id;
 
-
     $("socialPlatform").value =
         link.platform || "";
-
 
     $("socialUrl").value =
         link.url || "";
 
-
     $("socialIcon").value =
         link.icon || "";
+}
 
 
-    showAdminView("socialView");
+async function deleteSocial(id) {
 
-};
-
-
-/* =====================================================
-   DELETE SOCIAL
-===================================================== */
-
-window.deleteSocial = async function(id) {
-
-    if (
-        !confirm(
-            "Delete this social link?"
-        )
-    ) {
+    if (!confirm("Delete this social link?")) {
         return;
     }
 
-
-    try {
-
-        const {
-            error
-        } = await db
+    const { error } =
+        await db
             .from("social_links")
             .delete()
             .eq("id", id);
 
+    if (error) {
+
+        toast(error.message);
+
+        return;
+    }
+
+    toast("Social link deleted.");
+
+    await loadSocialLinks();
+}
+
+
+/* =========================================================
+   AUTH - LOGIN
+   ========================================================= */
+
+$("loginForm").addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        message(
+            "loginMessage",
+            "Signing in...",
+            true
+        );
+
+        const email =
+            $("loginEmail").value.trim();
+
+        const password =
+            $("loginPassword").value;
+
+
+        const { data, error } =
+            await db.auth.signInWithPassword({
+
+                email,
+                password
+            });
+
 
         if (error) {
-            throw error;
+
+            message(
+                "loginMessage",
+                error.message
+            );
+
+            return;
         }
 
 
-        await loadSocialLinks();
+        currentUser =
+            data.user;
 
-        renderSocialLinks();
+        message(
+            "loginMessage",
+            "Login successful.",
+            true
+        );
 
-        renderAdminSocial();
+        hideModal("loginModal");
 
-        updateStats();
+        showAdminDashboard();
+
+        toast("Welcome to Admin Dashboard.");
+    }
+);
 
 
-        showToast(
-            "Social link deleted.",
-            "success"
+/* =========================================================
+   FORGOT PASSWORD
+   ========================================================= */
+
+$("forgotPasswordBtn").addEventListener(
+    "click",
+    () => {
+
+        $("forgotEmail").value =
+            $("loginEmail").value.trim();
+
+        $("forgotMessage").textContent = "";
+
+        hideModal("loginModal");
+
+        showModal("forgotModal");
+    }
+);
+
+
+$("forgotPasswordForm").addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        const email =
+            $("forgotEmail").value.trim();
+
+
+        if (!email) {
+
+            message(
+                "forgotMessage",
+                "Enter your email address."
+            );
+
+            return;
+        }
+
+
+        message(
+            "forgotMessage",
+            "Sending reset link...",
+            true
         );
 
 
-    } catch (error) {
+        const { error } =
+            await db.auth.resetPasswordForEmail(
+                email,
+                {
+                    redirectTo: SITE_URL
+                }
+            );
 
-        showToast(
-            error.message,
-            "error"
+
+        if (error) {
+
+            console.error(
+                "Password reset error:",
+                error
+            );
+
+            message(
+                "forgotMessage",
+                error.message
+            );
+
+            return;
+        }
+
+
+        message(
+            "forgotMessage",
+            "Reset link sent. Check your email inbox or spam folder.",
+            true
         );
 
+        toast("Password reset email sent.");
+    }
+);
+
+
+/* =========================================================
+   PASSWORD RECOVERY
+   ========================================================= */
+
+db.auth.onAuthStateChange(
+    (event, session) => {
+
+        currentUser =
+            session?.user || null;
+
+
+        if (event === "PASSWORD_RECOVERY") {
+
+            setTimeout(() => {
+
+                showModal("resetModal");
+
+            }, 300);
+        }
+    }
+);
+
+
+/* =========================================================
+   UPDATE PASSWORD
+   ========================================================= */
+
+$("resetForm").addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        const password =
+            $("resetNewPassword").value;
+
+        const confirmPassword =
+            $("resetConfirmPassword").value;
+
+
+        if (password.length < 8) {
+
+            message(
+                "resetMessage",
+                "Password must contain at least 8 characters."
+            );
+
+            return;
+        }
+
+
+        if (password !== confirmPassword) {
+
+            message(
+                "resetMessage",
+                "Passwords do not match."
+            );
+
+            return;
+        }
+
+
+        message(
+            "resetMessage",
+            "Updating password...",
+            true
+        );
+
+
+        const { error } =
+            await db.auth.updateUser({
+                password
+            });
+
+
+        if (error) {
+
+            console.error(
+                "Update password error:",
+                error
+            );
+
+            message(
+                "resetMessage",
+                error.message
+            );
+
+            return;
+        }
+
+
+        message(
+            "resetMessage",
+            "Password updated successfully.",
+            true
+        );
+
+        toast("Password changed successfully.");
+
+        setTimeout(async () => {
+
+            hideModal("resetModal");
+
+            await db.auth.signOut();
+
+            currentUser = null;
+
+            showModal("loginModal");
+
+        }, 1500);
+    }
+);
+
+
+/* =========================================================
+   PASSWORD VISIBILITY
+   ========================================================= */
+
+$("togglePassword").addEventListener(
+    "click",
+    () => {
+
+        const input =
+            $("loginPassword");
+
+        input.type =
+            input.type === "password"
+                ? "text"
+                : "password";
+    }
+);
+
+
+$("toggleResetPassword").addEventListener(
+    "click",
+    () => {
+
+        const input =
+            $("resetNewPassword");
+
+        input.type =
+            input.type === "password"
+                ? "text"
+                : "password";
+    }
+);
+
+
+/* =========================================================
+   ADMIN DASHBOARD
+   ========================================================= */
+
+function showAdminDashboard() {
+
+    if (!currentUser) {
+
+        showModal("loginModal");
+
+        return;
     }
 
-};
+    $("adminUserEmail").textContent =
+        currentUser.email || "";
 
-
-/* =====================================================
-   RESET SOCIAL FORM
-===================================================== */
-
-function resetSocialForm() {
-
-    $("socialForm").reset();
-
-    $("socialId").value = "";
-
+    showModal("adminModal");
 }
 
 
-/* =====================================================
-   WHATSAPP LINK
-===================================================== */
+async function checkExistingSession() {
 
-function makeWhatsAppLink(value) {
+    const { data } =
+        await db.auth.getSession();
 
-    if (!value) {
-
-        return "#";
-
-    }
-
-
-    const text =
-        String(value).trim();
-
-
-    if (
-        text.startsWith("http://") ||
-        text.startsWith("https://")
-    ) {
-
-        return text;
-
-    }
-
-
-    const number =
-        text.replace(
-            /[^0-9]/g,
-            ""
-        );
-
-
-    if (!number) {
-
-        return "#";
-
-    }
-
-
-    return `https://wa.me/${number}`;
-
+    currentUser =
+        data.session?.user || null;
 }
 
 
-/* =====================================================
-   AUTH ERROR HANDLING
-===================================================== */
+/* =========================================================
+   LOGOUT
+   ========================================================= */
 
-function getAuthErrorMessage(error) {
+$("logoutBtn").addEventListener(
+    "click",
+    async () => {
 
-    if (!error) {
+        const { error } =
+            await db.auth.signOut();
 
-        return "An unknown error occurred.";
+        if (error) {
 
+            toast(error.message);
+
+            return;
+        }
+
+        currentUser = null;
+
+        hideModal("adminModal");
+
+        toast("Logged out successfully.");
     }
+);
 
 
-    const message =
-        error.message || "";
+/* =========================================================
+   ADMIN TABS
+   ========================================================= */
+
+document
+    .querySelectorAll(".admin-tab")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                document
+                    .querySelectorAll(".admin-tab")
+                    .forEach(btn =>
+                        btn.classList.remove("active")
+                    );
+
+                document
+                    .querySelectorAll(".admin-tab-content")
+                    .forEach(tab =>
+                        tab.classList.remove("active")
+                    );
 
 
-    const lower =
-        message.toLowerCase();
+                button.classList.add("active");
 
+                const target =
+                    $(button.dataset.tab);
 
-    if (
-        lower.includes("invalid login credentials")
-    ) {
-
-        return "Incorrect email or password.";
-
-    }
-
-
-    if (
-        lower.includes("email not confirmed")
-    ) {
-
-        return "Please confirm your email address first.";
-
-    }
-
-
-    if (
-        lower.includes("redirect")
-    ) {
-
-        return (
-            "Password reset redirect URL is not allowed in Supabase. " +
-            "Add the GitHub Pages URL to Authentication → URL Configuration."
+                if (target) {
+                    target.classList.add("active");
+                }
+            }
         );
-
-    }
-
-
-    if (
-        lower.includes("invalid api")
-    ) {
-
-        return (
-            "Supabase API configuration error. " +
-            "Check the Supabase URL and publishable key in app.js."
-        );
-
-    }
-
-
-    return message;
-
-}
-
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-function setMessage(
-    element,
-    text,
-    type
-) {
-
-    element.textContent =
-        text || "";
-
-
-    element.className =
-        "form-message";
-
-
-    if (type) {
-
-        element.classList.add(type);
-
-    }
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-let toastTimer;
-
-
-function showToast(
-    message,
-    type = "success"
-) {
-
-    const toast =
-        $("toast");
-
-
-    toast.textContent =
-        message;
-
-
-    toast.className =
-        `toast ${type}`;
-
-
-    requestAnimationFrame(() => {
-
-        toast.classList.add("show");
-
     });
 
 
-    clearTimeout(toastTimer);
+/* =========================================================
+   OPEN LOGIN
+   ========================================================= */
 
+function openLogin() {
 
-    toastTimer =
-        setTimeout(() => {
+    if (currentUser) {
 
-            toast.classList.remove(
-                "show"
-            );
+        showAdminDashboard();
 
-        }, 3500);
-
-}
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHTML(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
-        return "";
-
+        return;
     }
 
-
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-
+    showModal("loginModal");
 }
 
 
-/* =====================================================
-   ESCAPE ATTRIBUTE
-===================================================== */
+$("openLoginBtn").addEventListener(
+    "click",
+    openLogin
+);
 
-function escapeAttribute(value) {
+$("footerAdminBtn").addEventListener(
+    "click",
+    openLogin
+);
 
-    return escapeHTML(value);
+$("sidebarLoginBtn").addEventListener(
+    "click",
+    () => {
 
+        closeSidebar();
+
+        openLogin();
+    }
+);
+
+
+/* =========================================================
+   MODAL CLOSE BUTTONS
+   ========================================================= */
+
+$("closeLoginModal").addEventListener(
+    "click",
+    () => hideModal("loginModal")
+);
+
+$("closeForgotModal").addEventListener(
+    "click",
+    () => {
+
+        hideModal("forgotModal");
+
+        showModal("loginModal");
+    }
+);
+
+$("closeResetModal").addEventListener(
+    "click",
+    () => hideModal("resetModal")
+);
+
+$("closeAdminModal").addEventListener(
+    "click",
+    () => hideModal("adminModal")
+);
+
+$("closeProjectModal").addEventListener(
+    "click",
+    () => hideModal("projectModal")
+);
+
+$("cancelProjectBtn").addEventListener(
+    "click",
+    () => hideModal("projectFormModal")
+);
+
+$("addProjectBtn").addEventListener(
+    "click",
+    openNewProjectForm
+);
+
+$("cancelServiceBtn").addEventListener(
+    "click",
+    () => {
+
+        $("serviceForm").reset();
+        $("serviceId").value = "";
+    }
+);
+
+$("cancelSocialBtn").addEventListener(
+    "click",
+    () => {
+
+        $("socialForm").reset();
+        $("socialId").value = "";
+    }
+);
+
+
+/* =========================================================
+   CLICK OUTSIDE MODAL
+   ========================================================= */
+
+document
+    .querySelectorAll(".modal")
+    .forEach(modal => {
+
+        modal.addEventListener(
+            "click",
+            event => {
+
+                if (event.target === modal) {
+                    modal.classList.remove("show");
+                }
+            }
+        );
+    });
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+function openSidebar() {
+
+    $("sidebar").classList.add("open");
+
+    $("overlay").classList.add("show");
 }
+
+function closeSidebar() {
+
+    $("sidebar").classList.remove("open");
+
+    $("overlay").classList.remove("show");
+}
+
+$("menuBtn").addEventListener(
+    "click",
+    openSidebar
+);
+
+$("closeBtn").addEventListener(
+    "click",
+    closeSidebar
+);
+
+$("overlay").addEventListener(
+    "click",
+    closeSidebar
+);
+
+document
+    .querySelectorAll(".sidebar nav a")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            closeSidebar
+        );
+    });
+
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+$("searchInput").addEventListener(
+    "input",
+    renderProjects
+);
+
+$("categoryFilter").addEventListener(
+    "change",
+    renderProjects
+);
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+function updateStats() {
+
+    $("statProjects").textContent =
+        projects.length;
+
+    $("statServices").textContent =
+        services.length;
+
+    $("statSocial").textContent =
+        socialLinks.length;
+}
+
+
+/* =========================================================
+   REALTIME
+   ========================================================= */
+
+db.channel("haico-link-hub")
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "projects"
+        },
+        () => loadProjects()
+    )
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "services"
+        },
+        () => loadServices()
+    )
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "social_links"
+        },
+        () => loadSocialLinks()
+    )
+    .on(
+        "postgres_changes",
+        {
+            event: "*",
+            schema: "public",
+            table: "brand_settings"
+        },
+        () => loadBrand()
+    )
+    .subscribe();
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+async function initializeApp() {
+
+    $("year").textContent =
+        new Date().getFullYear();
+
+    try {
+
+        await checkExistingSession();
+
+        await Promise.all([
+            loadBrand(),
+            loadServices(),
+            loadProjects(),
+            loadSocialLinks()
+        ]);
+
+    } catch (error) {
+
+        console.error(
+            "Initialization error:",
+            error
+        );
+
+        toast(
+            "Some data could not be loaded."
+        );
+    }
+}
+
+
+initializeApp();
