@@ -1,16 +1,45 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="HAICO Tech and Design - Websites, Apps, Graphic Design, Management Systems, E-Commerce and Digital Solutions.">
-    <meta name="author" content="HAICO Tech and Design">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>HAICO Tech & Design</title>
+    <meta
+        name="description"
+        content="HAICO Link Hub - Your Idea. Our Creativity. One Digital Solution."
+    >
 
-    <!-- Font Awesome -->
+    <meta
+        name="keywords"
+        content="HAICO, HAICO Tech and Design, websites, apps, graphic design, e-commerce, digital solutions"
+    >
+
+    <meta name="author" content="HAICO TECH AND DESIGN">
+
+    <title>HAICO Link Hub | HAICO TECH AND DESIGN</title>
+
+    <!-- Google Font -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Icons -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -22,64 +51,251 @@
 
 <body>
 
-    <!-- ================= HEADER ================= -->
-    <header class="header">
+    <!-- =========================================================
+         PAGE LOADER
+    ========================================================== -->
+    <div id="pageLoader" class="page-loader">
+        <div class="loader-content">
+            <div class="loader-logo">
+                HAICO
+            </div>
+
+            <div class="loader-spinner"></div>
+
+            <p>Loading HAICO Link Hub...</p>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+         TOAST CONTAINER
+    ========================================================== -->
+    <div
+        id="toastContainer"
+        class="toast-container"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =========================================================
+         NAVIGATION
+    ========================================================== -->
+    <header id="siteHeader" class="site-header">
 
         <div class="container nav-container">
 
-            <a href="#home" class="logo">
-                <span class="logo-main">HAICO</span>
-                <span class="logo-sub">TECH & DESIGN</span>
+            <!-- Logo -->
+            <a href="#home" class="brand" aria-label="HAICO Link Hub Home">
+
+                <div class="brand-mark">
+                    <span>H</span>
+                </div>
+
+                <div class="brand-text">
+                    <strong>HAICO</strong>
+                    <small>TECH & DESIGN</small>
+                </div>
+
             </a>
 
-            <!-- Mobile Menu Button -->
-            <button class="menu-btn" id="menuBtn" aria-label="Open menu">
-                <i class="fas fa-bars"></i>
-            </button>
 
-            <!-- Navigation -->
-            <nav class="navbar" id="navbar">
-
-                <button class="close-btn" id="closeBtn" aria-label="Close menu">
-                    <i class="fas fa-times"></i>
-                </button>
-
-                <a href="#home" class="nav-link active-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#services" class="nav-link">Services</a>
-                <a href="#projects" class="nav-link">Projects</a>
-                <a href="#contact" class="nav-link">Contact</a>
+            <!-- Desktop Navigation -->
+            <nav id="mainNav" class="main-nav">
 
                 <a
-                    href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20would%20like%20to%20start%20a%20project."
-                    class="nav-whatsapp"
-                    target="_blank"
-                    rel="noopener"
+                    href="#home"
+                    class="nav-link active"
                 >
-                    <i class="fab fa-whatsapp"></i>
-                    WhatsApp
+                    Home
+                </a>
+
+                <a
+                    href="#about"
+                    class="nav-link"
+                >
+                    About
+                </a>
+
+                <a
+                    href="#services"
+                    class="nav-link"
+                >
+                    Services
+                </a>
+
+                <a
+                    href="#projects"
+                    class="nav-link"
+                >
+                    Projects
+                </a>
+
+                <a
+                    href="#contact"
+                    class="nav-link"
+                >
+                    Contact
                 </a>
 
             </nav>
+
+
+            <!-- Navigation Actions -->
+            <div class="nav-actions">
+
+                <button
+                    id="themeToggle"
+                    class="icon-button"
+                    type="button"
+                    aria-label="Toggle dark mode"
+                    title="Toggle theme"
+                >
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+
+                <a
+                    href="#contact"
+                    class="nav-cta"
+                >
+                    Let's Talk
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+
+                <button
+                    id="menuToggle"
+                    class="menu-toggle"
+                    type="button"
+                    aria-label="Open menu"
+                    aria-expanded="false"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+            </div>
 
         </div>
 
     </header>
 
 
-    <!-- ================= MAIN ================= -->
+    <!-- =========================================================
+         MOBILE MENU
+    ========================================================== -->
+    <div
+        id="mobileMenuOverlay"
+        class="mobile-menu-overlay"
+    ></div>
+
+    <aside
+        id="mobileMenu"
+        class="mobile-menu"
+        aria-hidden="true"
+    >
+
+        <div class="mobile-menu-header">
+
+            <a href="#home" class="brand">
+
+                <div class="brand-mark">
+                    <span>H</span>
+                </div>
+
+                <div class="brand-text">
+                    <strong>HAICO</strong>
+                    <small>TECH & DESIGN</small>
+                </div>
+
+            </a>
+
+            <button
+                id="mobileMenuClose"
+                class="icon-button"
+                type="button"
+                aria-label="Close menu"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <nav class="mobile-nav">
+
+            <a href="#home">
+                <i class="fa-solid fa-house"></i>
+                <span>Home</span>
+            </a>
+
+            <a href="#about">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>About</span>
+            </a>
+
+            <a href="#services">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Services</span>
+            </a>
+
+            <a href="#projects">
+                <i class="fa-solid fa-folder-open"></i>
+                <span>Projects</span>
+            </a>
+
+            <a href="#contact">
+                <i class="fa-solid fa-envelope"></i>
+                <span>Contact</span>
+            </a>
+
+        </nav>
+
+
+        <div class="mobile-menu-footer">
+
+            <a
+                href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="whatsapp-button"
+            >
+                <i class="fa-brands fa-whatsapp"></i>
+                Chat on WhatsApp
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN CONTENT
+    ========================================================== -->
     <main>
 
-        <!-- ================= HERO ================= -->
-        <section class="hero" id="home">
 
-            <div class="container hero-grid">
+        <!-- =====================================================
+             HERO SECTION
+        ====================================================== -->
+        <section
+            id="home"
+            class="hero-section"
+        >
 
-                <div class="hero-text">
+            <div class="hero-background">
+                <div class="hero-orb hero-orb-one"></div>
+                <div class="hero-orb hero-orb-two"></div>
+                <div class="hero-grid"></div>
+            </div>
 
-                    <p class="welcome">
-                        Welcome to HAICO Tech & Design
-                    </p>
+
+            <div class="container hero-container">
+
+                <div class="hero-content">
+
+                    <div class="hero-badge">
+                        <span class="status-dot"></span>
+                        Digital solutions for modern businesses
+                    </div>
+
 
                     <h1>
                         Your Idea.
@@ -87,27 +303,54 @@
                         One Digital Solution.
                     </h1>
 
+
                     <p class="hero-description">
-                        We transform ideas into modern digital solutions
-                        through technology, creativity and professional design.
+                        We transform ideas into powerful digital experiences
+                        through websites, applications, graphic design,
+                        management systems, e-commerce and innovative
+                        digital solutions.
                     </p>
 
-                    <div class="hero-buttons">
+
+                    <div class="hero-actions">
 
                         <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20have%20a%20project%20idea%20and%20I%20would%20like%20to%20discuss%20it."
-                            class="btn btn-primary"
-                            target="_blank"
-                            rel="noopener"
+                            href="#projects"
+                            class="primary-button"
                         >
-                            <i class="fab fa-whatsapp"></i>
+                            Explore Projects
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                        <a
+                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20have%20a%20project%20idea%20and%20I%27d%20like%20to%20discuss%20it."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="secondary-button"
+                        >
+                            <i class="fa-brands fa-whatsapp"></i>
                             Start a Project
                         </a>
 
-                        <a href="#services" class="btn btn-outline">
-                            Explore Services
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
+                    </div>
+
+
+                    <div class="hero-trust">
+
+                        <div class="trust-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Professional
+                        </div>
+
+                        <div class="trust-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Creative
+                        </div>
+
+                        <div class="trust-item">
+                            <i class="fa-solid fa-circle-check"></i>
+                            Digital
+                        </div>
 
                     </div>
 
@@ -117,42 +360,120 @@
                 <!-- Hero Visual -->
                 <div class="hero-visual">
 
-                    <div class="hero-card main-tech-card">
+                    <div class="hero-card main-hero-card">
 
-                        <div class="tech-icon">
-                            <i class="fas fa-laptop-code"></i>
+                        <div class="hero-card-top">
+
+                            <div class="mini-brand">
+                                <div class="mini-brand-icon">
+                                    H
+                                </div>
+
+                                <div>
+                                    <strong>HAICO</strong>
+                                    <span>LINK HUB</span>
+                                </div>
+                            </div>
+
+                            <span class="live-badge">
+                                <span></span>
+                                Live
+                            </span>
+
                         </div>
 
-                        <h3>Digital Solutions</h3>
 
-                        <p>
-                            Websites, applications and professional
-                            management systems.
-                        </p>
+                        <div class="hero-dashboard-preview">
 
-                        <div class="tech-lines">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                            <div class="preview-sidebar">
+
+                                <div class="preview-side-logo">
+                                    H
+                                </div>
+
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+
+                            </div>
+
+
+                            <div class="preview-main">
+
+                                <div class="preview-heading">
+                                    <div>
+                                        <small>Welcome to</small>
+                                        <strong>HAICO Digital Hub</strong>
+                                    </div>
+
+                                    <div class="preview-avatar">
+                                        H
+                                    </div>
+                                </div>
+
+
+                                <div class="preview-stats">
+
+                                    <div class="preview-stat">
+                                        <small>Projects</small>
+                                        <strong>24+</strong>
+                                    </div>
+
+                                    <div class="preview-stat">
+                                        <small>Solutions</small>
+                                        <strong>06</strong>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="preview-chart">
+
+                                    <div class="chart-header">
+                                        <span>Digital Growth</span>
+                                        <i class="fa-solid fa-chart-line"></i>
+                                    </div>
+
+                                    <div class="chart-bars">
+                                        <span style="height:35%"></span>
+                                        <span style="height:50%"></span>
+                                        <span style="height:42%"></span>
+                                        <span style="height:68%"></span>
+                                        <span style="height:58%"></span>
+                                        <span style="height:78%"></span>
+                                        <span style="height:92%"></span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
                     </div>
 
 
-                    <div class="floating-card card-one">
-                        <i class="fas fa-globe"></i>
+                    <div class="floating-card floating-card-one">
+                        <div class="floating-icon">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+
                         <div>
-                            <strong>Web</strong>
-                            <small>Development</small>
+                            <strong>Web Solutions</strong>
+                            <span>Modern & Responsive</span>
                         </div>
                     </div>
 
 
-                    <div class="floating-card card-two">
-                        <i class="fas fa-palette"></i>
+                    <div class="floating-card floating-card-two">
+                        <div class="floating-icon">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+
                         <div>
-                            <strong>Creative</strong>
-                            <small>Design</small>
+                            <strong>Creative Design</strong>
+                            <span>Ideas into visuals</span>
                         </div>
                     </div>
 
@@ -160,72 +481,154 @@
 
             </div>
 
+
+            <div class="hero-scroll">
+                <span>Scroll to explore</span>
+                <i class="fa-solid fa-arrow-down"></i>
+            </div>
+
         </section>
 
 
-        <!-- ================= ABOUT ================= -->
-        <section class="section about" id="about">
+        <!-- =====================================================
+             ABOUT SECTION
+        ====================================================== -->
+        <section
+            id="about"
+            class="section about-section"
+        >
 
             <div class="container">
 
-                <div class="section-heading">
-                    <span>ABOUT US</span>
-                    <h2>Technology Meets Creativity</h2>
+                <div class="section-heading centered">
+
+                    <span class="section-label">
+                        ABOUT HAICO
+                    </span>
+
+                    <h2>
+                        Turning ideas into
+                        <span>digital reality.</span>
+                    </h2>
+
                     <p>
-                        We build practical digital solutions designed
-                        to help individuals, businesses and organizations
-                        grow.
+                        HAICO TECH AND DESIGN is a technology and creative
+                        digital solutions brand focused on helping individuals,
+                        businesses and organizations build a stronger digital
+                        presence.
                     </p>
+
                 </div>
 
 
                 <div class="about-grid">
 
-                    <div class="about-box">
+                    <div class="about-visual">
 
-                        <div class="about-icon">
-                            <i class="fas fa-lightbulb"></i>
+                        <div class="about-main-card">
+
+                            <div class="about-card-pattern"></div>
+
+                            <div class="about-card-content">
+
+                                <div class="about-logo-large">
+                                    H
+                                </div>
+
+                                <span>HAICO</span>
+
+                                <strong>
+                                    Technology meets creativity.
+                                </strong>
+
+                            </div>
+
                         </div>
 
-                        <h3>Our Vision</h3>
 
-                        <p>
-                            To create innovative and accessible digital
-                            solutions that make work easier and businesses
-                            more successful.
-                        </p>
+                        <div class="experience-card">
+
+                            <strong>Digital</strong>
+                            <span>Solutions</span>
+
+                        </div>
 
                     </div>
 
 
-                    <div class="about-box">
+                    <div class="about-content">
 
-                        <div class="about-icon">
-                            <i class="fas fa-bullseye"></i>
-                        </div>
+                        <span class="content-kicker">
+                            WHO WE ARE
+                        </span>
 
-                        <h3>Our Mission</h3>
-
-                        <p>
-                            Turning ideas into reliable, professional
-                            and user-friendly digital products.
-                        </p>
-
-                    </div>
-
-
-                    <div class="about-box">
-
-                        <div class="about-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-
-                        <h3>Who We Serve</h3>
+                        <h3>
+                            Technology designed around
+                            <span>your vision.</span>
+                        </h3>
 
                         <p>
-                            Students, entrepreneurs, companies,
-                            institutions and organizations.
+                            We believe every great digital product starts
+                            with a clear idea. Our role is to transform that
+                            idea into a professional, useful and memorable
+                            digital experience.
                         </p>
+
+                        <p>
+                            From a simple business website to a complete
+                            management system, e-commerce platform or creative
+                            brand identity, HAICO combines technology and
+                            design to deliver practical solutions.
+                        </p>
+
+
+                        <div class="about-features">
+
+                            <div class="about-feature">
+                                <i class="fa-solid fa-lightbulb"></i>
+
+                                <div>
+                                    <strong>Creative Thinking</strong>
+                                    <span>
+                                        Fresh ideas built around your goals.
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="about-feature">
+                                <i class="fa-solid fa-laptop-code"></i>
+
+                                <div>
+                                    <strong>Digital Development</strong>
+                                    <span>
+                                        Functional and responsive solutions.
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <div class="about-feature">
+                                <i class="fa-solid fa-handshake"></i>
+
+                                <div>
+                                    <strong>Client Focus</strong>
+                                    <span>
+                                        Solutions designed with people in mind.
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <a
+                            href="#contact"
+                            class="text-button"
+                        >
+                            Work with HAICO
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
 
                     </div>
 
@@ -236,180 +639,192 @@
         </section>
 
 
-        <!-- ================= SERVICES ================= -->
-        <section class="section services" id="services">
+        <!-- =====================================================
+             SERVICES SECTION
+        ====================================================== -->
+        <section
+            id="services"
+            class="section services-section"
+        >
 
             <div class="container">
 
                 <div class="section-heading">
-                    <span>OUR SERVICES</span>
-                    <h2>What We Do</h2>
+
+                    <div>
+                        <span class="section-label">
+                            WHAT WE DO
+                        </span>
+
+                        <h2>
+                            Digital services
+                            <span>built for impact.</span>
+                        </h2>
+                    </div>
+
                     <p>
-                        Choose a service and contact HAICO directly
-                        through WhatsApp.
+                        Explore our core services designed to help your
+                        business, organization or personal brand grow
+                        digitally.
                     </p>
+
                 </div>
 
 
-                <div class="services-grid">
+                <!-- Dynamic services from Supabase -->
+                <div
+                    id="servicesGrid"
+                    class="services-grid"
+                >
 
-                    <!-- Website -->
+                    <!-- Default fallback cards -->
+
                     <article class="service-card">
 
+                        <div class="service-number">
+                            01
+                        </div>
+
                         <div class="service-icon">
-                            <i class="fas fa-globe"></i>
+                            <i class="fa-solid fa-globe"></i>
                         </div>
 
                         <h3>Website Development</h3>
 
                         <p>
-                            Modern, responsive and professional websites
-                            for businesses, organizations and personal brands.
+                            Professional, responsive and modern websites
+                            designed for businesses, organizations and
+                            personal brands.
                         </p>
 
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20am%20interested%20in%20Website%20Development.%20Please%20share%20more%20details%20and%20pricing."
-                            class="service-link"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            Discuss Service
-                            <i class="fas fa-arrow-right"></i>
+                        <a href="#contact" class="service-link">
+                            Learn more
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
 
                     </article>
 
 
-                    <!-- Apps -->
                     <article class="service-card">
 
-                        <div class="service-icon">
-                            <i class="fas fa-mobile-screen-button"></i>
+                        <div class="service-number">
+                            02
                         </div>
 
-                        <h3>Apps Development</h3>
+                        <div class="service-icon">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                        </div>
+
+                        <h3>Apps & Systems</h3>
 
                         <p>
-                            Useful mobile and web applications designed
-                            around your business or project requirements.
+                            Custom digital applications and management
+                            systems designed around real-world needs.
                         </p>
 
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20am%20interested%20in%20Apps%20Development.%20Please%20share%20more%20details%20and%20pricing."
-                            class="service-link"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            Discuss Service
-                            <i class="fas fa-arrow-right"></i>
+                        <a href="#contact" class="service-link">
+                            Learn more
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
 
                     </article>
 
 
-                    <!-- Graphic Design -->
                     <article class="service-card">
 
+                        <div class="service-number">
+                            03
+                        </div>
+
                         <div class="service-icon">
-                            <i class="fas fa-pen-nib"></i>
+                            <i class="fa-solid fa-pen-nib"></i>
                         </div>
 
                         <h3>Graphic Design</h3>
 
                         <p>
-                            Logos, posters, social media graphics,
-                            branding materials and other creative designs.
+                            Creative visual designs for brands, social media,
+                            marketing campaigns and digital communication.
                         </p>
 
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20am%20interested%20in%20Graphic%20Design.%20Please%20share%20more%20details%20and%20pricing."
-                            class="service-link"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            Discuss Service
-                            <i class="fas fa-arrow-right"></i>
+                        <a href="#contact" class="service-link">
+                            Learn more
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
 
                     </article>
 
 
-                    <!-- Management Systems -->
                     <article class="service-card">
 
-                        <div class="service-icon">
-                            <i class="fas fa-chart-line"></i>
+                        <div class="service-number">
+                            04
                         </div>
 
-                        <h3>Management Systems</h3>
-
-                        <p>
-                            Digital management systems for schools,
-                            businesses, hotels, hostels and organizations.
-                        </p>
-
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20am%20interested%20in%20a%20Management%20System.%20Please%20share%20more%20details%20and%20pricing."
-                            class="service-link"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            Discuss Service
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-
-                    </article>
-
-
-                    <!-- E-Commerce -->
-                    <article class="service-card">
-
                         <div class="service-icon">
-                            <i class="fas fa-cart-shopping"></i>
+                            <i class="fa-solid fa-cart-shopping"></i>
                         </div>
 
                         <h3>E-Commerce</h3>
 
                         <p>
-                            Online stores and digital marketplaces that
-                            help businesses sell products online.
+                            Online stores and digital commerce solutions that
+                            help businesses reach customers online.
                         </p>
 
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20am%20interested%20in%20E-Commerce.%20Please%20share%20more%20details%20and%20pricing."
-                            class="service-link"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            Discuss Service
-                            <i class="fas fa-arrow-right"></i>
+                        <a href="#contact" class="service-link">
+                            Learn more
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
 
                     </article>
 
 
-                    <!-- Digital Solutions -->
                     <article class="service-card">
 
+                        <div class="service-number">
+                            05
+                        </div>
+
                         <div class="service-icon">
-                            <i class="fas fa-rocket"></i>
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <h3>Management Systems</h3>
+
+                        <p>
+                            Digital systems for managing students, businesses,
+                            projects, records and everyday operations.
+                        </p>
+
+                        <a href="#contact" class="service-link">
+                            Learn more
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </article>
+
+
+                    <article class="service-card">
+
+                        <div class="service-number">
+                            06
+                        </div>
+
+                        <div class="service-icon">
+                            <i class="fa-solid fa-rocket"></i>
                         </div>
 
                         <h3>Digital Solutions</h3>
 
                         <p>
-                            Customized technology solutions built to solve
-                            specific problems and improve your workflow.
+                            Practical technology solutions created to solve
+                            unique digital challenges and opportunities.
                         </p>
 
-                        <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20need%20a%20custom%20Digital%20Solution.%20Please%20contact%20me%20with%20more%20details."
-                            class="service-link"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            Discuss Service
-                            <i class="fas fa-arrow-right"></i>
+                        <a href="#contact" class="service-link">
+                            Learn more
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
 
                     </article>
@@ -421,91 +836,153 @@
         </section>
 
 
-        <!-- ================= PROJECTS ================= -->
-        <section class="section projects" id="projects">
+        <!-- =====================================================
+             PROJECTS SECTION
+        ====================================================== -->
+        <section
+            id="projects"
+            class="section projects-section"
+        >
 
             <div class="container">
 
                 <div class="section-heading">
-                    <span>OUR WORK</span>
-                    <h2>Selected Projects</h2>
+
+                    <div>
+
+                        <span class="section-label">
+                            OUR WORK
+                        </span>
+
+                        <h2>
+                            Selected
+                            <span>projects.</span>
+                        </h2>
+
+                    </div>
+
                     <p>
-                        Some of the digital solutions that can be developed
-                        by HAICO Tech & Design.
+                        A growing collection of digital projects created
+                        through technology, creativity and problem solving.
                     </p>
-                </div>
-
-
-                <div class="projects-grid">
-
-                    <article class="project-card">
-                        <div class="project-icon">
-                            <i class="fas fa-school"></i>
-                        </div>
-                        <h3>College Management System</h3>
-                        <p>
-                            Student, academic, attendance and finance
-                            management solutions.
-                        </p>
-                    </article>
-
-
-                    <article class="project-card">
-                        <div class="project-icon">
-                            <i class="fas fa-hotel"></i>
-                        </div>
-                        <h3>Hotel Management</h3>
-                        <p>
-                            Guest, rooms, bookings, payments and business
-                            management solutions.
-                        </p>
-                    </article>
-
-
-                    <article class="project-card">
-                        <div class="project-icon">
-                            <i class="fas fa-store"></i>
-                        </div>
-                        <h3>Online Marketplace</h3>
-                        <p>
-                            Digital platforms connecting buyers and
-                            sellers.
-                        </p>
-                    </article>
-
-
-                    <article class="project-card">
-                        <div class="project-icon">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <h3>Business Systems</h3>
-                        <p>
-                            Customized systems for managing daily business
-                            operations.
-                        </p>
-                    </article>
 
                 </div>
 
 
-                <div class="project-cta">
+                <!-- Project Filters -->
+                <div
+                    id="projectFilters"
+                    class="project-filters"
+                >
 
-                    <h3>Have an idea?</h3>
-
-                    <p>
-                        Let's turn your idea into a professional digital
-                        solution.
-                    </p>
-
-                    <a
-                        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20have%20an%20idea%20for%20a%20digital%20project.%20I%20would%20like%20to%20discuss%20it."
-                        class="btn btn-primary"
-                        target="_blank"
-                        rel="noopener"
+                    <button
+                        class="filter-button active"
+                        type="button"
+                        data-filter="all"
                     >
-                        <i class="fab fa-whatsapp"></i>
-                        Discuss My Idea
-                    </a>
+                        All Projects
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                        data-filter="web"
+                    >
+                        Websites
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                        data-filter="app"
+                    >
+                        Apps
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                        data-filter="design"
+                    >
+                        Design
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        type="button"
+                        data-filter="system"
+                    >
+                        Systems
+                    </button>
+
+                </div>
+
+
+                <!-- Projects Loading -->
+                <div
+                    id="projectsLoading"
+                    class="projects-loading"
+                >
+
+                    <div class="loading-spinner"></div>
+
+                    <p>Loading projects...</p>
+
+                </div>
+
+
+                <!-- Dynamic Projects -->
+                <div
+                    id="projectsGrid"
+                    class="projects-grid"
+                ></div>
+
+
+                <!-- Empty Projects State -->
+                <div
+                    id="projectsEmpty"
+                    class="empty-state"
+                    hidden
+                >
+
+                    <div class="empty-icon">
+                        <i class="fa-solid fa-folder-open"></i>
+                    </div>
+
+                    <h3>No projects available</h3>
+
+                    <p>
+                        Projects will appear here when they are published.
+                    </p>
+
+                </div>
+
+
+                <!-- Projects Error -->
+                <div
+                    id="projectsError"
+                    class="empty-state error-state"
+                    hidden
+                >
+
+                    <div class="empty-icon">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+
+                    <h3>Unable to load projects</h3>
+
+                    <p>
+                        Please refresh the page and try again.
+                    </p>
+
+                    <button
+                        id="retryProjects"
+                        class="secondary-button"
+                        type="button"
+                    >
+                        <i class="fa-solid fa-rotate-right"></i>
+                        Try Again
+                    </button>
 
                 </div>
 
@@ -514,70 +991,173 @@
         </section>
 
 
-        <!-- ================= CONTACT ================= -->
-        <section class="section contact" id="contact">
+        <!-- =====================================================
+             PROJECT MODAL
+        ====================================================== -->
+        <div
+            id="projectModal"
+            class="modal"
+            aria-hidden="true"
+        >
+
+            <div class="modal-overlay" data-close-modal></div>
+
+            <div
+                class="modal-content project-modal-content"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="projectModalTitle"
+            >
+
+                <button
+                    class="modal-close"
+                    type="button"
+                    data-close-modal
+                    aria-label="Close project details"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+
+                <div
+                    id="projectModalImage"
+                    class="project-modal-image"
+                ></div>
+
+
+                <div class="project-modal-body">
+
+                    <span
+                        id="projectModalCategory"
+                        class="project-category"
+                    >
+                        Project
+                    </span>
+
+                    <h2 id="projectModalTitle">
+                        Project Title
+                    </h2>
+
+                    <p id="projectModalDescription">
+                        Project description.
+                    </p>
+
+
+                    <div
+                        id="projectModalMeta"
+                        class="project-modal-meta"
+                    ></div>
+
+
+                    <div class="project-modal-actions">
+
+                        <a
+                            id="projectModalLink"
+                            href="#"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="primary-button"
+                        >
+                            View Project
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                        </a>
+
+                        <a
+                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20am%20interested%20in%20a%20project%20similar%20to%20one%20of%20your%20projects."
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="secondary-button"
+                        >
+                            <i class="fa-brands fa-whatsapp"></i>
+                            Discuss Similar Project
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             WHY HAICO SECTION
+        ====================================================== -->
+        <section class="section why-section">
 
             <div class="container">
 
-                <div class="section-heading">
-                    <span>CONTACT US</span>
-                    <h2>Let's Work Together</h2>
-                    <p>
-                        Have a project, question or idea?
-                        Get in touch with HAICO Tech & Design.
-                    </p>
-                </div>
+                <div class="why-grid">
+
+                    <div class="why-content">
+
+                        <span class="section-label">
+                            WHY HAICO
+                        </span>
+
+                        <h2>
+                            More than design.
+                            <span>We build solutions.</span>
+                        </h2>
+
+                        <p>
+                            We combine creativity, technology and practical
+                            thinking to create digital products that are
+                            useful, professional and easy to experience.
+                        </p>
 
 
-                <div class="contact-grid">
+                        <div class="why-list">
 
-                    <div class="contact-info">
+                            <div class="why-item">
 
-                        <div class="contact-item">
+                                <div class="why-icon">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
 
-                            <div class="contact-icon">
-                                <i class="fab fa-whatsapp"></i>
+                                <div>
+                                    <strong>Modern Solutions</strong>
+                                    <p>
+                                        We use modern approaches to create
+                                        better digital experiences.
+                                    </p>
+                                </div>
+
                             </div>
 
-                            <div>
-                                <h3>WhatsApp</h3>
-                                <a
-                                    href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20would%20like%20to%20make%20an%20inquiry."
-                                    target="_blank"
-                                    rel="noopener"
-                                >
-                                    +255 718 170 176
-                                </a>
+
+                            <div class="why-item">
+
+                                <div class="why-icon">
+                                    <i class="fa-solid fa-mobile-screen"></i>
+                                </div>
+
+                                <div>
+                                    <strong>Mobile Friendly</strong>
+                                    <p>
+                                        Our interfaces are designed to work
+                                        across phones, tablets and computers.
+                                    </p>
+                                </div>
+
                             </div>
 
-                        </div>
 
+                            <div class="why-item">
 
-                        <div class="contact-item">
+                                <div class="why-icon">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
 
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
+                                <div>
+                                    <strong>Reliable Structure</strong>
+                                    <p>
+                                        We build projects with maintainability
+                                        and future growth in mind.
+                                    </p>
+                                </div>
 
-                            <div>
-                                <h3>Email</h3>
-                                <a href="mailto:ayoubhafidhi1@gmail.com">
-                                    ayoubhafidhi1@gmail.com
-                                </a>
-                            </div>
-
-                        </div>
-
-
-                        <div class="contact-item">
-
-                            <div class="contact-icon">
-                                <i class="fas fa-location-dot"></i>
-                            </div>
-
-                            <div>
-                                <h3>Location</h3>
-                                <p>Tanzania</p>
                             </div>
 
                         </div>
@@ -585,29 +1165,471 @@
                     </div>
 
 
-                    <div class="contact-card">
+                    <div class="why-visual">
 
-                        <div class="contact-big-icon">
-                            <i class="fab fa-whatsapp"></i>
+                        <div class="why-card">
+
+                            <div class="why-card-header">
+
+                                <div class="why-avatar">
+                                    H
+                                </div>
+
+                                <div>
+                                    <strong>HAICO Digital</strong>
+                                    <span>Creative Technology</span>
+                                </div>
+
+                                <i class="fa-solid fa-ellipsis"></i>
+
+                            </div>
+
+
+                            <div class="why-card-body">
+
+                                <div class="metric">
+                                    <span>Creativity</span>
+                                    <strong>95%</strong>
+                                </div>
+
+                                <div class="metric-bar">
+                                    <span style="width:95%"></span>
+                                </div>
+
+
+                                <div class="metric">
+                                    <span>Technology</span>
+                                    <strong>92%</strong>
+                                </div>
+
+                                <div class="metric-bar">
+                                    <span style="width:92%"></span>
+                                </div>
+
+
+                                <div class="metric">
+                                    <span>Digital Experience</span>
+                                    <strong>96%</strong>
+                                </div>
+
+                                <div class="metric-bar">
+                                    <span style="width:96%"></span>
+                                </div>
+
+                            </div>
+
+
+                            <div class="why-card-footer">
+
+                                <span>
+                                    <i class="fa-solid fa-circle-check"></i>
+                                    Ready to build
+                                </span>
+
+                                <span>
+                                    HAICO
+                                </span>
+
+                            </div>
+
                         </div>
 
-                        <h3>Talk to HAICO</h3>
+                    </div>
 
-                        <p>
-                            The fastest way to discuss your project,
-                            request a quotation or ask a question is
-                            through WhatsApp.
-                        </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CTA SECTION
+        ====================================================== -->
+        <section class="cta-section">
+
+            <div class="cta-background">
+                <div class="cta-orb"></div>
+            </div>
+
+            <div class="container">
+
+                <div class="cta-content">
+
+                    <span class="section-label">
+                        HAVE AN IDEA?
+                    </span>
+
+                    <h2>
+                        Let's turn your idea
+                        <span>into something real.</span>
+                    </h2>
+
+                    <p>
+                        Tell us what you want to build and let's create
+                        a digital solution that works for you.
+                    </p>
+
+
+                    <div class="cta-actions">
 
                         <a
-                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20would%20like%20to%20talk%20about%20a%20project."
-                            class="btn btn-whatsapp"
+                            href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20want%20to%20start%20a%20project."
                             target="_blank"
-                            rel="noopener"
+                            rel="noopener noreferrer"
+                            class="primary-button light-button"
                         >
-                            <i class="fab fa-whatsapp"></i>
-                            Chat on WhatsApp
+                            <i class="fa-brands fa-whatsapp"></i>
+                            Start on WhatsApp
                         </a>
+
+                        <a
+                            href="#contact"
+                            class="secondary-button light-outline"
+                        >
+                            Contact HAICO
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTACT SECTION
+        ====================================================== -->
+        <section
+            id="contact"
+            class="section contact-section"
+        >
+
+            <div class="container">
+
+                <div class="section-heading centered">
+
+                    <span class="section-label">
+                        CONTACT US
+                    </span>
+
+                    <h2>
+                        Let's build
+                        <span>something great.</span>
+                    </h2>
+
+                    <p>
+                        Have a question, project idea or business challenge?
+                        Get in touch with HAICO.
+                    </p>
+
+                </div>
+
+
+                <div class="contact-grid">
+
+                    <!-- Contact Information -->
+                    <div class="contact-info">
+
+                        <div class="contact-info-header">
+
+                            <span class="content-kicker">
+                                GET IN TOUCH
+                            </span>
+
+                            <h3>
+                                We're ready to
+                                <span>hear from you.</span>
+                            </h3>
+
+                            <p>
+                                Choose the easiest way to reach HAICO
+                                TECH AND DESIGN.
+                            </p>
+
+                        </div>
+
+
+                        <div class="contact-items">
+
+                            <a
+                                href="https://wa.me/255718170176"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="contact-item"
+                            >
+
+                                <div class="contact-icon whatsapp-icon">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
+
+                                <div>
+                                    <span>WhatsApp</span>
+                                    <strong>+255 718 170 176</strong>
+                                </div>
+
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                            </a>
+
+
+                            <a
+                                href="mailto:ayoubhafidhi1@gmail.com"
+                                class="contact-item"
+                            >
+
+                                <div class="contact-icon">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+
+                                <div>
+                                    <span>Email</span>
+                                    <strong>ayoubhafidhi1@gmail.com</strong>
+                                </div>
+
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                            </a>
+
+
+                            <div class="contact-item">
+
+                                <div class="contact-icon">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+
+                                <div>
+                                    <span>Location</span>
+                                    <strong>Tanzania</strong>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="social-links">
+
+                            <span>Follow HAICO</span>
+
+                            <div class="social-icons">
+
+                                <!-- Add official social URLs here when available -->
+
+                                <a
+                                    href="https://wa.me/255718170176"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label="WhatsApp"
+                                    title="WhatsApp"
+                                >
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+
+                                <a
+                                    href="mailto:ayoubhafidhi1@gmail.com"
+                                    aria-label="Email"
+                                    title="Email"
+                                >
+                                    <i class="fa-solid fa-envelope"></i>
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Contact Form -->
+                    <div class="contact-form-card">
+
+                        <div class="form-header">
+
+                            <span class="form-label">
+                                SEND A MESSAGE
+                            </span>
+
+                            <h3>
+                                Tell us about your project.
+                            </h3>
+
+                        </div>
+
+
+                        <form
+                            id="contactForm"
+                            novalidate
+                        >
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="contactName">
+                                        Full Name
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="contactName"
+                                        name="name"
+                                        placeholder="Your full name"
+                                        autocomplete="name"
+                                        required
+                                    >
+
+                                    <small
+                                        class="field-error"
+                                        data-error-for="contactName"
+                                    ></small>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="contactEmail">
+                                        Email
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="contactEmail"
+                                        name="email"
+                                        placeholder="you@example.com"
+                                        autocomplete="email"
+                                        required
+                                    >
+
+                                    <small
+                                        class="field-error"
+                                        data-error-for="contactEmail"
+                                    ></small>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="contactPhone">
+                                    Phone / WhatsApp
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="contactPhone"
+                                    name="phone"
+                                    placeholder="+255..."
+                                    autocomplete="tel"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="contactService">
+                                    Service
+                                </label>
+
+                                <select
+                                    id="contactService"
+                                    name="service"
+                                >
+
+                                    <option value="">
+                                        Select a service
+                                    </option>
+
+                                    <option value="Website Development">
+                                        Website Development
+                                    </option>
+
+                                    <option value="Apps & Systems">
+                                        Apps & Systems
+                                    </option>
+
+                                    <option value="Graphic Design">
+                                        Graphic Design
+                                    </option>
+
+                                    <option value="E-Commerce">
+                                        E-Commerce
+                                    </option>
+
+                                    <option value="Management Systems">
+                                        Management Systems
+                                    </option>
+
+                                    <option value="Digital Solutions">
+                                        Digital Solutions
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="contactMessage">
+                                    Message
+                                </label>
+
+                                <textarea
+                                    id="contactMessage"
+                                    name="message"
+                                    rows="5"
+                                    placeholder="Tell us about your idea or project..."
+                                    required
+                                ></textarea>
+
+                                <small
+                                    class="field-error"
+                                    data-error-for="contactMessage"
+                                ></small>
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                id="contactSubmit"
+                                class="primary-button form-submit"
+                            >
+
+                                <span class="button-text">
+                                    Send Message
+                                </span>
+
+                                <span
+                                    class="button-loading"
+                                    hidden
+                                >
+                                    <i class="fa-solid fa-spinner fa-spin"></i>
+                                    Sending...
+                                </span>
+
+                                <i class="fa-solid fa-paper-plane"></i>
+
+                            </button>
+
+                            <p class="form-note">
+                                <i class="fa-solid fa-lock"></i>
+                                Your message is handled securely.
+                            </p>
+
+                        </form>
 
                     </div>
 
@@ -620,59 +1642,125 @@
     </main>
 
 
-    <!-- ================= FOOTER ================= -->
-    <footer class="footer">
+    <!-- =========================================================
+         FOOTER
+    ========================================================== -->
+    <footer class="site-footer">
 
-        <div class="container footer-content">
+        <div class="container">
 
-            <div class="footer-brand">
+            <div class="footer-main">
 
-                <a href="#home" class="logo footer-logo">
-                    <span class="logo-main">HAICO</span>
-                    <span class="logo-sub">TECH & DESIGN</span>
-                </a>
+                <div class="footer-brand">
 
-                <p>
-                    Your Idea. Our Creativity.
-                    One Digital Solution.
-                </p>
+                    <a href="#home" class="brand">
 
-            </div>
+                        <div class="brand-mark">
+                            <span>H</span>
+                        </div>
 
+                        <div class="brand-text">
+                            <strong>HAICO</strong>
+                            <small>TECH & DESIGN</small>
+                        </div>
 
-            <div class="footer-links">
-
-                <h3>Quick Links</h3>
-
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#services">Services</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-
-            </div>
-
-
-            <div class="footer-social">
-
-                <h3>Connect With Us</h3>
-
-                <div class="social-icons">
-
-                    <a
-                        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design."
-                        target="_blank"
-                        rel="noopener"
-                        aria-label="WhatsApp"
-                    >
-                        <i class="fab fa-whatsapp"></i>
                     </a>
 
+                    <p>
+                        Your Idea. Our Creativity.
+                        One Digital Solution.
+                    </p>
+
                     <a
-                        href="mailto:ayoubhafidhi1@gmail.com"
-                        aria-label="Email"
+                        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="footer-whatsapp"
                     >
-                        <i class="fas fa-envelope"></i>
+                        <i class="fa-brands fa-whatsapp"></i>
+                        Chat with us
+                    </a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Explore</h4>
+
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#services">Services</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Services</h4>
+
+                    <a href="#services">Website</a>
+                    <a href="#services">Apps</a>
+                    <a href="#services">Graphic Design</a>
+                    <a href="#services">Management Systems</a>
+                    <a href="#services">E-Commerce</a>
+
+                </div>
+
+
+                <div class="footer-column">
+
+                    <h4>Contact</h4>
+
+                    <a
+                        href="https://wa.me/255718170176"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        +255 718 170 176
+                    </a>
+
+                    <a href="mailto:ayoubhafidhi1@gmail.com">
+                        ayoubhafidhi1@gmail.com
+                    </a>
+
+                    <span>
+                        Tanzania
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-bottom">
+
+                <p>
+                    ©
+                    <span id="currentYear"></span>
+                    HAICO TECH AND DESIGN.
+                    All rights reserved.
+                </p>
+
+                <div class="footer-bottom-links">
+
+                    <a href="#home">
+                        Privacy
+                    </a>
+
+                    <a href="#home">
+                        Terms
+                    </a>
+
+                    <!-- Admin access -->
+                    <a
+                        href="admin.html"
+                        class="admin-access"
+                    >
+                        <i class="fa-solid fa-lock"></i>
+                        Admin
                     </a>
 
                 </div>
@@ -681,34 +1769,53 @@
 
         </div>
 
-
-        <div class="footer-bottom">
-
-            <p>
-                &copy; <span id="year"></span>
-                HAICO Tech & Design. All Rights Reserved.
-            </p>
-
-        </div>
-
     </footer>
 
 
-    <!-- ================= FLOATING WHATSAPP ================= -->
-    <a
-        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20and%20Design%2C%20I%20would%20like%20to%20start%20a%20project."
-        class="whatsapp-float"
-        target="_blank"
-        rel="noopener"
-        aria-label="Contact HAICO on WhatsApp"
+    <!-- =========================================================
+         BACK TO TOP
+    ========================================================== -->
+    <button
+        id="backToTop"
+        class="back-to-top"
+        type="button"
+        aria-label="Back to top"
+        title="Back to top"
     >
-        <i class="fab fa-whatsapp"></i>
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+
+    <!-- =========================================================
+         WHATSAPP FLOATING BUTTON
+    ========================================================== -->
+    <a
+        href="https://wa.me/255718170176?text=Hello%20HAICO%20Tech%20%26%20Design%2C%20I%20would%20like%20to%20make%20an%20inquiry."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="whatsapp-float"
+        aria-label="Contact HAICO on WhatsApp"
+        title="Chat with HAICO on WhatsApp"
+    >
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">
+            Chat with us
+        </span>
     </a>
 
+
+    <!-- =========================================================
+         SUPABASE
+         NOTE:
+         app.js will initialize Supabase.
+         Replace the placeholders in app.js with your project's
+         public Supabase URL and anon key.
+    ========================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <!-- Main JavaScript -->
     <script src="app.js"></script>
 
 </body>
 </html>
-```
