@@ -3,454 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="theme-color" content="#071a33">
     <title>HAICO Link Hub</title>
-    <meta name="description" content="HAICO Link Hub - Digital Projects, Services and Solutions">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- =========================
-     LOADING
-========================= -->
-<div id="loadingScreen" class="loading-screen">
-    <div class="loader"></div>
-    <p>Loading HAICO Link Hub...</p>
-</div>
-
-<!-- =========================
-     HEADER
-========================= -->
-<header class="main-header">
-
-    <div class="header-inner">
-
-        <a href="#" class="brand-mini" id="headerBrand">
-            HAICO
-        </a>
-
-        <nav class="desktop-nav">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </nav>
-
-        <button id="openLoginBtn" class="admin-login-btn">
-            Admin Login
-        </button>
-
-        <button id="mobileMenuBtn" class="mobile-menu-btn">
-            ☰
-        </button>
-
+<header class="topbar">
+    <div class="brand-mini">
+        <span class="brand-mark">H</span>
+        <span id="headerBrand">HAICO Link Hub</span>
     </div>
 
-    <div id="mobileNav" class="mobile-nav">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <button id="mobileLoginBtn">Admin Login</button>
-    </div>
+    <button id="menuBtn" class="icon-btn">☰</button>
 
+    <button id="openLoginBtn" class="admin-login-btn">
+        🔐 Admin Login
+    </button>
 </header>
 
+<div id="overlay" class="overlay"></div>
 
-<!-- =========================
-     HERO
-========================= -->
-<section id="home" class="hero-section">
+<aside id="sidebar" class="sidebar">
+    <button id="closeBtn" class="close-sidebar">×</button>
 
-    <div class="hero-content">
-
-        <div class="hero-badge">
-            DIGITAL PROJECT HUB
-        </div>
-
-        <h1 id="heroBrand">
-            HAICO TECH & DESIGN
-        </h1>
-
-        <h2 id="heroTagline">
-            Your Idea. Our Creativity. One Digital Solution.
-        </h2>
-
-        <p>
-            Discover websites, applications, management systems,
-            graphic designs, e-commerce platforms and other digital
-            solutions created by HAICO.
-        </p>
-
-        <div class="hero-buttons">
-            <a href="#projects" class="primary-btn">
-                Explore Projects
-            </a>
-
-            <a href="#contact" class="secondary-btn">
-                Contact HAICO
-            </a>
-        </div>
-
+    <div class="sidebar-brand">
+        <div class="big-logo">H</div>
+        <h2>HAICO</h2>
+        <p>Link Hub</p>
     </div>
 
+    <nav>
+        <a href="#home">🏠 Home</a>
+        <a href="#about">ℹ️ About</a>
+        <a href="#services">🛠 Services</a>
+        <a href="#projects">🚀 Projects</a>
+        <a href="#contact">📞 Contact</a>
+        <button id="sidebarLoginBtn">🔐 Admin Login</button>
+    </nav>
+</aside>
+
+<main>
+
+<section id="home" class="hero">
+    <div class="hero-content">
+        <span class="eyebrow">DIGITAL PROJECT PORTFOLIO</span>
+
+        <h1 id="heroBrand">HAICO Link Hub</h1>
+
+        <p id="heroTagline">
+            Your Idea. Our Creativity. One Digital Solution.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#projects" class="primary-btn">Explore Projects</a>
+            <a href="#contact" class="secondary-btn">Contact HAICO</a>
+        </div>
+    </div>
 </section>
 
-
-<!-- =========================
-     ABOUT
-========================= -->
 <section id="about" class="section">
-
     <div class="section-heading">
-        <span>WHO WE ARE</span>
-        <h2>About Our Brand</h2>
+        <span>ABOUT</span>
+        <h2>About HAICO</h2>
     </div>
 
     <div class="about-card">
-
-        <div class="about-icon">
-            H
-        </div>
-
-        <div>
-            <h3 id="aboutBrandName">
-                HAICO TECH & DESIGN
-            </h3>
-
-            <p id="aboutText">
-                We create practical digital solutions that help individuals,
-                businesses and organizations transform their ideas into
-                professional digital experiences.
-            </p>
-
-            <div class="about-contact">
-
-                <div>
-                    <strong>Phone</strong>
-                    <span id="phoneText">+255 718 170 176</span>
-                </div>
-
-                <div>
-                    <strong>Email</strong>
-                    <span id="emailText">ayoubhafidhi1@gmail.com</span>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     SERVICES
-========================= -->
-<section id="services" class="section section-alt">
-
-    <div class="section-heading">
-        <span>WHAT WE DO</span>
-        <h2>Our Services</h2>
-    </div>
-
-    <div id="servicesContainer" class="services-grid">
-        <div class="empty-message">
-            Loading services...
-        </div>
-    </div>
-
-</section>
-
-
-<!-- =========================
-     PROJECTS
-========================= -->
-<section id="projects" class="section">
-
-    <div class="section-heading">
-        <span>OUR WORK</span>
-        <h2>Digital Projects</h2>
-        <p>
-            Explore projects and digital solutions created by HAICO.
+        <p id="aboutText">
+            Welcome to HAICO Link Hub. Discover digital projects,
+            websites, applications, management systems and creative solutions.
         </p>
+    </div>
+</section>
+
+<section id="services" class="section">
+    <div class="section-heading">
+        <span>SERVICES</span>
+        <h2>What We Do</h2>
+    </div>
+
+    <div id="servicesContainer" class="services-grid"></div>
+</section>
+
+<section id="projects" class="section">
+    <div class="section-heading">
+        <span>PORTFOLIO</span>
+        <h2>Our Projects</h2>
     </div>
 
     <div class="project-tools">
-
-        <div class="search-box">
-            <span>⌕</span>
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search projects..."
-            >
-        </div>
+        <input
+            type="search"
+            id="searchInput"
+            placeholder="Search projects..."
+        >
 
         <select id="categoryFilter">
-            <option value="all">All Categories</option>
+            <option value="">All Categories</option>
         </select>
-
     </div>
 
-    <div id="projectsContainer" class="projects-grid">
-        <div class="empty-message">
-            Loading projects...
-        </div>
-    </div>
-
+    <div id="projectsContainer" class="projects-grid"></div>
 </section>
 
-
-<!-- =========================
-     CONTACT
-========================= -->
-<section id="contact" class="contact-section">
-
-    <div class="section-heading light-heading">
-        <span>GET IN TOUCH</span>
-        <h2>Let's Build Something Great</h2>
-        <p>
-            Have an idea? Contact HAICO and let's turn your idea
-            into a professional digital solution.
-        </p>
+<section id="contact" class="section contact-section">
+    <div class="section-heading">
+        <span>CONTACT</span>
+        <h2>Let's Work Together</h2>
     </div>
 
     <div class="contact-grid">
 
-        <a id="whatsappContact"
-           href="#"
-           target="_blank"
-           class="contact-card">
-            <div class="contact-card-icon">☏</div>
-            <h3>WhatsApp</h3>
-            <p>Chat with HAICO</p>
-        </a>
-
-        <a id="emailContact"
-           href="#"
-           class="contact-card">
-            <div class="contact-card-icon">@</div>
-            <h3>Email</h3>
-            <p id="contactEmailText">Send us an email</p>
-        </a>
+        <div class="contact-card">
+            <div class="contact-icon">📞</div>
+            <h3>Phone</h3>
+            <a id="phoneText" href="#">+255 718 170 176</a>
+        </div>
 
         <div class="contact-card">
-            <div class="contact-card-icon">☎</div>
-            <h3>Phone</h3>
-            <p id="contactPhoneText">+255 718 170 176</p>
+            <div class="contact-icon">✉️</div>
+            <h3>Email</h3>
+            <a id="emailContact" href="mailto:ayoubhafidhi1@gmail.com">
+                ayoubhafidhi1@gmail.com
+            </a>
+        </div>
+
+        <div class="contact-card">
+            <div class="contact-icon">💬</div>
+            <h3>WhatsApp</h3>
+            <a id="whatsappContact" href="#" target="_blank">
+                Chat on WhatsApp
+            </a>
         </div>
 
     </div>
 
     <div id="socialContainer" class="social-container"></div>
-
 </section>
 
+</main>
 
-<!-- =========================
-     FOOTER
-========================= -->
-<footer class="footer">
-
+<footer>
     <div>
-
-        <h3 id="footerBrand">
-            HAICO TECH & DESIGN
-        </h3>
-
-        <p>
-            Your Idea. Our Creativity. One Digital Solution.
-        </p>
-
+        <strong id="footerBrand">HAICO Link Hub</strong>
+        <p>Your Idea. Our Creativity. One Digital Solution.</p>
     </div>
 
-    <div class="footer-right">
+    <button id="footerAdminBtn" class="footer-admin-btn">
+        Admin
+    </button>
 
-        <span>
-            © <span id="year"></span> HAICO. All Rights Reserved.
-        </span>
-
-        <button id="footerAdminBtn" class="footer-admin-btn">
-            Admin
-        </button>
-
-    </div>
-
+    <p>
+        © <span id="year"></span> HAICO Tech & Design
+    </p>
 </footer>
 
 
-<!-- ==================================================
-     LOGIN OVERLAY
-================================================== -->
-<div id="loginOverlay" class="overlay hidden">
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal auth-modal">
 
-    <div class="auth-container">
+    <div class="auth-box">
 
-        <!-- LEFT BRAND PANEL -->
+        <button id="closeLoginModal" class="modal-close">×</button>
+
         <div class="auth-brand-panel">
+            <div class="auth-logo">H</div>
 
-            <button id="closeLoginBtn" class="close-auth-btn">
-                ×
-            </button>
+            <span>HAICO TECH & DESIGN</span>
 
-            <div class="auth-brand-content">
+            <h2>HAICO Link Hub</h2>
 
-                <div class="large-logo">
-                    H
-                </div>
+            <p id="authTagline">
+                Your Idea. Our Creativity. One Digital Solution.
+            </p>
 
-                <p class="auth-small-title">
-                    WELCOME TO
-                </p>
-
-                <h1 id="loginBrandName">
-                    HAICO TECH & DESIGN
-                </h1>
-
-                <h2 id="loginBrandTagline">
-                    Your Idea. Our Creativity. One Digital Solution.
-                </h2>
-
-                <p>
-                    Manage your digital projects, services, brand
-                    information and social links from one professional
-                    administration dashboard.
-                </p>
-
-                <div class="website-label">
-                    <span>WEBSITE</span>
-                    <strong id="loginWebsite">
-                        mrhaico.github.io/haico-link-hub
-                    </strong>
-                </div>
-
+            <div class="auth-website">
+                mrhaico.github.io/haico-link-hub
             </div>
-
         </div>
 
-
-        <!-- RIGHT LOGIN PANEL -->
         <div class="auth-form-panel">
 
-            <div class="login-form-wrapper">
+            <div class="auth-title">
+                <span>ADMIN AREA</span>
+                <h1>Welcome Back</h1>
+                <p>Login to manage your digital portfolio.</p>
+            </div>
 
-                <div class="form-heading">
-                    <span>ADMINISTRATION</span>
-                    <h2>Admin Login</h2>
-                    <p>
-                        Sign in to manage HAICO Link Hub.
-                    </p>
-                </div>
+            <form id="loginForm">
 
-                <form id="loginForm">
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="admin@example.com"
+                    required
+                >
 
-                    <label for="loginEmail">
-                        Email Address
-                    </label>
+                <label>Password</label>
 
+                <div class="password-box">
                     <input
-                        type="email"
-                        id="loginEmail"
-                        placeholder="admin@example.com"
+                        type="password"
+                        id="loginPassword"
+                        placeholder="Your password"
                         required
                     >
+                    <button type="button" id="togglePassword">👁</button>
+                </div>
 
+                <button type="submit" class="full-btn">
+                    Login to Dashboard
+                </button>
 
-                    <label for="loginPassword">
-                        Password
-                    </label>
+                <button
+                    type="button"
+                    id="forgotPasswordBtn"
+                    class="text-btn"
+                >
+                    Forgot Password?
+                </button>
 
-                    <div class="password-input">
-                        <input
-                            type="password"
-                            id="loginPassword"
-                            placeholder="Enter your password"
-                            required
-                        >
+                <p id="loginMessage" class="form-message"></p>
 
-                        <button
-                            type="button"
-                            id="togglePassword"
-                        >
-                            Show
-                        </button>
-                    </div>
-
-
-                    <div class="login-options">
-
-                        <button
-                            type="button"
-                            id="forgotPasswordBtn"
-                            class="forgot-btn"
-                        >
-                            Forgot Password?
-                        </button>
-
-                    </div>
-
-
-                    <button
-                        type="submit"
-                        id="loginSubmitBtn"
-                        class="full-primary-btn"
-                    >
-                        Login to Dashboard
-                    </button>
-
-
-                    <div
-                        id="loginMessage"
-                        class="form-message"
-                    ></div>
-
-                </form>
-
-            </div>
+            </form>
 
         </div>
 
     </div>
-
 </div>
 
 
-<!-- ==================================================
-     FORGOT PASSWORD OVERLAY
-================================================== -->
-<div id="forgotOverlay" class="overlay hidden">
+<!-- FORGOT PASSWORD MODAL -->
+<div id="forgotModal" class="modal">
 
-    <div class="simple-modal">
+    <div class="small-modal">
 
-        <button id="closeForgotBtn" class="modal-close">
-            ×
-        </button>
+        <button id="closeForgotModal" class="modal-close">×</button>
 
-        <div class="modal-icon">
-            🔐
-        </div>
+        <div class="modal-icon">🔑</div>
 
         <h2>Forgot Password?</h2>
 
         <p>
-            Enter your admin email address and Supabase will
-            send you a secure password reset link.
+            Enter your admin email and Supabase will send
+            you a password reset link.
         </p>
 
         <form id="forgotPasswordForm">
 
-            <label for="forgotEmail">
-                Admin Email
-            </label>
+            <label>Email Address</label>
 
             <input
                 type="email"
@@ -459,392 +262,220 @@
                 required
             >
 
-            <button
-                type="submit"
-                id="forgotSubmitBtn"
-                class="full-primary-btn"
-            >
+            <button type="submit" class="full-btn">
                 Send Reset Link
             </button>
 
-            <button
-                type="button"
-                id="backToLoginBtn"
-                class="back-btn"
-            >
-                Back to Login
-            </button>
-
-            <div
-                id="forgotMessage"
-                class="form-message"
-            ></div>
+            <p id="forgotMessage" class="form-message"></p>
 
         </form>
 
     </div>
-
 </div>
 
 
-<!-- ==================================================
-     RESET PASSWORD OVERLAY
-================================================== -->
-<div id="resetOverlay" class="overlay hidden">
+<!-- RESET PASSWORD MODAL -->
+<div id="resetModal" class="modal">
 
-    <div class="simple-modal">
+    <div class="small-modal">
 
-        <div class="modal-icon">
-            🔑
-        </div>
+        <button id="closeResetModal" class="modal-close">×</button>
+
+        <div class="modal-icon">🔐</div>
 
         <h2>Create New Password</h2>
 
-        <p>
-            Enter your new administrator password below.
-        </p>
+        <p>Enter your new admin password.</p>
 
-        <form id="resetPasswordForm">
+        <form id="resetForm">
 
-            <label for="newPassword">
-                New Password
-            </label>
+            <label>New Password</label>
 
-            <input
-                type="password"
-                id="newPassword"
-                placeholder="Minimum 6 characters"
-                minlength="6"
-                required
-            >
+            <div class="password-box">
+                <input
+                    type="password"
+                    id="resetNewPassword"
+                    minlength="8"
+                    placeholder="Minimum 8 characters"
+                    required
+                >
+                <button type="button" id="toggleResetPassword">👁</button>
+            </div>
 
-            <label for="confirmPassword">
-                Confirm Password
-            </label>
+            <label>Confirm Password</label>
 
             <input
                 type="password"
-                id="confirmPassword"
-                placeholder="Repeat your password"
-                minlength="6"
+                id="resetConfirmPassword"
+                minlength="8"
+                placeholder="Repeat password"
                 required
             >
 
-            <button
-                type="submit"
-                id="resetSubmitBtn"
-                class="full-primary-btn"
-            >
+            <button type="submit" class="full-btn">
                 Update Password
             </button>
 
-            <div
-                id="resetMessage"
-                class="form-message"
-            ></div>
+            <p id="resetMessage" class="form-message"></p>
 
         </form>
 
     </div>
-
 </div>
 
 
-<!-- ==================================================
-     ADMIN DASHBOARD
-================================================== -->
-<div id="adminDashboard" class="admin-dashboard hidden">
+<!-- ADMIN DASHBOARD -->
+<div id="adminModal" class="modal dashboard-modal">
 
-    <aside class="admin-sidebar">
+    <div class="dashboard">
 
-        <div class="admin-sidebar-brand">
-
-            <div class="sidebar-logo">
-                H
-            </div>
+        <header class="dashboard-header">
 
             <div>
-                <strong>HAICO</strong>
-                <small>ADMIN PANEL</small>
+                <span>HAICO LINK HUB</span>
+                <h2>Admin Dashboard</h2>
             </div>
 
-        </div>
-
-
-        <nav class="admin-navigation">
-
-            <button
-                class="admin-nav-btn active"
-                data-view="overviewView"
-            >
-                <span>⌂</span>
-                Overview
-            </button>
-
-            <button
-                class="admin-nav-btn"
-                data-view="projectsView"
-            >
-                <span>▣</span>
-                Projects
-            </button>
-
-            <button
-                class="admin-nav-btn"
-                data-view="servicesView"
-            >
-                <span>◆</span>
-                Services
-            </button>
-
-            <button
-                class="admin-nav-btn"
-                data-view="brandView"
-            >
-                <span>✦</span>
-                Brand Settings
-            </button>
-
-            <button
-                class="admin-nav-btn"
-                data-view="socialView"
-            >
-                <span>●</span>
-                Social Links
-            </button>
-
-        </nav>
-
-
-        <div class="sidebar-bottom">
-
-            <button id="closeAdminBtn" class="sidebar-action">
-                ← Public Website
-            </button>
-
-            <button id="logoutBtn" class="sidebar-logout">
-                Logout
-            </button>
-
-        </div>
-
-    </aside>
-
-
-    <main class="admin-main">
-
-        <header class="admin-topbar">
-
-            <div>
-
-                <button
-                    id="mobileAdminMenu"
-                    class="mobile-admin-menu"
-                >
-                    ☰
+            <div class="dashboard-user">
+                <span id="adminUserEmail"></span>
+                <button id="logoutBtn">Logout</button>
+                <button id="closeAdminModal" class="dashboard-close">
+                    ×
                 </button>
-
-                <h1 id="adminPageTitle">
-                    Dashboard Overview
-                </h1>
-
-                <p id="adminWelcome">
-                    Welcome to your administration panel.
-                </p>
-
-            </div>
-
-            <div class="admin-user">
-
-                <div class="admin-avatar">
-                    A
-                </div>
-
-                <div>
-                    <strong id="adminUserEmail">
-                        Admin
-                    </strong>
-
-                    <small>
-                        Administrator
-                    </small>
-                </div>
-
             </div>
 
         </header>
 
+        <div class="dashboard-body">
 
-        <!-- =========================
-             OVERVIEW
-        ========================= -->
-        <section
-            id="overviewView"
-            class="admin-view active"
-        >
+            <aside class="dashboard-nav">
 
-            <div class="stats-grid">
-
-                <div class="stat-card">
-                    <div class="stat-icon">▣</div>
-                    <div>
-                        <span>Projects</span>
-                        <strong id="projectCount">0</strong>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">◆</div>
-                    <div>
-                        <span>Services</span>
-                        <strong id="serviceCount">0</strong>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">●</div>
-                    <div>
-                        <span>Social Links</span>
-                        <strong id="socialCount">0</strong>
-                    </div>
-                </div>
-
-                <div class="stat-card">
-                    <div class="stat-icon">★</div>
-                    <div>
-                        <span>Featured</span>
-                        <strong id="featuredCount">0</strong>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="admin-welcome-card">
-
-                <div>
-                    <span>HAICO LINK HUB</span>
-
-                    <h2>
-                        Manage your digital presence.
-                    </h2>
-
-                    <p>
-                        Add projects, update services, change brand
-                        information and manage your social links.
-                    </p>
-                </div>
-
-                <button
-                    class="primary-btn"
-                    data-go-view="projectsView"
-                >
-                    Manage Projects
+                <button class="admin-tab active" data-tab="overviewTab">
+                    📊 Overview
                 </button>
 
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             PROJECTS
-        ========================= -->
-        <section
-            id="projectsView"
-            class="admin-view"
-        >
-
-            <div class="admin-section-header">
-
-                <div>
-                    <span>PORTFOLIO</span>
-                    <h2>Manage Projects</h2>
-                </div>
-
-                <button
-                    id="addProjectBtn"
-                    class="primary-btn"
-                >
-                    + Add Project
+                <button class="admin-tab" data-tab="projectsTab">
+                    🚀 Projects
                 </button>
 
-            </div>
+                <button class="admin-tab" data-tab="servicesTab">
+                    🛠 Services
+                </button>
 
-            <div
-                id="adminProjectsContainer"
-                class="admin-list"
-            ></div>
+                <button class="admin-tab" data-tab="brandTab">
+                    🎨 Brand
+                </button>
 
-        </section>
+                <button class="admin-tab" data-tab="socialTab">
+                    🔗 Social Links
+                </button>
+
+            </aside>
+
+            <div class="dashboard-content">
+
+                <!-- OVERVIEW -->
+                <section
+                    id="overviewTab"
+                    class="admin-tab-content active"
+                >
+
+                    <div class="dashboard-heading">
+                        <span>CONTROL CENTER</span>
+                        <h1>Overview</h1>
+                    </div>
+
+                    <div class="stats-grid">
+
+                        <div class="stat-card">
+                            <span>Projects</span>
+                            <strong id="statProjects">0</strong>
+                        </div>
+
+                        <div class="stat-card">
+                            <span>Services</span>
+                            <strong id="statServices">0</strong>
+                        </div>
+
+                        <div class="stat-card">
+                            <span>Social Links</span>
+                            <strong id="statSocial">0</strong>
+                        </div>
+
+                    </div>
+
+                </section>
 
 
-        <!-- =========================
-             SERVICES
-        ========================= -->
-        <section
-            id="servicesView"
-            class="admin-view"
-        >
+                <!-- PROJECTS -->
+                <section id="projectsTab" class="admin-tab-content">
 
-            <div class="admin-section-header">
+                    <div class="admin-section-top">
 
-                <div>
-                    <span>SERVICES</span>
-                    <h2>Manage Services</h2>
-                </div>
+                        <div>
+                            <span>PORTFOLIO MANAGEMENT</span>
+                            <h1>Projects</h1>
+                        </div>
 
-            </div>
+                        <button id="addProjectBtn" class="primary-btn">
+                            + Add Project
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="adminProjectsContainer"
+                        class="admin-list"
+                    ></div>
+
+                </section>
 
 
-            <div class="two-column-admin">
+                <!-- SERVICES -->
+                <section id="servicesTab" class="admin-tab-content">
 
-                <div class="admin-form-card">
+                    <div class="admin-section-top">
+                        <div>
+                            <span>SERVICE MANAGEMENT</span>
+                            <h1>Services</h1>
+                        </div>
+                    </div>
 
-                    <h3 id="serviceFormTitle">
-                        Add Service
-                    </h3>
+                    <form id="serviceForm" class="admin-form">
 
-                    <form id="serviceForm">
+                        <input type="hidden" id="serviceId">
 
-                        <input
-                            type="hidden"
-                            id="serviceId"
-                        >
+                        <div class="form-grid">
 
-                        <label>
-                            Service Name
-                        </label>
+                            <div>
+                                <label>Service Name</label>
+                                <input
+                                    id="serviceName"
+                                    required
+                                    placeholder="Website Development"
+                                >
+                            </div>
 
-                        <input
-                            type="text"
-                            id="serviceName"
-                            placeholder="Website Development"
-                            required
-                        >
+                            <div>
+                                <label>Icon</label>
+                                <input
+                                    id="serviceIcon"
+                                    placeholder="🌐"
+                                >
+                            </div>
 
-                        <label>
-                            Icon
-                        </label>
+                        </div>
 
-                        <input
-                            type="text"
-                            id="serviceIcon"
-                            placeholder="💻"
-                        >
-
-                        <label>
-                            Description
-                        </label>
+                        <label>Description</label>
 
                         <textarea
                             id="serviceDescription"
-                            rows="5"
-                            placeholder="Describe this service..."
+                            rows="3"
+                            placeholder="Service description"
                             required
                         ></textarea>
 
-                        <div class="form-buttons">
+                        <div class="form-actions">
 
                             <button
                                 type="submit"
@@ -856,530 +487,354 @@
                             <button
                                 type="button"
                                 id="cancelServiceBtn"
-                                class="cancel-btn"
+                                class="secondary-btn"
                             >
-                                Cancel
+                                Clear
                             </button>
 
                         </div>
 
+                        <p id="serviceMessage" class="form-message"></p>
+
                     </form>
-
-                </div>
-
-
-                <div>
-
-                    <h3 class="list-title">
-                        Existing Services
-                    </h3>
 
                     <div
                         id="adminServicesContainer"
                         class="admin-list"
                     ></div>
 
-                </div>
-
-            </div>
-
-        </section>
+                </section>
 
 
-        <!-- =========================
-             BRAND
-        ========================= -->
-        <section
-            id="brandView"
-            class="admin-view"
-        >
+                <!-- BRAND -->
+                <section id="brandTab" class="admin-tab-content">
 
-            <div class="admin-section-header">
-
-                <div>
-                    <span>IDENTITY</span>
-                    <h2>Brand Settings</h2>
-                </div>
-
-            </div>
-
-
-            <div class="admin-form-card wide-card">
-
-                <form id="brandForm">
-
-                    <div class="form-grid">
-
+                    <div class="admin-section-top">
                         <div>
-                            <label>Brand Name</label>
-
-                            <input
-                                type="text"
-                                id="brandName"
-                                required
-                            >
+                            <span>BRAND MANAGEMENT</span>
+                            <h1>Brand Settings</h1>
                         </div>
-
-                        <div>
-                            <label>Tagline</label>
-
-                            <input
-                                type="text"
-                                id="brandTagline"
-                                required
-                            >
-                        </div>
-
                     </div>
 
+                    <form id="brandForm" class="admin-form">
 
-                    <label>About</label>
+                        <div class="form-grid">
 
-                    <textarea
-                        id="brandAbout"
-                        rows="6"
-                        required
-                    ></textarea>
+                            <div>
+                                <label>Brand Name</label>
+                                <input id="brandName" required>
+                            </div>
 
+                            <div>
+                                <label>Tagline</label>
+                                <input id="brandTagline">
+                            </div>
 
-                    <div class="form-grid">
-
-                        <div>
-                            <label>Phone</label>
-
-                            <input
-                                type="text"
-                                id="brandPhone"
-                            >
                         </div>
 
-                        <div>
-                            <label>Email</label>
+                        <label>About</label>
 
-                            <input
-                                type="email"
-                                id="brandEmail"
-                            >
+                        <textarea
+                            id="brandAbout"
+                            rows="5"
+                        ></textarea>
+
+                        <div class="form-grid">
+
+                            <div>
+                                <label>Logo URL</label>
+                                <input
+                                    id="brandLogo"
+                                    placeholder="https://..."
+                                >
+                            </div>
+
+                            <div>
+                                <label>Phone</label>
+                                <input id="brandPhone">
+                            </div>
+
                         </div>
 
+                        <div class="form-grid">
+
+                            <div>
+                                <label>Email</label>
+                                <input id="brandEmail" type="email">
+                            </div>
+
+                            <div>
+                                <label>WhatsApp Number</label>
+                                <input
+                                    id="brandWhatsapp"
+                                    placeholder="255718170176"
+                                >
+                            </div>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="primary-btn"
+                        >
+                            Save Brand Settings
+                        </button>
+
+                        <p id="brandMessage" class="form-message"></p>
+
+                    </form>
+
+                </section>
+
+
+                <!-- SOCIAL -->
+                <section id="socialTab" class="admin-tab-content">
+
+                    <div class="admin-section-top">
+                        <div>
+                            <span>SOCIAL MANAGEMENT</span>
+                            <h1>Social Links</h1>
+                        </div>
                     </div>
 
+                    <form id="socialForm" class="admin-form">
 
-                    <label>WhatsApp Number / Link</label>
+                        <input type="hidden" id="socialId">
 
-                    <input
-                        type="text"
-                        id="brandWhatsapp"
-                        placeholder="+255718170176"
-                    >
+                        <div class="form-grid">
 
+                            <div>
+                                <label>Platform</label>
+                                <input
+                                    id="socialPlatform"
+                                    placeholder="TikTok"
+                                    required
+                                >
+                            </div>
 
-                    <label>Logo URL</label>
+                            <div>
+                                <label>Icon</label>
+                                <input
+                                    id="socialIcon"
+                                    placeholder="🎵"
+                                >
+                            </div>
 
-                    <input
-                        type="url"
-                        id="brandLogo"
-                        placeholder="https://..."
-                    >
-
-
-                    <button
-                        type="submit"
-                        class="primary-btn"
-                    >
-                        Save Brand Settings
-                    </button>
-
-                    <div
-                        id="brandMessage"
-                        class="form-message"
-                    ></div>
-
-                </form>
-
-            </div>
-
-        </section>
-
-
-        <!-- =========================
-             SOCIAL
-        ========================= -->
-        <section
-            id="socialView"
-            class="admin-view"
-        >
-
-            <div class="admin-section-header">
-
-                <div>
-                    <span>SOCIAL MEDIA</span>
-                    <h2>Manage Social Links</h2>
-                </div>
-
-            </div>
-
-
-            <div class="two-column-admin">
-
-                <div class="admin-form-card">
-
-                    <h3>
-                        Add / Edit Social Link
-                    </h3>
-
-                    <form id="socialForm">
-
-                        <input
-                            type="hidden"
-                            id="socialId"
-                        >
-
-                        <label>Platform</label>
-
-                        <input
-                            type="text"
-                            id="socialPlatform"
-                            placeholder="Instagram"
-                            required
-                        >
+                        </div>
 
                         <label>URL</label>
 
                         <input
-                            type="url"
                             id="socialUrl"
-                            placeholder="https://instagram.com/..."
+                            type="url"
+                            placeholder="https://..."
                             required
                         >
 
-                        <label>Icon</label>
-
-                        <input
-                            type="text"
-                            id="socialIcon"
-                            placeholder="◎"
-                        >
-
-                        <div class="form-buttons">
+                        <div class="form-actions">
 
                             <button
                                 type="submit"
                                 class="primary-btn"
                             >
-                                Save Link
+                                Save Social Link
                             </button>
 
                             <button
                                 type="button"
                                 id="cancelSocialBtn"
-                                class="cancel-btn"
+                                class="secondary-btn"
                             >
-                                Cancel
+                                Clear
                             </button>
 
                         </div>
 
+                        <p id="socialMessage" class="form-message"></p>
+
                     </form>
-
-                </div>
-
-
-                <div>
-
-                    <h3 class="list-title">
-                        Existing Links
-                    </h3>
 
                     <div
                         id="adminSocialContainer"
                         class="admin-list"
                     ></div>
 
-                </div>
+                </section>
 
             </div>
-
-        </section>
-
-    </main>
-
+        </div>
+    </div>
 </div>
 
 
-<!-- ==================================================
-     PROJECT FORM MODAL
-================================================== -->
-<div id="projectFormModal" class="modal-overlay hidden">
+<!-- PROJECT FORM -->
+<div id="projectFormModal" class="modal">
 
     <div class="large-modal">
 
-        <div class="modal-header">
+        <button id="cancelProjectBtn" class="modal-close">×</button>
 
-            <div>
-                <span>PORTFOLIO</span>
-                <h2 id="projectFormTitle">
-                    Add Project
-                </h2>
-            </div>
-
-            <button
-                id="cancelProjectBtn"
-                class="modal-close"
-            >
-                ×
-            </button>
-
+        <div class="modal-title">
+            <span>PROJECT MANAGEMENT</span>
+            <h2 id="projectFormTitle">Add Project</h2>
         </div>
 
+        <form id="projectForm" class="admin-form">
 
-        <form id="projectForm">
-
-            <input
-                type="hidden"
-                id="projectId"
-            >
-
+            <input type="hidden" id="projectId">
 
             <div class="form-grid">
 
                 <div>
-                    <label>Project Name *</label>
-
-                    <input
-                        type="text"
-                        id="projectName"
-                        required
-                    >
+                    <label>Project Name</label>
+                    <input id="projectName" required>
                 </div>
 
                 <div>
-                    <label>Category *</label>
-
+                    <label>Category</label>
                     <input
-                        type="text"
                         id="projectCategory"
-                        placeholder="Website"
+                        placeholder="Website, App, System..."
                         required
                     >
                 </div>
 
             </div>
-
-
-            <label>Short Description *</label>
-
-            <textarea
-                id="projectDescription"
-                rows="4"
-                required
-            ></textarea>
-
-
-            <label>Project Details</label>
-
-            <textarea
-                id="projectDetailsText"
-                rows="6"
-            ></textarea>
-
 
             <div class="form-grid">
 
                 <div>
                     <label>Created By</label>
-
-                    <input
-                        type="text"
-                        id="projectCreatedBy"
-                        placeholder="HAICO"
-                    >
+                    <input id="projectCreatedBy">
                 </div>
 
                 <div>
                     <label>Brand</label>
-
-                    <input
-                        type="text"
-                        id="projectBrand"
-                        placeholder="HAICO TECH & DESIGN"
-                    >
+                    <input id="projectBrand">
                 </div>
 
             </div>
 
+            <label>Description</label>
+            <textarea id="projectDescription" rows="3"></textarea>
 
-            <label>Technologies</label>
-
-            <input
-                type="text"
-                id="projectTechnologies"
-                placeholder="HTML, CSS, JavaScript, Supabase"
-            >
-
+            <label>Detailed Information</label>
+            <textarea id="projectDetailsText" rows="5"></textarea>
 
             <div class="form-grid">
 
                 <div>
-                    <label>Status</label>
-
-                    <select id="projectStatus">
-
-                        <option value="Completed">
-                            Completed
-                        </option>
-
-                        <option value="In Progress">
-                            In Progress
-                        </option>
-
-                        <option value="Coming Soon">
-                            Coming Soon
-                        </option>
-
-                    </select>
+                    <label>Technologies</label>
+                    <input
+                        id="projectTechnologies"
+                        placeholder="HTML, CSS, JavaScript"
+                    >
                 </div>
 
                 <div>
-                    <label>Live Link</label>
+                    <label>Status</label>
+                    <select id="projectStatus">
+                        <option value="Completed">Completed</option>
+                        <option value="Active">Active</option>
+                        <option value="In Development">In Development</option>
+                        <option value="Coming Soon">Coming Soon</option>
+                    </select>
+                </div>
 
+            </div>
+
+            <div class="form-grid">
+
+                <div>
+                    <label>Live Website</label>
                     <input
-                        type="url"
                         id="projectLiveLink"
+                        type="url"
                         placeholder="https://..."
                     >
                 </div>
 
-            </div>
-
-
-            <div class="form-grid">
-
                 <div>
-                    <label>GitHub Link</label>
-
+                    <label>GitHub</label>
                     <input
-                        type="url"
                         id="projectGithubLink"
+                        type="url"
                         placeholder="https://github.com/..."
                     >
                 </div>
 
-                <div>
-                    <label>WhatsApp Link</label>
-
-                    <input
-                        type="url"
-                        id="projectWhatsappLink"
-                        placeholder="https://wa.me/..."
-                    >
-                </div>
-
             </div>
-
 
             <div class="form-grid">
 
                 <div>
-
-                    <label>Project Image</label>
-
+                    <label>WhatsApp Link</label>
                     <input
-                        type="file"
-                        id="projectImage"
-                        accept="image/*"
+                        id="projectWhatsappLink"
+                        type="url"
+                        placeholder="https://wa.me/..."
                     >
-
                 </div>
 
                 <div>
-
-                    <label>Attachment / Download</label>
-
+                    <label>Project Image</label>
                     <input
+                        id="projectImage"
                         type="file"
-                        id="projectAttachment"
+                        accept="image/*"
                     >
-
                 </div>
 
             </div>
 
+            <label>Attachment / Download File</label>
+
+            <input
+                id="projectAttachment"
+                type="file"
+            >
 
             <label class="checkbox-label">
-
                 <input
-                    type="checkbox"
                     id="projectFeatured"
+                    type="checkbox"
                 >
-
                 Featured Project
-
             </label>
 
+            <button
+                type="submit"
+                id="saveProjectBtn"
+                class="primary-btn"
+            >
+                Save Project
+            </button>
 
-            <div
-                id="projectFormMessage"
-                class="form-message"
-            ></div>
-
-
-            <div class="form-buttons modal-buttons">
-
-                <button
-                    type="submit"
-                    id="saveProjectBtn"
-                    class="primary-btn"
-                >
-                    Save Project
-                </button>
-
-                <button
-                    type="button"
-                    id="cancelProjectBtn2"
-                    class="cancel-btn"
-                >
-                    Cancel
-                </button>
-
-            </div>
+            <p id="projectFormMessage" class="form-message"></p>
 
         </form>
 
     </div>
-
 </div>
 
 
-<!-- ==================================================
-     PROJECT DETAILS MODAL
-================================================== -->
-<div id="projectModal" class="modal-overlay hidden">
+<!-- PROJECT DETAILS -->
+<div id="projectModal" class="modal">
 
-    <div class="project-details-modal">
+    <div class="large-modal project-detail-modal">
 
-        <button
-            id="closeProjectModal"
-            class="modal-close"
-        >
-            ×
-        </button>
+        <button id="closeProjectModal" class="modal-close">×</button>
 
         <div id="projectDetails"></div>
 
     </div>
-
 </div>
 
 
-<!-- TOAST -->
 <div id="toast" class="toast"></div>
 
 
-<!-- SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- APP -->
 <script src="app.js"></script>
 
 </body>
