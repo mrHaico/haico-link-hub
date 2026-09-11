@@ -1,21 +1,18 @@
 /* =========================================================
    HAICO LINK HUB
-   ONLINE VERSION
-   HTML + CSS + JAVASCRIPT + SUPABASE
-   NO LOCALSTORAGE
-   ========================================================= */
+   SUPABASE APPLICATION
+========================================================= */
 
 
 /* =========================================================
-   1. SUPABASE CONNECTION
-   ========================================================= */
+   SUPABASE CONFIG
+========================================================= */
 
 const SUPABASE_URL =
     "https://lhgjvezxmeedbyiibbin.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY =
-    "sb_publishable_Nj4CRhnyMm2Psb209Rnq8w_rXiZLBbX";
-
+    "sb_publishable_Nj4CRhnyMm2Psb209Rnq8w_rXiZLBbB";
 
 const { createClient } = supabase;
 
@@ -26,8 +23,8 @@ const db = createClient(
 
 
 /* =========================================================
-   2. GLOBAL VARIABLES
-   ========================================================= */
+   GLOBAL STATE
+========================================================= */
 
 let projects = [];
 let services = [];
@@ -35,119 +32,271 @@ let socialLinks = [];
 let brandSettings = null;
 let currentUser = null;
 
+let recoveryMode = false;
+
 
 /* =========================================================
-   3. BASIC HELPERS
-   ========================================================= */
+   DOM HELPER
+========================================================= */
 
 const $ = (id) => document.getElementById(id);
 
 
-function escapeHTML(value) {
-
-    if (value === null || value === undefined) {
-        return "";
-    }
-
-    return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
-
-
-function showToast(message) {
-
-    const toast = $("toast");
-
-    toast.textContent = message;
-
-    toast.classList.add("show");
-
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 3000);
-}
-
-
-function openModal(id) {
-
-    $(id).classList.add("show");
-
-    document.body.classList.add("no-scroll");
-}
-
-
-function closeModal(id) {
-
-    $(id).classList.remove("show");
-
-    if (!document.querySelector(".modal.show")) {
-        document.body.classList.remove("no-scroll");
-    }
-}
-
-
-function setMessage(id, message, success = false) {
-
-    const element = $(id);
-
-    if (!element) return;
-
-    element.textContent = message;
-
-    element.style.color =
-        success ? "#12b76a" : "#d92d20";
-}
-
-
-function safeUrl(url) {
-
-    if (!url) return "#";
-
-    try {
-
-        const parsed = new URL(url);
-
-        if (
-            parsed.protocol === "http:" ||
-            parsed.protocol === "https:"
-        ) {
-            return parsed.href;
-        }
-
-    } catch (error) {}
-
-    return "#";
-}
-
-
 /* =========================================================
-   4. INITIALIZE
-   ========================================================= */
+   DOM READY
+========================================================= */
 
 document.addEventListener("DOMContentLoaded", async () => {
 
-    $("year").textContent = new Date().getFullYear();
+    setupYear();
 
     setupNavigation();
+
     setupModals();
+
+    setupLogin();
+
+    setupPasswordToggle();
+
+    setupForgotPassword();
+
+    setupResetPassword();
+
     setupAdminTabs();
-    setupForms();
+
+    setupProjectForm();
+
+    setupServiceForm();
+
+    setupBrandForm();
+
+    setupSocialForm();
+
     setupSearch();
+
+    setupRealtime();
 
     await loadAllData();
 
-    await checkCurrentUser();
+    await checkCurrentSession();
+
+    handleRecoveryUrl();
+
+    setTimeout(() => {
+
+        const loader = $("pageLoader");
+
+        if (loader) {
+            loader.classList.add("hidden");
+        }
+
+    }, 500);
 
 });
 
 
 /* =========================================================
-   5. LOAD ALL ONLINE DATA
-   ========================================================= */
+   YEAR
+========================================================= */
+
+function setupYear() {
+
+    const year = $("year");
+
+    if (year) {
+        year.textContent = new Date().getFullYear();
+    }
+
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function setupNavigation() {
+
+    const menuBtn = $("menuBtn");
+    const closeBtn = $("closeBtn");
+    const sidebar = $("sidebar");
+    const overlay = $("overlay");
+
+    if (menuBtn) {
+
+        menuBtn.addEventListener("click", () => {
+
+            sidebar.classList.add("active");
+            overlay.classList.add("active");
+
+        });
+
+    }
+
+
+    if (closeBtn) {
+
+        closeBtn.addEventListener("click", closeSidebar);
+
+    }
+
+
+    if (overlay) {
+
+        overlay.addEventListener("click", closeSidebar);
+
+    }
+
+
+    document.querySelectorAll(".sidebar-link").forEach(link => {
+
+        link.addEventListener("click", closeSidebar);
+
+    });
+
+
+    const sidebarLoginBtn = $("sidebarLoginBtn");
+
+    if (sidebarLoginBtn) {
+
+        sidebarLoginBtn.addEventListener("click", () => {
+
+            closeSidebar();
+            openModal("loginModal");
+
+        });
+
+    }
+
+}
+
+
+function closeSidebar() {
+
+    $("sidebar")?.classList.remove("active");
+    $("overlay")?.classList.remove("active");
+
+}
+
+
+/* =========================================================
+   MODAL HELPERS
+========================================================= */
+
+function openModal(id) {
+
+    const modal = $(id);
+
+    if (!modal) return;
+
+    modal.classList.add("active");
+
+    document.body.classList.add("modal-open");
+
+}
+
+
+function closeModal(id) {
+
+    const modal = $(id);
+
+    if (!modal) return;
+
+    modal.classList.remove("active");
+
+    const anyModalOpen =
+        document.querySelector(".modal.active");
+
+    if (!anyModalOpen) {
+        document.body.classList.remove("modal-open");
+    }
+
+}
+
+
+function setupModals() {
+
+    $("openLoginBtn")?.addEventListener(
+        "click",
+        () => openModal("loginModal")
+    );
+
+    $("footerAdminBtn")?.addEventListener(
+        "click",
+        () => openModal("loginModal")
+    );
+
+
+    $("closeLoginModal")?.addEventListener(
+        "click",
+        () => closeModal("loginModal")
+    );
+
+
+    $("closeAdminModal")?.addEventListener(
+        "click",
+        () => closeModal("adminModal")
+    );
+
+
+    $("closeProjectModal")?.addEventListener(
+        "click",
+        () => closeModal("projectModal")
+    );
+
+
+    $("closeProjectFormModal")?.addEventListener(
+        "click",
+        () => closeModal("projectFormModal")
+    );
+
+
+    $("cancelProjectBtn")?.addEventListener(
+        "click",
+        () => closeModal("projectFormModal")
+    );
+
+
+    $("closeForgotModal")?.addEventListener(
+        "click",
+        () => closeModal("forgotModal")
+    );
+
+
+    $("backToLoginBtn")?.addEventListener(
+        "click",
+        () => {
+
+            closeModal("forgotModal");
+            openModal("loginModal");
+
+        }
+    );
+
+
+    document.querySelectorAll(".modal").forEach(modal => {
+
+        modal.addEventListener("click", event => {
+
+            if (event.target === modal) {
+
+                if (modal.id === "adminModal") {
+                    return;
+                }
+
+                closeModal(modal.id);
+
+            }
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   LOAD ALL DATA
+========================================================= */
 
 async function loadAllData() {
 
@@ -162,267 +311,592 @@ async function loadAllData() {
 
 
 /* =========================================================
-   6. BRAND SETTINGS
-   ========================================================= */
+   BRAND SETTINGS
+========================================================= */
 
 async function loadBrandSettings() {
 
     const { data, error } = await db
         .from("brand_settings")
         .select("*")
-        .order("id", { ascending: true })
-        .limit(1)
-        .maybeSingle();
-
+        .limit(1);
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Brand settings error:",
+            error
+        );
 
         return;
+
     }
 
+    if (data && data.length > 0) {
 
-    brandSettings = data;
+        brandSettings = data[0];
+
+        renderBrand();
+
+    }
+
+}
 
 
-    if (!data) return;
+function renderBrand() {
+
+    if (!brandSettings) return;
 
 
-    $("heroBrand").textContent =
-        data.brand_name ||
+    const name =
+        brandSettings.brand_name ||
         "HAICO TECH & DESIGN";
 
-
-    $("heroTagline").textContent =
-        data.tagline ||
+    const tagline =
+        brandSettings.tagline ||
         "Your Idea. Our Creativity. One Digital Solution.";
 
 
-    $("aboutText").textContent =
-        data.about || "";
+    setText("heroBrand", name);
+
+    setText("heroTagline", tagline);
+
+    setText("aboutTitle", name);
+
+    setText(
+        "aboutText",
+        brandSettings.about ||
+        "HAICO TECH & DESIGN is a digital technology and creative design brand focused on building professional digital solutions."
+    );
 
 
-    $("phoneText").textContent =
-        data.phone || "";
+    setText(
+        "phoneText",
+        brandSettings.phone ||
+        "+255 718 170 176"
+    );
 
 
-    $("emailText").textContent =
-        data.email || "";
+    setText(
+        "emailText",
+        brandSettings.email ||
+        "ayoubhafidhi1@gmail.com"
+    );
 
 
-    if (data.email) {
+    setText(
+        "whatsappText",
+        brandSettings.whatsapp ||
+        brandSettings.phone ||
+        "+255 718 170 176"
+    );
 
-        $("emailContact").href =
-            `mailto:${data.email}`;
+
+    setText("headerBrandName", shortBrandName(name));
+
+    setText("sidebarBrandName", shortBrandName(name));
+
+    setText("footerBrandName", name);
+
+    setText("loginBrandName", name);
+
+
+    const email =
+        brandSettings.email ||
+        "ayoubhafidhi1@gmail.com";
+
+    const emailContact = $("emailContact");
+
+    if (emailContact) {
+        emailContact.href = `mailto:${email}`;
     }
 
 
-    if (data.whatsapp) {
+    const whatsapp =
+        brandSettings.whatsapp ||
+        brandSettings.phone ||
+        "+255 718 170 176";
 
-        let number =
-            data.whatsapp.replace(/\D/g, "");
+    const whatsappContact = $("whatsappContact");
 
-        $("whatsappContact").href =
-            `https://wa.me/${number}`;
+    if (whatsappContact) {
+
+        const clean =
+            whatsapp.replace(/\D/g, "");
+
+        whatsappContact.href =
+            `https://wa.me/${clean}`;
+
+    }
+
+}
+
+
+function shortBrandName(name) {
+
+    if (!name) {
+        return "HAICO";
+    }
+
+    if (name.length > 18) {
+        return "HAICO";
+    }
+
+    return name;
+
+}
+
+
+function setText(id, value) {
+
+    const element = $(id);
+
+    if (element) {
+        element.textContent = value ?? "";
     }
 
 }
 
 
 /* =========================================================
-   7. LOAD SERVICES
-   ========================================================= */
+   SERVICES
+========================================================= */
 
 async function loadServices() {
 
     const { data, error } = await db
         .from("services")
         .select("*")
-        .order("id", { ascending: true });
-
+        .order("created_at", {
+            ascending: false
+        });
 
     if (error) {
 
-        console.error(error);
-
-        $("servicesContainer").innerHTML =
-            `<div class="error-state">
-                Failed to load services.
-             </div>`;
+        console.error(
+            "Services error:",
+            error
+        );
 
         return;
-    }
 
+    }
 
     services = data || [];
 
     renderServices();
+
     renderAdminServices();
+
+    updateDashboardStats();
 
 }
 
-
-/* =========================================================
-   8. RENDER SERVICES PUBLIC
-   ========================================================= */
 
 function renderServices() {
 
     const container =
         $("servicesContainer");
 
+    if (!container) return;
+
 
     if (!services.length) {
 
-        container.innerHTML =
-            `<div class="empty-state">
-                No services available yet.
-             </div>`;
+        container.innerHTML = `
+            <div class="empty-state">
+                <div>✦</div>
+                <p>No services available yet.</p>
+            </div>
+        `;
 
         return;
+
     }
 
 
     container.innerHTML =
-        services.map(service => `
+        services.map(service => {
 
-            <article class="service-card">
+            const icon =
+                escapeHTML(
+                    service.icon || "✦"
+                );
 
-                <div class="service-icon">
-                    ${escapeHTML(service.icon || "🛠️")}
-                </div>
+            const name =
+                escapeHTML(
+                    service.name || "Service"
+                );
 
-                <h3>
-                    ${escapeHTML(service.name)}
-                </h3>
+            const description =
+                escapeHTML(
+                    service.description || ""
+                );
 
-                <p>
-                    ${escapeHTML(service.description || "")}
-                </p>
+            return `
 
-            </article>
+                <article class="service-card">
 
-        `).join("");
+                    <div class="service-icon">
+                        ${icon}
+                    </div>
+
+                    <h3>
+                        ${name}
+                    </h3>
+
+                    <p>
+                        ${description}
+                    </p>
+
+                </article>
+
+            `;
+
+        }).join("");
+
 }
 
 
 /* =========================================================
-   9. LOAD PROJECTS
-   ========================================================= */
+   PROJECTS
+========================================================= */
 
 async function loadProjects() {
 
     const { data, error } = await db
         .from("projects")
         .select("*")
-        .order("featured", { ascending: false })
-        .order("created_at", { ascending: false });
-
+        .order("created_at", {
+            ascending: false
+        });
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Projects error:",
+            error
+        );
 
-        $("projectsContainer").innerHTML =
-            `<div class="error-state">
-                Failed to load projects.
-             </div>`;
+        renderProjectsError(error);
 
         return;
-    }
 
+    }
 
     projects = data || [];
 
-    populateCategories();
     renderProjects();
+
     renderAdminProjects();
+
+    updateCategoryFilter();
+
+    updateDashboardStats();
+
+}
+
+
+function renderProjectsError(error) {
+
+    const container =
+        $("projectsContainer");
+
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="empty-state">
+
+            <div>!</div>
+
+            <p>
+                Unable to load projects.
+            </p>
+
+        </div>
+    `;
+
+}
+
+
+function renderProjects(list = projects) {
+
+    const container =
+        $("projectsContainer");
+
+    if (!container) return;
+
+
+    if (!list.length) {
+
+        container.innerHTML = `
+            <div class="empty-state">
+
+                <div>▣</div>
+
+                <p>
+                    No projects found.
+                </p>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        list.map(project => {
+
+            const image =
+                project.image_url ||
+                project.image ||
+                "";
+
+
+            const imageHTML = image
+
+                ? `
+                    <img
+                        src="${escapeAttribute(image)}"
+                        alt="${escapeAttribute(project.name || "Project")}"
+                        loading="lazy"
+                    >
+                `
+
+                : `
+                    <div class="project-placeholder">
+                        H
+                    </div>
+                `;
+
+
+            const featured =
+                project.featured === true
+                    ? `<span class="project-featured">FEATURED</span>`
+                    : "";
+
+
+            return `
+
+                <article class="project-card">
+
+                    <div class="project-image">
+
+                        ${imageHTML}
+
+                        ${featured}
+
+                    </div>
+
+
+                    <div class="project-content">
+
+                        <span class="project-category">
+
+                            ${escapeHTML(
+                                project.category ||
+                                "Digital Project"
+                            )}
+
+                        </span>
+
+
+                        <h3>
+                            ${escapeHTML(
+                                project.name ||
+                                "Untitled Project"
+                            )}
+                        </h3>
+
+
+                        <p>
+                            ${escapeHTML(
+                                project.description ||
+                                ""
+                            )}
+                        </p>
+
+
+                        <div class="project-footer">
+
+                            <span class="project-status">
+
+                                ●
+                                ${escapeHTML(
+                                    project.status ||
+                                    "Active"
+                                )}
+
+                            </span>
+
+
+                            <button
+                                class="view-project"
+                                data-project-id="${escapeAttribute(project.id)}"
+                            >
+                                View Details →
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }).join("");
+
+
+    container
+        .querySelectorAll(".view-project")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const id =
+                        button.dataset.projectId;
+
+                    openProjectDetails(id);
+
+                }
+            );
+
+        });
 
 }
 
 
 /* =========================================================
-   10. CATEGORY FILTER
-   ========================================================= */
+   CATEGORY FILTER
+========================================================= */
 
-function populateCategories() {
+function updateCategoryFilter() {
 
     const select =
         $("categoryFilter");
+
+    if (!select) return;
 
 
     const current =
         select.value;
 
 
-    const categories = [
-        ...new Set(
+    const categories =
+        [...new Set(
             projects
                 .map(project => project.category)
                 .filter(Boolean)
-        )
-    ];
+        )]
+        .sort();
 
 
     select.innerHTML = `
         <option value="all">
             All Categories
         </option>
-
-        ${categories.map(category => `
-            <option value="${escapeHTML(category)}">
-                ${escapeHTML(category)}
-            </option>
-        `).join("")}
     `;
+
+
+    categories.forEach(category => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = category;
+
+        option.textContent = category;
+
+        select.appendChild(option);
+
+    });
 
 
     if (
         categories.includes(current)
     ) {
+
         select.value = current;
+
     }
 
 }
 
 
 /* =========================================================
-   11. RENDER PROJECTS
-   ========================================================= */
+   SEARCH
+========================================================= */
 
-function renderProjects() {
-
-    const container =
-        $("projectsContainer");
-
+function setupSearch() {
 
     const search =
-        $("searchInput").value
-            .trim()
-            .toLowerCase();
+        $("searchInput");
+
+    const filter =
+        $("categoryFilter");
+
+
+    if (search) {
+
+        search.addEventListener(
+            "input",
+            filterProjects
+        );
+
+    }
+
+
+    if (filter) {
+
+        filter.addEventListener(
+            "change",
+            filterProjects
+        );
+
+    }
+
+}
+
+
+function filterProjects() {
+
+    const search =
+        ($("searchInput")?.value || "")
+            .toLowerCase()
+            .trim();
 
 
     const category =
-        $("categoryFilter").value;
+        $("categoryFilter")?.value ||
+        "all";
 
 
     const filtered =
         projects.filter(project => {
 
-            const text = `
-                ${project.name || ""}
-                ${project.category || ""}
-                ${project.description || ""}
-                ${project.details || ""}
-                ${project.technologies || ""}
-                ${project.created_by || ""}
-            `.toLowerCase();
+            const searchable = [
+
+                project.name,
+                project.category,
+                project.description,
+                project.details,
+                project.created_by,
+                project.technologies
+
+            ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
 
 
             const matchesSearch =
                 !search ||
-                text.includes(search);
+                searchable.includes(search);
 
 
             const matchesCategory =
@@ -438,415 +912,224 @@ function renderProjects() {
         });
 
 
-    if (!filtered.length) {
-
-        container.innerHTML =
-            `<div class="empty-state">
-                No projects found.
-             </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        filtered.map(project =>
-            projectCard(project)
-        ).join("");
-
-
-    container
-        .querySelectorAll(".view-project")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const id =
-                        Number(button.dataset.id);
-
-                    openProjectDetails(id);
-
-                }
-            );
-
-        });
+    renderProjects(filtered);
 
 }
 
 
 /* =========================================================
-   12. PROJECT CARD
-   ========================================================= */
-
-function projectCard(project) {
-
-    const image =
-        project.image_url;
-
-
-    const imageHTML = image
-        ? `
-            <img
-                src="${safeUrl(image)}"
-                class="project-image"
-                alt="${escapeHTML(project.name)}"
-                loading="lazy"
-            >
-          `
-        : `
-            <div class="project-placeholder">
-                💻
-            </div>
-          `;
-
-
-    return `
-
-        <article
-            class="project-card
-            ${project.featured ? "featured" : ""}"
-        >
-
-            <div class="project-top">
-
-                ${project.featured
-                    ? `<div class="featured-label">
-                        ⭐ FEATURED
-                       </div>`
-                    : ""
-                }
-
-                ${imageHTML}
-
-            </div>
-
-
-            <div class="project-body">
-
-                <span class="project-category">
-                    ${escapeHTML(
-                        project.category ||
-                        "Digital Project"
-                    )}
-                </span>
-
-
-                <h3>
-                    ${escapeHTML(project.name)}
-                </h3>
-
-
-                <p>
-                    ${escapeHTML(
-                        project.description || ""
-                    )}
-                </p>
-
-
-                <div class="project-meta">
-
-                    ${
-                        project.status
-                        ? `
-                            <span class="meta-badge">
-                                ${escapeHTML(
-                                    project.status
-                                )}
-                            </span>
-                          `
-                        : ""
-                    }
-
-
-                    ${
-                        project.technologies
-                        ? `
-                            <span class="meta-badge">
-                                ${escapeHTML(
-                                    project.technologies
-                                )}
-                            </span>
-                          `
-                        : ""
-                    }
-
-                </div>
-
-
-                <div class="project-actions">
-
-                    <button
-                        class="small-btn view-project"
-                        data-id="${project.id}"
-                    >
-                        View Details
-                    </button>
-
-
-                    ${
-                        project.live_link
-                        ? `
-                            <a
-                                class="small-btn"
-                                href="${safeUrl(
-                                    project.live_link
-                                )}"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                Live
-                            </a>
-                          `
-                        : ""
-                    }
-
-
-                    ${
-                        project.whatsapp_link
-                        ? `
-                            <a
-                                class="small-btn"
-                                href="${safeUrl(
-                                    project.whatsapp_link
-                                )}"
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                WhatsApp
-                            </a>
-                          `
-                        : ""
-                    }
-
-                </div>
-
-            </div>
-
-        </article>
-    `;
-}
-
-
-/* =========================================================
-   13. PROJECT DETAILS
-   ========================================================= */
+   PROJECT DETAILS
+========================================================= */
 
 function openProjectDetails(id) {
 
     const project =
         projects.find(
-            item => Number(item.id) === Number(id)
+            item => String(item.id) === String(id)
         );
 
 
     if (!project) return;
 
 
-    const imageHTML =
-        project.image_url
+    const container =
+        $("projectDetails");
+
+    if (!container) return;
+
+
+    const image =
+        project.image_url ||
+        project.image ||
+        "";
+
+
+    const imageHTML = image
+
         ? `
             <img
-                src="${safeUrl(project.image_url)}"
                 class="project-detail-image"
-                alt="${escapeHTML(project.name)}"
+                src="${escapeAttribute(image)}"
+                alt="${escapeAttribute(project.name || "Project")}"
             >
-          `
+        `
+
         : "";
 
 
-    $("projectDetails").innerHTML = `
-
-        <div class="project-detail">
-
-            ${imageHTML}
+    const technologies =
+        project.technologies ||
+        "Not specified";
 
 
-            <span class="detail-category">
+    const createdBy =
+        project.created_by ||
+        "HAICO TECH & DESIGN";
+
+
+    const status =
+        project.status ||
+        "Active";
+
+
+    let actions = "";
+
+
+    if (project.live_link) {
+
+        actions += `
+            <a
+                href="${escapeAttribute(project.live_link)}"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-primary"
+            >
+                Open Live Website
+            </a>
+        `;
+
+    }
+
+
+    if (project.github_link) {
+
+        actions += `
+            <a
+                href="${escapeAttribute(project.github_link)}"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-secondary"
+            >
+                GitHub
+            </a>
+        `;
+
+    }
+
+
+    if (project.whatsapp_link) {
+
+        actions += `
+            <a
+                href="${escapeAttribute(project.whatsapp_link)}"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-whatsapp"
+            >
+                WhatsApp
+            </a>
+        `;
+
+    }
+
+
+    if (project.attachment_url) {
+
+        actions += `
+            <a
+                href="${escapeAttribute(project.attachment_url)}"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-secondary"
+            >
+                Download Attachment
+            </a>
+        `;
+
+    }
+
+
+    container.innerHTML = `
+
+        ${imageHTML}
+
+        <div class="project-detail-content">
+
+            <span class="section-label">
+
                 ${escapeHTML(
                     project.category ||
-                    "Digital Project"
+                    "PROJECT"
                 )}
+
             </span>
 
 
             <h2>
-                ${escapeHTML(project.name)}
+
+                ${escapeHTML(
+                    project.name ||
+                    "Untitled Project"
+                )}
+
             </h2>
 
 
-            <div class="detail-section">
+            <p class="project-detail-description">
 
-                <h4>
-                    Description
-                </h4>
+                ${escapeHTML(
+                    project.details ||
+                    project.description ||
+                    ""
+                )}
 
-                <p class="detail-description">
-                    ${escapeHTML(
-                        project.description || ""
-                    )}
-                </p>
+            </p>
+
+
+            <div class="project-detail-meta">
+
+                <div class="detail-meta-box">
+
+                    <small>STATUS</small>
+
+                    <strong>
+                        ${escapeHTML(status)}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-meta-box">
+
+                    <small>CREATED BY</small>
+
+                    <strong>
+                        ${escapeHTML(createdBy)}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-meta-box">
+
+                    <small>TECHNOLOGIES</small>
+
+                    <strong>
+                        ${escapeHTML(technologies)}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-meta-box">
+
+                    <small>CATEGORY</small>
+
+                    <strong>
+                        ${escapeHTML(
+                            project.category ||
+                            "Digital"
+                        )}
+                    </strong>
+
+                </div>
 
             </div>
 
 
-            ${
-                project.details
-                ? `
-                    <div class="detail-section">
+            <div class="project-detail-actions">
 
-                        <h4>
-                            Project Details
-                        </h4>
-
-                        <p>
-                            ${escapeHTML(
-                                project.details
-                            )}
-                        </p>
-
-                    </div>
-                  `
-                : ""
-            }
-
-
-            ${
-                project.technologies
-                ? `
-                    <div class="detail-section">
-
-                        <h4>
-                            Technologies
-                        </h4>
-
-                        <p>
-                            ${escapeHTML(
-                                project.technologies
-                            )}
-                        </p>
-
-                    </div>
-                  `
-                : ""
-            }
-
-
-            ${
-                project.created_by
-                ? `
-                    <div class="detail-section">
-
-                        <h4>
-                            Created By
-                        </h4>
-
-                        <p>
-                            ${escapeHTML(
-                                project.created_by
-                            )}
-                        </p>
-
-                    </div>
-                  `
-                : ""
-            }
-
-
-            ${
-                project.status
-                ? `
-                    <div class="detail-section">
-
-                        <h4>
-                            Status
-                        </h4>
-
-                        <p>
-                            ${escapeHTML(
-                                project.status
-                            )}
-                        </p>
-
-                    </div>
-                  `
-                : ""
-            }
-
-
-            <div class="detail-links">
-
-                ${
-                    project.live_link
-                    ? `
-                        <a
-                            class="detail-link"
-                            href="${safeUrl(
-                                project.live_link
-                            )}"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            🌐 Live Website
-                        </a>
-                      `
-                    : ""
-                }
-
-
-                ${
-                    project.github_link
-                    ? `
-                        <a
-                            class="detail-link"
-                            href="${safeUrl(
-                                project.github_link
-                            )}"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            💻 GitHub
-                        </a>
-                      `
-                    : ""
-                }
-
-
-                ${
-                    project.whatsapp_link
-                    ? `
-                        <a
-                            class="detail-link"
-                            href="${safeUrl(
-                                project.whatsapp_link
-                            )}"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            💬 WhatsApp
-                        </a>
-                      `
-                    : ""
-                }
-
-
-                ${
-                    project.attachment_url
-                    ? `
-                        <a
-                            class="detail-link"
-                            href="${safeUrl(
-                                project.attachment_url
-                            )}"
-                            target="_blank"
-                            rel="noopener"
-                        >
-                            📎 Download File
-                        </a>
-                      `
-                    : ""
-                }
+                ${actions}
 
             </div>
 
@@ -856,132 +1139,212 @@ function openProjectDetails(id) {
 
 
     openModal("projectModal");
+
 }
 
 
 /* =========================================================
-   14. SOCIAL LINKS
-   ========================================================= */
+   SOCIAL LINKS
+========================================================= */
 
 async function loadSocialLinks() {
 
     const { data, error } = await db
         .from("social_links")
         .select("*")
-        .order("id", { ascending: true });
-
+        .order("created_at", {
+            ascending: false
+        });
 
     if (error) {
 
-        console.error(error);
+        console.error(
+            "Social links error:",
+            error
+        );
 
         return;
-    }
 
+    }
 
     socialLinks = data || [];
 
     renderSocialLinks();
-    renderAdminSocialLinks();
+
+    renderAdminSocial();
+
+    updateDashboardStats();
 
 }
 
-
-/* =========================================================
-   15. PUBLIC SOCIAL LINKS
-   ========================================================= */
 
 function renderSocialLinks() {
 
     const container =
         $("socialContainer");
 
+    if (!container) return;
+
 
     if (!socialLinks.length) {
 
-        container.innerHTML =
-            `<div class="empty-state">
-                Social links will appear here.
-             </div>`;
+        container.innerHTML = `
+            <div class="empty-state">
+
+                <div>◎</div>
+
+                <p>
+                    Social links will appear here.
+                </p>
+
+            </div>
+        `;
 
         return;
+
     }
 
 
     container.innerHTML =
-        socialLinks.map(social => `
+        socialLinks.map(link => {
 
-            <a
-                href="${safeUrl(social.url)}"
-                target="_blank"
-                rel="noopener"
-                class="social-card"
-            >
+            return `
 
-                <div>
-                    ${escapeHTML(
-                        social.icon || "🌐"
-                    )}
-                </div>
+                <a
+                    href="${escapeAttribute(link.url || "#")}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="social-card"
+                >
 
-                <h3>
-                    ${escapeHTML(
-                        social.platform
-                    )}
-                </h3>
+                    <span class="social-icon">
 
-                <p>
-                    Visit our ${escapeHTML(
-                        social.platform
-                    )}
-                </p>
+                        ${escapeHTML(
+                            link.icon || "◎"
+                        )}
 
-            </a>
+                    </span>
 
-        `).join("");
+                    <strong>
+
+                        ${escapeHTML(
+                            link.platform ||
+                            "Social Media"
+                        )}
+
+                    </strong>
+
+                </a>
+
+            `;
+
+        }).join("");
+
 }
 
 
 /* =========================================================
-   16. AUTH - CHECK CURRENT USER
-   ========================================================= */
+   AUTH CHECK
+========================================================= */
 
-async function checkCurrentUser() {
+async function checkCurrentSession() {
 
     const {
-        data: {
-            user
-        }
-    } = await db.auth.getUser();
+        data,
+        error
+    } = await db.auth.getSession();
 
 
-    currentUser = user || null;
+    if (error) {
+
+        console.error(
+            "Session error:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if (data?.session?.user) {
+
+        currentUser =
+            data.session.user;
+
+    }
 
 }
 
 
 /* =========================================================
-   17. ADMIN LOGIN
-   ========================================================= */
+   LOGIN
+========================================================= */
 
-async function loginAdmin(event) {
+function setupLogin() {
 
-    event.preventDefault();
+    const form =
+        $("loginForm");
 
+    if (!form) return;
+
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            await loginAdmin();
+
+        }
+    );
+
+}
+
+
+async function loginAdmin() {
 
     const email =
-        $("loginEmail").value.trim();
-
+        $("loginEmail")?.value
+            .trim();
 
     const password =
-        $("loginPassword").value;
+        $("loginPassword")?.value;
 
 
-    setMessage(
-        "loginMessage",
-        "Logging in...",
-        true
-    );
+    const message =
+        $("loginMessage");
+
+    const button =
+        $("loginSubmitBtn");
+
+
+    if (!email || !password) {
+
+        showMessage(
+            message,
+            "Please enter your email and password.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    button?.classList.add("loading");
+
+
+    if (button) {
+        button.querySelector("span")
+            ?.replaceWith(
+                createTextElement(
+                    "span",
+                    "Signing in..."
+                )
+            );
+    }
 
 
     const {
@@ -993,16 +1356,21 @@ async function loginAdmin(event) {
     });
 
 
+    button?.classList.remove("loading");
+
+
     if (error) {
 
-        console.error(error);
-
-        setMessage(
-            "loginMessage",
-            error.message
+        showMessage(
+            message,
+            friendlyAuthError(error.message),
+            "error"
         );
 
+        restoreLoginButton();
+
         return;
+
     }
 
 
@@ -1010,401 +1378,740 @@ async function loginAdmin(event) {
         data.user;
 
 
-    $("loginForm").reset();
-
-
-    setMessage(
-        "loginMessage",
-        "",
-        true
+    showMessage(
+        message,
+        "Login successful. Opening dashboard...",
+        "success"
     );
 
 
-    closeModal("loginModal");
+    setTimeout(() => {
 
-    openModal("adminModal");
+        closeModal("loginModal");
 
-    await loadAdminData();
+        openAdminDashboard();
 
-    showToast(
-        "Admin login successful."
-    );
+        restoreLoginButton();
+
+    }, 500);
+
+}
+
+
+function restoreLoginButton() {
+
+    const button =
+        $("loginSubmitBtn");
+
+    if (!button) return;
+
+
+    button.innerHTML = `
+        <span>Login to Dashboard</span>
+        <span>→</span>
+    `;
 
 }
 
 
 /* =========================================================
-   18. LOGOUT
-   ========================================================= */
+   PASSWORD TOGGLE
+========================================================= */
 
-async function logoutAdmin() {
+function setupPasswordToggle() {
 
-    const {
-        error
-    } = await db.auth.signOut();
+    const button =
+        $("togglePassword");
+
+    const input =
+        $("loginPassword");
 
 
-    if (error) {
-
-        showToast(
-            "Logout failed."
-        );
-
+    if (!button || !input) {
         return;
     }
 
 
-    currentUser = null;
+    button.addEventListener(
+        "click",
+        () => {
 
-    closeModal("adminModal");
+            if (input.type === "password") {
 
-    showToast(
-        "You have logged out."
+                input.type = "text";
+
+                button.textContent = "Hide";
+
+            } else {
+
+                input.type = "password";
+
+                button.textContent = "Show";
+
+            }
+
+        }
     );
 
 }
 
 
 /* =========================================================
-   19. ADMIN DATA
-   ========================================================= */
+   FORGOT PASSWORD
+========================================================= */
 
-async function loadAdminData() {
+function setupForgotPassword() {
 
-    await Promise.all([
-        loadProjects(),
-        loadServices(),
-        loadBrandSettings(),
-        loadSocialLinks()
-    ]);
+    $("forgotPasswordBtn")
+        ?.addEventListener(
+            "click",
+            () => {
+
+                const loginEmail =
+                    $("loginEmail")?.value.trim();
+
+                if (loginEmail) {
+
+                    $("forgotEmail").value =
+                        loginEmail;
+
+                }
+
+                closeModal("loginModal");
+
+                openModal("forgotModal");
+
+            }
+        );
+
+
+    $("forgotForm")
+        ?.addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+                await sendPasswordReset();
+
+            }
+        );
 
 }
 
 
 /* =========================================================
-   20. ADD PROJECT
-   ========================================================= */
+   SEND PASSWORD RESET
+========================================================= */
 
-async function saveProject(event) {
+async function sendPasswordReset() {
 
-    event.preventDefault();
+    const email =
+        $("forgotEmail")?.value.trim();
 
+    const message =
+        $("forgotMessage");
+
+    const button =
+        $("resetEmailBtn");
+
+
+    if (!email) {
+
+        showMessage(
+            message,
+            "Please enter your admin email.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    button?.classList.add("loading");
+
+
+    const redirectUrl =
+        `${window.location.origin}${window.location.pathname}?reset=1`;
+
+
+    const {
+        error
+    } = await db.auth.resetPasswordForEmail(
+        email,
+        {
+            redirectTo: redirectUrl
+        }
+    );
+
+
+    button?.classList.remove("loading");
+
+
+    if (error) {
+
+        showMessage(
+            message,
+            friendlyAuthError(error.message),
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    showMessage(
+        message,
+        "Reset link sent. Check your email inbox.",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   RECOVERY URL
+========================================================= */
+
+function handleRecoveryUrl() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+
+    if (
+        params.get("reset") === "1"
+    ) {
+
+        recoveryMode = true;
+
+    }
+
+}
+
+
+/* =========================================================
+   SUPABASE AUTH STATE
+========================================================= */
+
+db.auth.onAuthStateChange(
+    async (event, session) => {
+
+        if (
+            event === "PASSWORD_RECOVERY"
+        ) {
+
+            recoveryMode = true;
+
+            openModal("resetModal");
+
+        }
+
+
+        if (
+            event === "SIGNED_IN" &&
+            session?.user
+        ) {
+
+            currentUser =
+                session.user;
+
+            if (
+                recoveryMode &&
+                window.location.search.includes(
+                    "reset=1"
+                )
+            ) {
+
+                openModal("resetModal");
+
+            }
+
+        }
+
+
+        if (
+            event === "SIGNED_OUT"
+        ) {
+
+            currentUser = null;
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   RESET PASSWORD
+========================================================= */
+
+function setupResetPassword() {
+
+    const form =
+        $("resetForm");
+
+    if (!form) return;
+
+
+    form.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+            const password =
+                $("newPassword")?.value;
+
+            const confirm =
+                $("confirmPassword")?.value;
+
+            const message =
+                $("resetMessage");
+
+
+            if (
+                !password ||
+                password.length < 6
+            ) {
+
+                showMessage(
+                    message,
+                    "Password must contain at least 6 characters.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (password !== confirm) {
+
+                showMessage(
+                    message,
+                    "Passwords do not match.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const {
+                error
+            } = await db.auth.updateUser({
+                password
+            });
+
+
+            if (error) {
+
+                showMessage(
+                    message,
+                    friendlyAuthError(error.message),
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            showMessage(
+                message,
+                "Password updated successfully.",
+                "success"
+            );
+
+
+            setTimeout(async () => {
+
+                await db.auth.signOut();
+
+                closeModal("resetModal");
+
+                openModal("loginModal");
+
+                window.history.replaceState(
+                    {},
+                    document.title,
+                    window.location.pathname
+                );
+
+                recoveryMode = false;
+
+            }, 1200);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ADMIN DASHBOARD
+========================================================= */
+
+function openAdminDashboard() {
 
     if (!currentUser) {
 
-        showToast(
-            "Please login first."
-        );
+        openModal("loginModal");
 
         return;
+
     }
 
 
-    const id =
-        $("projectId").value;
+    const email =
+        currentUser.email ||
+        "Admin";
 
 
-    const name =
-        $("projectName").value.trim();
+    setText(
+        "adminUserEmail",
+        email
+    );
 
 
-    const category =
-        $("projectCategory").value.trim();
+    updateDashboardStats();
+
+    renderAdminProjects();
+
+    renderAdminServices();
+
+    renderAdminSocial();
+
+    populateBrandForm();
+
+    openModal("adminModal");
+
+}
 
 
-    const description =
-        $("projectDescription").value.trim();
+/* =========================================================
+   ADMIN TABS
+========================================================= */
+
+function setupAdminTabs() {
+
+    document
+        .querySelectorAll(".admin-tab")
+        .forEach(tab => {
+
+            tab.addEventListener(
+                "click",
+                () => {
+
+                    document
+                        .querySelectorAll(
+                            ".admin-tab"
+                        )
+                        .forEach(item => {
+                            item.classList.remove(
+                                "active"
+                            );
+                        });
 
 
-    const details =
-        $("projectDetailsText").value.trim();
+                    document
+                        .querySelectorAll(
+                            ".admin-tab-content"
+                        )
+                        .forEach(content => {
+                            content.classList.remove(
+                                "active"
+                            );
+                        });
 
 
-    const createdBy =
-        $("projectCreatedBy").value.trim();
+                    tab.classList.add(
+                        "active"
+                    );
 
 
-    const technologies =
-        $("projectTechnologies").value.trim();
+                    const target =
+                        $(tab.dataset.tab);
+
+                    target?.classList.add(
+                        "active"
+                    );
+
+                }
+            );
+
+        });
+
+}
 
 
-    const status =
-        $("projectStatus").value;
+/* =========================================================
+   DASHBOARD STATS
+========================================================= */
 
+function updateDashboardStats() {
 
-    const liveLink =
-        $("projectLiveLink").value.trim();
+    setText(
+        "projectCount",
+        projects.length
+    );
 
+    setText(
+        "serviceCount",
+        services.length
+    );
 
-    const githubLink =
-        $("projectGithubLink").value.trim();
-
-
-    const whatsappLink =
-        $("projectWhatsappLink").value.trim();
+    setText(
+        "socialCount",
+        socialLinks.length
+    );
 
 
     const featured =
-        $("projectFeatured").checked;
-
-
-    const imageFile =
-        $("projectImage").files[0];
-
-
-    const attachmentFile =
-        $("projectAttachment").files[0];
-
-
-    const saveButton =
-        $("saveProjectBtn");
-
-
-    saveButton.disabled = true;
-
-    saveButton.textContent =
-        "Saving...";
-
-
-    try {
-
-        let imageUrl = null;
-        let attachmentUrl = null;
-
-
-        /* Existing project data */
-
-        if (id) {
-
-            const existing =
-                projects.find(
-                    project =>
-                        Number(project.id) ===
-                        Number(id)
-                );
-
-
-            if (existing) {
-
-                imageUrl =
-                    existing.image_url || null;
-
-                attachmentUrl =
-                    existing.attachment_url || null;
-
-            }
-
-        }
-
-
-        /* Upload image */
-
-        if (imageFile) {
-
-            imageUrl =
-                await uploadFile(
-                    imageFile,
-                    "project-images"
-                );
-
-        }
-
-
-        /* Upload attachment */
-
-        if (attachmentFile) {
-
-            attachmentUrl =
-                await uploadFile(
-                    attachmentFile,
-                    "attachments"
-                );
-
-        }
-
-
-        const projectData = {
-
-            name,
-
-            category,
-
-            description,
-
-            details,
-
-            image_url:
-                imageUrl,
-
-            created_by:
-                createdBy ||
-                "HAICO TECH & DESIGN",
-
-            brand:
-                brandSettings?.brand_name ||
-                "HAICO TECH & DESIGN",
-
-            technologies,
-
-            status,
-
-            live_link:
-                liveLink || null,
-
-            github_link:
-                githubLink || null,
-
-            whatsapp_link:
-                whatsappLink || null,
-
-            attachment_url:
-                attachmentUrl,
-
-            featured,
-
-            updated_at:
-                new Date().toISOString()
-
-        };
-
-
-        let result;
-
-
-        if (id) {
-
-            result =
-                await db
-                    .from("projects")
-                    .update(projectData)
-                    .eq("id", id);
-
-        } else {
-
-            result =
-                await db
-                    .from("projects")
-                    .insert(projectData);
-
-        }
-
-
-        if (result.error) {
-
-            throw result.error;
-        }
-
-
-        $("projectForm").reset();
-
-        $("projectId").value = "";
-
-        $("projectFormTitle").textContent =
-            "Add Project";
-
-
-        closeModal(
-            "projectFormModal"
-        );
-
-
-        await loadProjects();
-
-
-        showToast(
-            id
-                ? "Project updated successfully."
-                : "Project added successfully."
-        );
-
-    } catch (error) {
-
-        console.error(error);
-
-        setMessage(
-            "projectFormMessage",
-            error.message
-        );
-
-    } finally {
-
-        saveButton.disabled = false;
-
-        saveButton.textContent =
-            "Save Project";
-
-    }
+        projects.filter(
+            project =>
+                project.featured === true
+        ).length;
+
+
+    setText(
+        "featuredCount",
+        featured
+    );
 
 }
 
 
 /* =========================================================
-   21. FILE UPLOAD
-   ========================================================= */
+   ADMIN PROJECT LIST
+========================================================= */
 
-async function uploadFile(file, bucket) {
+function renderAdminProjects() {
 
-    if (!file) return null;
+    const container =
+        $("adminProjectsContainer");
 
-
-    const extension =
-        file.name.includes(".")
-            ? file.name.split(".").pop()
-            : "";
+    if (!container) return;
 
 
-    const randomName =
-        `${Date.now()}-${Math.random()
-            .toString(36)
-            .substring(2, 10)}`;
+    if (!projects.length) {
 
+        container.innerHTML = `
+            <div class="empty-state">
 
-    const filePath =
-        `${randomName}${extension ? "." + extension : ""}`;
+                <div>▣</div>
 
+                <p>
+                    No projects added yet.
+                </p>
 
-    const {
-        error
-    } = await db.storage
-        .from(bucket)
-        .upload(
-            filePath,
-            file,
-            {
-                cacheControl: "3600",
-                upsert: false
-            }
-        );
+            </div>
+        `;
 
+        return;
 
-    if (error) {
-
-        throw error;
     }
 
 
-    const {
-        data
-    } = db.storage
-        .from(bucket)
-        .getPublicUrl(filePath);
+    container.innerHTML =
+        projects.map(project => {
+
+            const image =
+                project.image_url ||
+                project.image ||
+                "";
 
 
-    return data.publicUrl;
+            const imageHTML = image
+
+                ? `
+                    <img
+                        class="admin-list-image"
+                        src="${escapeAttribute(image)}"
+                        alt=""
+                    >
+                `
+
+                : `
+                    <div class="admin-list-image
+                                project-placeholder">
+                        H
+                    </div>
+                `;
+
+
+            return `
+
+                <div class="admin-list-item">
+
+                    ${imageHTML}
+
+
+                    <div class="admin-list-info">
+
+                        <strong>
+
+                            ${escapeHTML(
+                                project.name ||
+                                "Untitled"
+                            )}
+
+                        </strong>
+
+                        <small>
+
+                            ${escapeHTML(
+                                project.category ||
+                                "Project"
+                            )}
+
+                            ·
+
+                            ${escapeHTML(
+                                project.status ||
+                                "Active"
+                            )}
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="admin-list-actions">
+
+                        <button
+                            class="icon-btn edit-project"
+                            data-id="${escapeAttribute(project.id)}"
+                            title="Edit"
+                        >
+                            ✎
+                        </button>
+
+
+                        <button
+                            class="icon-btn delete delete-project"
+                            data-id="${escapeAttribute(project.id)}"
+                            title="Delete"
+                        >
+                            ×
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    container
+        .querySelectorAll(".edit-project")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => editProject(
+                    button.dataset.id
+                )
+            );
+
+        });
+
+
+    container
+        .querySelectorAll(".delete-project")
+        .forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => deleteProject(
+                    button.dataset.id
+                )
+            );
+
+        });
+
 }
 
 
 /* =========================================================
-   22. EDIT PROJECT
-   ========================================================= */
+   PROJECT FORM
+========================================================= */
+
+function setupProjectForm() {
+
+    $("addProjectBtn")
+        ?.addEventListener(
+            "click",
+            () => {
+
+                resetProjectForm();
+
+                setText(
+                    "projectFormTitle",
+                    "Add Project"
+                );
+
+                openModal(
+                    "projectFormModal"
+                );
+
+            }
+        );
+
+
+    $("projectForm")
+        ?.addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+                await saveProject();
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   RESET PROJECT FORM
+========================================================= */
+
+function resetProjectForm() {
+
+    const form =
+        $("projectForm");
+
+    form?.reset();
+
+    $("projectId").value = "";
+
+    setText(
+        "projectFormMessage",
+        ""
+    );
+
+}
+
+
+/* =========================================================
+   EDIT PROJECT
+========================================================= */
 
 function editProject(id) {
 
     const project =
         projects.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
+            item => String(item.id) === String(id)
         );
 
 
@@ -1412,7 +2119,7 @@ function editProject(id) {
 
 
     $("projectId").value =
-        project.id;
+        project.id || "";
 
 
     $("projectName").value =
@@ -1440,7 +2147,7 @@ function editProject(id) {
 
 
     $("projectStatus").value =
-        project.status || "Active";
+        project.status || "Completed";
 
 
     $("projectLiveLink").value =
@@ -1456,15 +2163,18 @@ function editProject(id) {
 
 
     $("projectFeatured").checked =
-        Boolean(project.featured);
+        project.featured === true;
 
 
-    $("projectFormTitle").textContent =
-        "Edit Project";
+    $("projectImage").value = "";
+
+    $("projectAttachment").value = "";
 
 
-    $("projectFormMessage").textContent =
-        "";
+    setText(
+        "projectFormTitle",
+        "Edit Project"
+    );
 
 
     openModal(
@@ -1475,26 +2185,287 @@ function editProject(id) {
 
 
 /* =========================================================
-   23. DELETE PROJECT
-   ========================================================= */
+   SAVE PROJECT
+========================================================= */
 
-async function deleteProject(id) {
+async function saveProject() {
 
-    if (!currentUser) {
+    const id =
+        $("projectId")?.value;
 
-        showToast(
-            "Please login first."
+
+    const projectData = {
+
+        name:
+            $("projectName").value.trim(),
+
+        category:
+            $("projectCategory").value.trim(),
+
+        description:
+            $("projectDescription").value.trim(),
+
+        details:
+            $("projectDetailsText").value.trim(),
+
+        created_by:
+            $("projectCreatedBy").value.trim(),
+
+        technologies:
+            $("projectTechnologies").value.trim(),
+
+        status:
+            $("projectStatus").value,
+
+        live_link:
+            $("projectLiveLink").value.trim(),
+
+        github_link:
+            $("projectGithubLink").value.trim(),
+
+        whatsapp_link:
+            $("projectWhatsappLink").value.trim(),
+
+        featured:
+            $("projectFeatured").checked
+
+    };
+
+
+    if (!projectData.name) {
+
+        showMessage(
+            $("projectFormMessage"),
+            "Project name is required.",
+            "error"
         );
 
         return;
+
     }
 
 
+    const saveButton =
+        $("saveProjectBtn");
+
+
+    saveButton?.classList.add(
+        "loading"
+    );
+
+
+    try {
+
+        /* =============================================
+           IMAGE UPLOAD
+        ============================================= */
+
+        const imageFile =
+            $("projectImage")?.files?.[0];
+
+
+        if (imageFile) {
+
+            const imageResult =
+                await uploadFile(
+                    imageFile,
+                    "project-images"
+                );
+
+
+            if (
+                imageResult &&
+                imageResult.url
+            ) {
+
+                projectData.image_url =
+                    imageResult.url;
+
+            }
+
+        }
+
+
+        /* =============================================
+           ATTACHMENT UPLOAD
+        ============================================= */
+
+        const attachmentFile =
+            $("projectAttachment")
+                ?.files?.[0];
+
+
+        if (attachmentFile) {
+
+            const attachmentResult =
+                await uploadFile(
+                    attachmentFile,
+                    "attachments"
+                );
+
+
+            if (
+                attachmentResult &&
+                attachmentResult.url
+            ) {
+
+                projectData.attachment_url =
+                    attachmentResult.url;
+
+            }
+
+        }
+
+
+        /* =============================================
+           INSERT / UPDATE
+        ============================================= */
+
+        let result;
+
+
+        if (id) {
+
+            result =
+                await db
+                    .from("projects")
+                    .update(projectData)
+                    .eq("id", id);
+
+        } else {
+
+            result =
+                await db
+                    .from("projects")
+                    .insert([
+                        projectData
+                    ]);
+
+        }
+
+
+        if (result.error) {
+            throw result.error;
+        }
+
+
+        showMessage(
+            $("projectFormMessage"),
+            id
+                ? "Project updated successfully."
+                : "Project added successfully.",
+            "success"
+        );
+
+
+        await loadProjects();
+
+
+        setTimeout(() => {
+
+            closeModal(
+                "projectFormModal"
+            );
+
+        }, 700);
+
+    } catch (error) {
+
+        console.error(
+            "Save project error:",
+            error
+        );
+
+
+        showMessage(
+            $("projectFormMessage"),
+            error.message ||
+                "Unable to save project.",
+            "error"
+        );
+
+    } finally {
+
+        saveButton?.classList.remove(
+            "loading"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   UPLOAD FILE
+========================================================= */
+
+async function uploadFile(
+    file,
+    bucket
+) {
+
+    if (!file) return null;
+
+
+    const safeName =
+        file.name
+            .replace(
+                /[^a-zA-Z0-9._-]/g,
+                "-"
+            );
+
+
+    const path =
+        `${Date.now()}-${Math.random()
+            .toString(36)
+            .slice(2)}-${safeName}`;
+
+
+    const {
+        error
+    } = await db.storage
+        .from(bucket)
+        .upload(
+            path,
+            file,
+            {
+                cacheControl: "3600",
+                upsert: false
+            }
+        );
+
+
+    if (error) {
+
+        throw error;
+
+    }
+
+
+    const {
+        data
+    } = db.storage
+        .from(bucket)
+        .getPublicUrl(path);
+
+
+    return {
+        path,
+        url: data.publicUrl
+    };
+
+}
+
+
+/* =========================================================
+   DELETE PROJECT
+========================================================= */
+
+async function deleteProject(id) {
+
     const project =
         projects.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
+            item => String(item.id) === String(id)
         );
 
 
@@ -1503,7 +2474,7 @@ async function deleteProject(id) {
 
     const confirmed =
         confirm(
-            `Delete "${project.name}"?`
+            `Delete "${project.name}"?\n\nThis action cannot be undone.`
         );
 
 
@@ -1520,255 +2491,140 @@ async function deleteProject(id) {
 
     if (error) {
 
-        console.error(error);
-
-        showToast(
-            error.message
+        alert(
+            `Unable to delete project: ${error.message}`
         );
 
         return;
+
     }
 
 
     await loadProjects();
 
-
-    showToast(
-        "Project deleted."
-    );
-
 }
 
 
 /* =========================================================
-   24. ADMIN PROJECT LIST
-   ========================================================= */
-
-function renderAdminProjects() {
-
-    const container =
-        $("adminProjectsContainer");
-
-
-    if (!container) return;
-
-
-    if (!projects.length) {
-
-        container.innerHTML =
-            `<div class="empty-state">
-                No projects yet.
-             </div>`;
-
-        return;
-    }
-
-
-    container.innerHTML =
-        projects.map(project => `
-
-            <div class="admin-item">
-
-                <div class="admin-item-info">
-
-                    <h4>
-                        ${escapeHTML(
-                            project.name
-                        )}
-                    </h4>
-
-                    <p>
-                        ${escapeHTML(
-                            project.category ||
-                            "No category"
-                        )}
-
-                        •
-
-                        ${escapeHTML(
-                            project.status ||
-                            ""
-                        )}
-                    </p>
-
-                </div>
-
-
-                <div class="admin-actions">
-
-                    <button
-                        class="small-btn edit-btn"
-                        data-edit-project="${project.id}"
-                    >
-                        Edit
-                    </button>
-
-
-                    <button
-                        class="small-btn delete-btn"
-                        data-delete-project="${project.id}"
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `).join("");
-
-
-    container
-        .querySelectorAll(
-            "[data-edit-project]"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    editProject(
-                        button.dataset.editProject
-                    );
-
-                }
-            );
-
-        });
-
-
-    container
-        .querySelectorAll(
-            "[data-delete-project]"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    deleteProject(
-                        button.dataset.deleteProject
-                    );
-
-                }
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   25. SERVICES ADMIN
-   ========================================================= */
+   ADMIN SERVICES
+========================================================= */
 
 function renderAdminServices() {
 
     const container =
         $("adminServicesContainer");
 
-
     if (!container) return;
 
 
     if (!services.length) {
 
-        container.innerHTML =
-            `<div class="empty-state">
-                No services.
-             </div>`;
+        container.innerHTML = `
+            <div class="empty-state">
+
+                <div>✦</div>
+
+                <p>
+                    No services available.
+                </p>
+
+            </div>
+        `;
 
         return;
+
     }
 
 
     container.innerHTML =
-        services.map(service => `
+        services.map(service => {
 
-            <div class="admin-item">
+            return `
 
-                <div class="admin-item-info">
+                <div class="admin-list-item">
 
-                    <h4>
-                        ${escapeHTML(
-                            service.icon || "🛠️"
-                        )}
+                    <div class="admin-list-image
+                                project-placeholder">
 
                         ${escapeHTML(
-                            service.name
+                            service.icon || "✦"
                         )}
-                    </h4>
 
-                    <p>
-                        ${escapeHTML(
-                            service.description || ""
-                        )}
-                    </p>
+                    </div>
+
+
+                    <div class="admin-list-info">
+
+                        <strong>
+
+                            ${escapeHTML(
+                                service.name ||
+                                "Service"
+                            )}
+
+                        </strong>
+
+                        <small>
+
+                            ${escapeHTML(
+                                service.description ||
+                                ""
+                            )}
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="admin-list-actions">
+
+                        <button
+                            class="icon-btn edit-service"
+                            data-id="${escapeAttribute(service.id)}"
+                        >
+                            ✎
+                        </button>
+
+
+                        <button
+                            class="icon-btn delete delete-service"
+                            data-id="${escapeAttribute(service.id)}"
+                        >
+                            ×
+                        </button>
+
+                    </div>
 
                 </div>
 
+            `;
 
-                <div class="admin-actions">
-
-                    <button
-                        class="small-btn edit-btn"
-                        data-edit-service="${service.id}"
-                    >
-                        Edit
-                    </button>
-
-
-                    <button
-                        class="small-btn delete-btn"
-                        data-delete-service="${service.id}"
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `).join("");
+        }).join("");
 
 
     container
-        .querySelectorAll(
-            "[data-edit-service]"
-        )
+        .querySelectorAll(".edit-service")
         .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
-
-                    editService(
-                        button.dataset.editService
-                    );
-
-                }
+                () => editService(
+                    button.dataset.id
+                )
             );
 
         });
 
 
     container
-        .querySelectorAll(
-            "[data-delete-service]"
-        )
+        .querySelectorAll(".delete-service")
         .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
-
-                    deleteService(
-                        button.dataset.deleteService
-                    );
-
-                }
+                () => deleteService(
+                    button.dataset.id
+                )
             );
 
         });
@@ -1777,41 +2633,54 @@ function renderAdminServices() {
 
 
 /* =========================================================
-   26. SAVE SERVICE
-   ========================================================= */
+   SERVICE FORM
+========================================================= */
 
-async function saveService(event) {
+function setupServiceForm() {
 
-    event.preventDefault();
+    $("serviceForm")
+        ?.addEventListener(
+            "submit",
+            async event => {
 
+                event.preventDefault();
 
-    if (!currentUser) {
+                await saveService();
 
-        showToast(
-            "Please login first."
+            }
         );
 
-        return;
-    }
 
+    $("cancelServiceBtn")
+        ?.addEventListener(
+            "click",
+            resetServiceForm
+        );
+
+}
+
+
+async function saveService() {
 
     const id =
         $("serviceId").value;
 
 
-    const serviceData = {
+    const data = {
 
         name:
             $("serviceName").value.trim(),
 
-        description:
-            $("serviceDescription").value.trim(),
-
         icon:
-            $("serviceIcon").value.trim() ||
-            "🛠️"
+            $("serviceIcon").value.trim(),
+
+        description:
+            $("serviceDescription").value.trim()
 
     };
+
+
+    if (!data.name) return;
 
 
     let result;
@@ -1822,7 +2691,7 @@ async function saveService(event) {
         result =
             await db
                 .from("services")
-                .update(serviceData)
+                .update(data)
                 .eq("id", id);
 
     } else {
@@ -1830,51 +2699,34 @@ async function saveService(event) {
         result =
             await db
                 .from("services")
-                .insert(serviceData);
+                .insert([data]);
 
     }
 
 
     if (result.error) {
 
-        console.error(result.error);
-
-        showToast(
+        alert(
             result.error.message
         );
 
         return;
+
     }
 
 
-    $("serviceForm").reset();
-
-    $("serviceId").value = "";
-
+    resetServiceForm();
 
     await loadServices();
 
-
-    showToast(
-        id
-            ? "Service updated."
-            : "Service added."
-    );
-
 }
 
-
-/* =========================================================
-   27. EDIT SERVICE
-   ========================================================= */
 
 function editService(id) {
 
     const service =
         services.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
+            item => String(item.id) === String(id)
         );
 
 
@@ -1882,7 +2734,7 @@ function editService(id) {
 
 
     $("serviceId").value =
-        service.id;
+        service.id || "";
 
 
     $("serviceName").value =
@@ -1896,18 +2748,41 @@ function editService(id) {
     $("serviceDescription").value =
         service.description || "";
 
+
+    document
+        .querySelector(
+            '.admin-tab[data-tab="servicesTab"]'
+        )
+        ?.click();
+
 }
 
 
-/* =========================================================
-   28. DELETE SERVICE
-   ========================================================= */
+function resetServiceForm() {
+
+    $("serviceForm")?.reset();
+
+    $("serviceId").value = "";
+
+}
+
 
 async function deleteService(id) {
 
-    if (!confirm(
-        "Delete this service?"
-    )) {
+    const service =
+        services.find(
+            item => String(item.id) === String(id)
+        );
+
+
+    if (!service) return;
+
+
+    if (
+        !confirm(
+            `Delete "${service.name}"?`
+        )
+    ) {
         return;
     }
 
@@ -1922,132 +2797,42 @@ async function deleteService(id) {
 
     if (error) {
 
-        showToast(
+        alert(
             error.message
         );
 
         return;
+
     }
 
 
     await loadServices();
 
-
-    showToast(
-        "Service deleted."
-    );
-
 }
 
 
 /* =========================================================
-   29. SAVE BRAND
-   ========================================================= */
+   BRAND FORM
+========================================================= */
 
-async function saveBrand(event) {
+function setupBrandForm() {
 
-    event.preventDefault();
+    $("brandForm")
+        ?.addEventListener(
+            "submit",
+            async event => {
 
+                event.preventDefault();
 
-    if (!currentUser) {
+                await saveBrandSettings();
 
-        showToast(
-            "Please login first."
+            }
         );
-
-        return;
-    }
-
-
-    const brandData = {
-
-        brand_name:
-            $("brandName").value.trim(),
-
-        tagline:
-            $("brandTagline").value.trim(),
-
-        about:
-            $("brandAbout").value.trim(),
-
-        logo_url:
-            $("brandLogo").value.trim() ||
-            null,
-
-        phone:
-            $("brandPhone").value.trim(),
-
-        email:
-            $("brandEmail").value.trim(),
-
-        whatsapp:
-            $("brandWhatsapp").value.trim(),
-
-        updated_at:
-            new Date().toISOString()
-
-    };
-
-
-    let result;
-
-
-    if (brandSettings?.id) {
-
-        result =
-            await db
-                .from("brand_settings")
-                .update(brandData)
-                .eq(
-                    "id",
-                    brandSettings.id
-                );
-
-    } else {
-
-        result =
-            await db
-                .from("brand_settings")
-                .insert(brandData);
-
-    }
-
-
-    if (result.error) {
-
-        console.error(result.error);
-
-        setMessage(
-            "brandMessage",
-            result.error.message
-        );
-
-        return;
-    }
-
-
-    await loadBrandSettings();
-
-
-    setMessage(
-        "brandMessage",
-        "Brand settings saved successfully.",
-        true
-    );
-
-
-    showToast(
-        "Brand settings updated."
-    );
 
 }
 
 
-/* =========================================================
-   30. LOAD BRAND INTO ADMIN FORM
-   ========================================================= */
-
-function fillBrandForm() {
+function populateBrandForm() {
 
     if (!brandSettings) return;
 
@@ -2064,10 +2849,6 @@ function fillBrandForm() {
         brandSettings.about || "";
 
 
-    $("brandLogo").value =
-        brandSettings.logo_url || "";
-
-
     $("brandPhone").value =
         brandSettings.phone || "";
 
@@ -2079,118 +2860,210 @@ function fillBrandForm() {
     $("brandWhatsapp").value =
         brandSettings.whatsapp || "";
 
+
+    $("brandLogo").value =
+        brandSettings.logo_url || "";
+
+}
+
+
+async function saveBrandSettings() {
+
+    const data = {
+
+        brand_name:
+            $("brandName").value.trim(),
+
+        tagline:
+            $("brandTagline").value.trim(),
+
+        about:
+            $("brandAbout").value.trim(),
+
+        phone:
+            $("brandPhone").value.trim(),
+
+        email:
+            $("brandEmail").value.trim(),
+
+        whatsapp:
+            $("brandWhatsapp").value.trim(),
+
+        logo_url:
+            $("brandLogo").value.trim()
+
+    };
+
+
+    let result;
+
+
+    if (brandSettings?.id) {
+
+        result =
+            await db
+                .from("brand_settings")
+                .update(data)
+                .eq(
+                    "id",
+                    brandSettings.id
+                );
+
+    } else {
+
+        result =
+            await db
+                .from("brand_settings")
+                .insert([data]);
+
+    }
+
+
+    if (result.error) {
+
+        showMessage(
+            $("brandMessage"),
+            result.error.message,
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    showMessage(
+        $("brandMessage"),
+        "Brand settings updated successfully.",
+        "success"
+    );
+
+
+    await loadBrandSettings();
+
 }
 
 
 /* =========================================================
-   31. SOCIAL ADMIN LIST
-   ========================================================= */
+   SOCIAL ADMIN
+========================================================= */
 
-function renderAdminSocialLinks() {
+function renderAdminSocial() {
 
     const container =
         $("adminSocialContainer");
-
 
     if (!container) return;
 
 
     if (!socialLinks.length) {
 
-        container.innerHTML =
-            `<div class="empty-state">
-                No social links.
-             </div>`;
+        container.innerHTML = `
+            <div class="empty-state">
+
+                <div>◎</div>
+
+                <p>
+                    No social links added.
+                </p>
+
+            </div>
+        `;
 
         return;
+
     }
 
 
     container.innerHTML =
-        socialLinks.map(social => `
+        socialLinks.map(link => {
 
-            <div class="admin-item">
+            return `
 
-                <div class="admin-item-info">
+                <div class="admin-list-item">
 
-                    <h4>
-                        ${escapeHTML(
-                            social.icon || "🌐"
-                        )}
+                    <div class="admin-list-image
+                                project-placeholder">
 
                         ${escapeHTML(
-                            social.platform
+                            link.icon || "◎"
                         )}
-                    </h4>
 
-                    <p>
-                        ${escapeHTML(
-                            social.url
-                        )}
-                    </p>
+                    </div>
+
+
+                    <div class="admin-list-info">
+
+                        <strong>
+
+                            ${escapeHTML(
+                                link.platform ||
+                                "Social"
+                            )}
+
+                        </strong>
+
+                        <small>
+
+                            ${escapeHTML(
+                                link.url ||
+                                ""
+                            )}
+
+                        </small>
+
+                    </div>
+
+
+                    <div class="admin-list-actions">
+
+                        <button
+                            class="icon-btn edit-social"
+                            data-id="${escapeAttribute(link.id)}"
+                        >
+                            ✎
+                        </button>
+
+
+                        <button
+                            class="icon-btn delete delete-social"
+                            data-id="${escapeAttribute(link.id)}"
+                        >
+                            ×
+                        </button>
+
+                    </div>
 
                 </div>
 
+            `;
 
-                <div class="admin-actions">
-
-                    <button
-                        class="small-btn edit-btn"
-                        data-edit-social="${social.id}"
-                    >
-                        Edit
-                    </button>
-
-
-                    <button
-                        class="small-btn delete-btn"
-                        data-delete-social="${social.id}"
-                    >
-                        Delete
-                    </button>
-
-                </div>
-
-            </div>
-
-        `).join("");
+        }).join("");
 
 
     container
-        .querySelectorAll(
-            "[data-edit-social]"
-        )
+        .querySelectorAll(".edit-social")
         .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
-
-                    editSocial(
-                        button.dataset.editSocial
-                    );
-
-                }
+                () => editSocial(
+                    button.dataset.id
+                )
             );
 
         });
 
 
     container
-        .querySelectorAll(
-            "[data-delete-social]"
-        )
+        .querySelectorAll(".delete-social")
         .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
-
-                    deleteSocial(
-                        button.dataset.deleteSocial
-                    );
-
-                }
+                () => deleteSocial(
+                    button.dataset.id
+                )
             );
 
         });
@@ -2199,29 +3072,40 @@ function renderAdminSocialLinks() {
 
 
 /* =========================================================
-   32. SAVE SOCIAL
-   ========================================================= */
+   SOCIAL FORM
+========================================================= */
 
-async function saveSocial(event) {
+function setupSocialForm() {
 
-    event.preventDefault();
+    $("socialForm")
+        ?.addEventListener(
+            "submit",
+            async event => {
 
+                event.preventDefault();
 
-    if (!currentUser) {
+                await saveSocial();
 
-        showToast(
-            "Please login first."
+            }
         );
 
-        return;
-    }
 
+    $("cancelSocialBtn")
+        ?.addEventListener(
+            "click",
+            resetSocialForm
+        );
+
+}
+
+
+async function saveSocial() {
 
     const id =
         $("socialId").value;
 
 
-    const socialData = {
+    const data = {
 
         platform:
             $("socialPlatform").value.trim(),
@@ -2230,10 +3114,17 @@ async function saveSocial(event) {
             $("socialUrl").value.trim(),
 
         icon:
-            $("socialIcon").value.trim() ||
-            "🌐"
+            $("socialIcon").value.trim()
 
     };
+
+
+    if (
+        !data.platform ||
+        !data.url
+    ) {
+        return;
+    }
 
 
     let result;
@@ -2244,7 +3135,7 @@ async function saveSocial(event) {
         result =
             await db
                 .from("social_links")
-                .update(socialData)
+                .update(data)
                 .eq("id", id);
 
     } else {
@@ -2252,82 +3143,90 @@ async function saveSocial(event) {
         result =
             await db
                 .from("social_links")
-                .insert(socialData);
+                .insert([data]);
 
     }
 
 
     if (result.error) {
 
-        showToast(
+        alert(
             result.error.message
         );
 
         return;
+
     }
 
 
-    $("socialForm").reset();
-
-    $("socialId").value = "";
-
+    resetSocialForm();
 
     await loadSocialLinks();
 
-
-    showToast(
-        id
-            ? "Social link updated."
-            : "Social link added."
-    );
-
 }
 
-
-/* =========================================================
-   33. EDIT SOCIAL
-   ========================================================= */
 
 function editSocial(id) {
 
-    const social =
+    const link =
         socialLinks.find(
-            item =>
-                Number(item.id) ===
-                Number(id)
+            item => String(item.id) === String(id)
         );
 
 
-    if (!social) return;
+    if (!link) return;
 
 
     $("socialId").value =
-        social.id;
+        link.id || "";
 
 
     $("socialPlatform").value =
-        social.platform || "";
+        link.platform || "";
 
 
     $("socialUrl").value =
-        social.url || "";
+        link.url || "";
 
 
     $("socialIcon").value =
-        social.icon || "";
+        link.icon || "";
+
+
+    document
+        .querySelector(
+            '.admin-tab[data-tab="socialTab"]'
+        )
+        ?.click();
 
 }
 
 
-/* =========================================================
-   34. DELETE SOCIAL
-   ========================================================= */
+function resetSocialForm() {
+
+    $("socialForm")?.reset();
+
+    $("socialId").value = "";
+
+}
+
 
 async function deleteSocial(id) {
 
-    if (!confirm(
-        "Delete this social link?"
-    )) {
+    const link =
+        socialLinks.find(
+            item => String(item.id) === String(id)
+        );
+
+
+    if (!link) return;
+
+
+    if (
+        !confirm(
+            `Delete "${link.platform}"?`
+        )
+    ) {
         return;
     }
 
@@ -2342,509 +3241,260 @@ async function deleteSocial(id) {
 
     if (error) {
 
-        showToast(
+        alert(
             error.message
         );
 
         return;
+
     }
 
 
     await loadSocialLinks();
 
-
-    showToast(
-        "Social link deleted."
-    );
-
 }
 
 
 /* =========================================================
-   35. ADMIN TABS
-   ========================================================= */
+   LOGOUT
+========================================================= */
 
-function setupAdminTabs() {
+$("logoutBtn")
+    ?.addEventListener(
+        "click",
+        async () => {
 
-    document
-        .querySelectorAll(".admin-tab")
-        .forEach(tab => {
-
-            tab.addEventListener(
-                "click",
-                () => {
-
-                    document
-                        .querySelectorAll(
-                            ".admin-tab"
-                        )
-                        .forEach(item =>
-                            item.classList.remove(
-                                "active"
-                            )
-                        );
-
-
-                    document
-                        .querySelectorAll(
-                            ".admin-tab-content"
-                        )
-                        .forEach(content =>
-                            content.classList.remove(
-                                "active"
-                            )
-                        );
-
-
-                    tab.classList.add(
-                        "active"
-                    );
-
-
-                    const target =
-                        $(tab.dataset.tab);
-
-
-                    if (target) {
-
-                        target.classList.add(
-                            "active"
-                        );
-
-                    }
-
-
-                    if (
-                        tab.dataset.tab ===
-                        "brandTab"
-                    ) {
-
-                        fillBrandForm();
-
-                    }
-
-                }
-            );
-
-        });
-
-}
-
-
-/* =========================================================
-   36. NAVIGATION
-   ========================================================= */
-
-function setupNavigation() {
-
-    $("menuBtn")
-        .addEventListener(
-            "click",
-            () => {
-
-                $("sidebar")
-                    .classList.add("open");
-
-                $("overlay")
-                    .classList.add("show");
-
-            }
-        );
-
-
-    $("closeBtn")
-        .addEventListener(
-            "click",
-            closeSidebar
-        );
-
-
-    $("overlay")
-        .addEventListener(
-            "click",
-            closeSidebar
-        );
-
-
-    document
-        .querySelectorAll(".nav-link")
-        .forEach(link => {
-
-            link.addEventListener(
-                "click",
-                closeSidebar
-            );
-
-        });
-
-}
-
-
-function closeSidebar() {
-
-    $("sidebar")
-        .classList.remove("open");
-
-    $("overlay")
-        .classList.remove("show");
-
-}
-
-
-/* =========================================================
-   37. MODALS
-   ========================================================= */
-
-function setupModals() {
-
-    $("openLoginBtn")
-        .addEventListener(
-            "click",
-            () => {
-
-                closeSidebar();
-
-                openModal(
-                    "loginModal"
+            const confirmed =
+                confirm(
+                    "Are you sure you want to logout?"
                 );
 
-            }
-        );
+
+            if (!confirmed) return;
 
 
-    $("footerAdminBtn")
-        .addEventListener(
-            "click",
-            () => {
+            const {
+                error
+            } = await db.auth.signOut();
 
-                if (currentUser) {
 
-                    openModal(
-                        "adminModal"
-                    );
+            if (error) {
 
-                    loadAdminData();
+                alert(
+                    error.message
+                );
 
-                } else {
-
-                    openModal(
-                        "loginModal"
-                    );
-
-                }
+                return;
 
             }
-        );
 
 
-    $("closeLoginModal")
-        .addEventListener(
-            "click",
-            () =>
-                closeModal("loginModal")
-        );
+            currentUser = null;
 
-
-    $("closeAdminModal")
-        .addEventListener(
-            "click",
-            () =>
-                closeModal("adminModal")
-        );
-
-
-    $("closeProjectModal")
-        .addEventListener(
-            "click",
-            () =>
-                closeModal("projectModal")
-        );
-
-
-    $("closeProjectFormModal")
-        .addEventListener(
-            "click",
-            () =>
-                closeModal(
-                    "projectFormModal"
-                )
-        );
-
-
-    document
-        .querySelectorAll(".modal")
-        .forEach(modal => {
-
-            modal.addEventListener(
-                "click",
-                event => {
-
-                    if (
-                        event.target ===
-                        modal
-                    ) {
-
-                        closeModal(
-                            modal.id
-                        );
-
-                    }
-
-                }
-            );
-
-        });
-
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (
-                event.key === "Escape"
-            ) {
-
-                document
-                    .querySelectorAll(
-                        ".modal.show"
-                    )
-                    .forEach(modal => {
-
-                        closeModal(
-                            modal.id
-                        );
-
-                    });
-
-            }
+            closeModal("adminModal");
 
         }
     );
 
-}
-
 
 /* =========================================================
-   38. FORMS
-   ========================================================= */
+   REALTIME
+========================================================= */
 
-function setupForms() {
+function setupRealtime() {
 
-    $("loginForm")
-        .addEventListener(
-            "submit",
-            loginAdmin
-        );
+    db.channel("haico-link-hub-realtime")
 
-
-    $("logoutBtn")
-        .addEventListener(
-            "click",
-            logoutAdmin
-        );
-
-
-    $("projectForm")
-        .addEventListener(
-            "submit",
-            saveProject
-        );
-
-
-    $("serviceForm")
-        .addEventListener(
-            "submit",
-            saveService
-        );
-
-
-    $("brandForm")
-        .addEventListener(
-            "submit",
-            saveBrand
-        );
-
-
-    $("socialForm")
-        .addEventListener(
-            "submit",
-            saveSocial
-        );
-
-
-    $("addProjectBtn")
-        .addEventListener(
-            "click",
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "projects"
+            },
             () => {
-
-                resetProjectForm();
-
-                openModal(
-                    "projectFormModal"
-                );
-
+                loadProjects();
             }
-        );
+        )
 
-
-    $("cancelProjectBtn")
-        .addEventListener(
-            "click",
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "services"
+            },
             () => {
-
-                resetProjectForm();
-
-                closeModal(
-                    "projectFormModal"
-                );
-
+                loadServices();
             }
-        );
+        )
 
-
-    $("cancelServiceBtn")
-        .addEventListener(
-            "click",
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "social_links"
+            },
             () => {
-
-                $("serviceForm").reset();
-
-                $("serviceId").value = "";
-
+                loadSocialLinks();
             }
-        );
+        )
 
-
-    $("cancelSocialBtn")
-        .addEventListener(
-            "click",
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "brand_settings"
+            },
             () => {
-
-                $("socialForm").reset();
-
-                $("socialId").value = "";
-
+                loadBrandSettings();
             }
-        );
+        )
+
+        .subscribe();
 
 }
 
 
 /* =========================================================
-   39. RESET PROJECT FORM
-   ========================================================= */
+   AUTH ERROR TRANSLATION
+========================================================= */
 
-function resetProjectForm() {
+function friendlyAuthError(message) {
 
-    $("projectForm").reset();
+    if (!message) {
+        return "Something went wrong. Please try again.";
+    }
 
-    $("projectId").value = "";
 
-    $("projectCreatedBy").value =
-        "HAICO TECH & DESIGN";
+    const text =
+        message.toLowerCase();
 
-    $("projectStatus").value =
-        "Active";
 
-    $("projectFormTitle").textContent =
-        "Add Project";
+    if (
+        text.includes(
+            "invalid login credentials"
+        )
+    ) {
 
-    $("projectFormMessage").textContent =
-        "";
+        return "Incorrect email or password.";
+
+    }
+
+
+    if (
+        text.includes(
+            "email not confirmed"
+        )
+    ) {
+
+        return "Please confirm your email before logging in.";
+
+    }
+
+
+    if (
+        text.includes(
+            "user not found"
+        )
+    ) {
+
+        return "Admin account was not found.";
+
+    }
+
+
+    if (
+        text.includes(
+            "rate limit"
+        )
+    ) {
+
+        return "Too many requests. Please wait and try again.";
+
+    }
+
+
+    return message;
 
 }
 
 
 /* =========================================================
-   40. SEARCH
-   ========================================================= */
+   MESSAGE
+========================================================= */
 
-function setupSearch() {
+function showMessage(
+    element,
+    message,
+    type = "info"
+) {
 
-    $("searchInput")
-        .addEventListener(
-            "input",
-            renderProjects
-        );
+    if (!element) return;
 
 
-    $("categoryFilter")
-        .addEventListener(
-            "change",
-            renderProjects
-        );
+    element.textContent =
+        message || "";
+
+
+    element.className =
+        `form-message ${type}`;
 
 }
 
 
 /* =========================================================
-   41. REALTIME REFRESH
-   ========================================================= */
+   TEXT ELEMENT
+========================================================= */
 
-/*
-   This listens for changes in Supabase.
-   If another admin changes projects/services,
-   the public page can refresh its information.
-*/
+function createTextElement(
+    tag,
+    text
+) {
 
-db.channel(
-    "haico-link-hub-changes"
-)
-.on(
-    "postgres_changes",
-    {
-        event: "*",
-        schema: "public",
-        table: "projects"
-    },
-    async () => {
+    const element =
+        document.createElement(tag);
 
-        await loadProjects();
+    element.textContent =
+        text;
 
-    }
-)
-.on(
-    "postgres_changes",
-    {
-        event: "*",
-        schema: "public",
-        table: "services"
-    },
-    async () => {
+    return element;
 
-        await loadServices();
-
-    }
-)
-.on(
-    "postgres_changes",
-    {
-        event: "*",
-        schema: "public",
-        table: "social_links"
-    },
-    async () => {
-
-        await loadSocialLinks();
-
-    }
-)
-.on(
-    "postgres_changes",
-    {
-        event: "*",
-        schema: "public",
-        table: "brand_settings"
-    },
-    async () => {
-
-        await loadBrandSettings();
-
-    }
-)
-.subscribe();
+}
 
 
 /* =========================================================
-   END
-   ========================================================= */
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return "";
+    }
+
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+}
+
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+========================================================= */
+
+function escapeAttribute(value) {
+
+    return escapeHTML(value);
+
+}
